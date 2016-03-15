@@ -1,0 +1,9 @@
+Package: rcrtan
+Type: Package
+Title: Criterion-referenced Test Analysis
+Version: 0.1.0
+Author: Geoff LaFlair
+Maintainer: Geoff LaFlair <gtlaflair@uky.edu>
+Description: Conducts criterion-referenced test analyses as described in Brown & Hudson (2002) and Bachman (2004)
+License: What license is it under?
+LazyData: TRUE
