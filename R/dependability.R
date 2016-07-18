@@ -17,5 +17,7 @@ subkoviak <- function(data, items, raw_cut_score){
   
   z_rounded <- round(z, digits = 1)
   
+  rel <- round(alpha(data[items], check.keys = FALSE)$total$std.alpha,2)
+  
   return(z)
   }
