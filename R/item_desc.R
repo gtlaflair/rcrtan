@@ -1,18 +1,30 @@
 
-
-# Item facility -------------------------------------------------------
-
+#' Calculate item facility
+#' 
+#' @param data A data frame of dichotomously scored test times
+#' @param items Raw column indices representing the test items
+#' @return Item_facility Item facility values for test items
 
 IF <- function(data, items){
   
   Item_facility <- data %>%
-    filter(pass %in% 'pass') %>%
+    dplyr::filter(pass %in% 'pass') %>%
     .[items] %>%
     colMeans()
   
   return(Item_facility)
   
 }
+
+#' Calculate item facility for passing students
+#' 
+#' @param data A data frame of dichotomously scored test times
+#' @param items Raw column indices representing the test items
+#' @param cut_score A raw or percentage cut-score
+#' @param scale A character vector indicataing wheter the cut-score
+#' is 'raw' (default) or 'percent'
+#' @return Item_facility_pass Item facility values for test items of
+#' of test takers who passed the test
 
 IF_pass <- function(data, items, cut_score, scale){
   
@@ -24,14 +36,23 @@ IF_pass <- function(data, items, cut_score, scale){
   data$pass <- ifelse(data$total >= cut_score, 'pass', 'fail')
   
   Item_facility_pass <- data %>%
-    filter(pass %in% 'pass') %>%
+    dplyr::filter(pass %in% 'pass') %>%
     .[items] %>%
     colMeans()
 
   return(Item_facility_pass)
 }
 
-
+#' Calculate item facility for failing students
+#' 
+#' @param data A data frame of dichotomously scored test times
+#' @param items Raw column indices representing the test items
+#' @param cut_score A raw or percentage cut-score
+#' @param scale A character vector indicataing wheter the cut-score
+#' is 'raw' (default) or 'percent'
+#' @return Item_facility_fail Item facility values for test items of
+#' of test takers who failed the test
+#' 
 IF_fail <- function(data, items, cut_score, scale){
   
   data$raw_total <- rowSums(data[items])
@@ -42,15 +63,21 @@ IF_fail <- function(data, items, cut_score, scale){
   data$pass <- ifelse(data$total >= cut_score, 'pass', 'fail')
   
   Item_facility_fail <- data %>%
-    filter(pass %in% 'fail') %>%
+    dplyr::filter(pass %in% 'fail') %>%
     .[items] %>%
     colMeans()
   
   return(Item_facility_fail)
 }
 
-# B-index ---------------------------------------------------
-# Checks out with Brown (2002, p. 124)
+#' Calculate B-index
+#' 
+#' @param data A data frame of dichotomously scored test times
+#' @param items Raw column indices representing the test items
+#' @param cut_score A raw or percentage cut-score
+#' @param scale A character vector indicataing wheter the cut-score
+#' is 'raw' (default) or 'percent'
+#' @return Bindex B-index values for items on the test
 
 b_index <- function(data, items, cut_score, scale){
   
@@ -64,7 +91,7 @@ b_index <- function(data, items, cut_score, scale){
   data$pass <- ifelse(data$Total >= cut_score, 'pass', 'fail')
   
   Item_facility_pass <- data %>%
-    filter(pass %in% 'pass') %>%
+    dplyr::filter(pass %in% 'pass') %>%
     .[items] %>%
     colMeans()
   
@@ -73,11 +100,19 @@ b_index <- function(data, items, cut_score, scale){
     .[items] %>%
     colMeans()
   
-  return(Item_facility_pass - Item_facility_fail)
+  Bindex <- Item_facility_pass - Item_facility_fail
+  
+  return(Bindex)
 }
 
-# Agreement index --------------------------------------------
-# Checks out with Brown (2002, p. 124) except for Q4
+#' Calculate Agreement statistic
+#' 
+#' @param data A data frame of dichotomously scored test times
+#' @param items Raw column indices representing the test items
+#' @param cut_score A raw or percentage cut-score
+#' @param scale A character vector indicataing wheter the cut-score
+#' is 'raw' (default) or 'percent'
+#' @return Agree Agreement statistic values for items on the test
 
 agree_index <- function(data, items, cut_score, scale){
   
@@ -91,18 +126,18 @@ agree_index <- function(data, items, cut_score, scale){
   data$pass <- ifelse(data$total >= cut_score, 'pass', 'fail')
 
   PiT <- data %>%
-    filter(pass == 'pass') %>%
+    dplyr::filter(pass == 'pass') %>%
     .[items] %>%
-    summarise_each(funs(sum)) %>%
+    dplyr::summarise_each(funs(sum)) %>%
     .[] / length(data[[1]])
 
   Qi <- data %>%
     .[items] %>%
-    summarise_each(funs(counts=sum(. == 0,na.rm=TRUE))) %>%
+    dplyr::summarise_each(funs(counts=sum(. == 0,na.rm=TRUE))) %>%
     .[] / length(data[[1]])
 
   Pt <- data %>%
-    summarise(pass_prop = length(which(pass == 'pass'))/length(pass)) %>%
+    dplyr::summarise(pass_prop = length(which(pass == 'pass'))/length(pass)) %>%
     rep(.,length(items)) %>%
     unlist
 
@@ -111,8 +146,14 @@ agree_index <- function(data, items, cut_score, scale){
   return(Agree)
 }
 
-# Item Phi ---------------------------------------------
-# Slightly off from with Brown (2002, p. 124)
+#' Calculate Agreement statistic
+#' 
+#' @param data A data frame of dichotomously scored test times
+#' @param items Raw column indices representing the test items
+#' @param cut_score A raw or percentage cut-score
+#' @param scale A character vector indicataing wheter the cut-score
+#' is 'raw' (default) or 'percent'
+#' @return Phi Item Phi values for items on the test
 
 item_phi <- function(data, items, cut_score, scale){
   
@@ -126,20 +167,20 @@ item_phi <- function(data, items, cut_score, scale){
   data$pass <- ifelse(data$total >= cut_score, 'pass', 'fail')
   
   PiT <- data %>%
-    filter(pass == 'pass') %>%
+    dplyr::filter(pass == 'pass') %>%
     .[items] %>%
-    summarise_each(funs(sum)) %>%
+    dplyr::summarise_each(funs(sum)) %>%
     .[] / length(data[[1]])
   
   Qi <- data %>%
     .[items] %>%
-    summarise_each(funs(counts=sum(. == 0,na.rm=TRUE))) %>%
+    dplyr::summarise_each(funs(counts=sum(. == 0,na.rm=TRUE))) %>%
     .[]/length(data[[1]])
   
   Pi <- 1 - Qi
   
   Pt <- data %>%
-    summarise(pass_prop = length(which(pass == 'pass'))/length(pass)) %>%
+    dplyr::summarise(pass_prop = length(which(pass == 'pass'))/length(pass)) %>%
     rep(.,length(items)) %>%
     unlist
   

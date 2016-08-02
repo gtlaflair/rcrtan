@@ -5,12 +5,15 @@ Version: 0.1.0
 Author: Geoff LaFlair
 Maintainer: Geoff LaFlair <gtlaflair@gmail.com>
 Description: Functions for criterion-referenced test analyses as described in
-    Brown & Hudson (2002)
+    Brown & Hudson (2002).
+Depends: R (>= 2.10)
 License: GPL-3
 LazyData: TRUE
 Imports:
-    plyr,
     dplyr,
-    tidyr,
-    psych
+    magrittr,
+    plyr,
+    psych,
+    readr,
+    tidyr
 RoxygenNote: 5.0.1

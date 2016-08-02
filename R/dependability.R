@@ -13,7 +13,7 @@ subkoviak <- function(data, items, raw_cut_score){
   
   M <- mean(rowSums(data[items]))
   
-  S <- sd(rowSums(data[items]))
+  S <- stats::sd(rowSums(data[items]))
   
   z <- (c - .5 - M) / (S)
   
@@ -21,18 +21,18 @@ subkoviak <- function(data, items, raw_cut_score){
   
   z_cut_rounded <- round(z, digits = 1)
   
-  rel <- round(alpha(data[items], check.keys = FALSE, warnings = FALSE)$total$std.alpha,1) %>%
+  rel <- round(psych::alpha(data[items], check.keys = FALSE, warnings = FALSE)$total$std.alpha,1) %>%
     as.character()
   
   agree_coef <- subkoviak_data$agree_tab %>%
-    select(z, contains(rel)) %>%
-    filter(z %in% z_rounded) %>%
+    dplyr::select(z, contains(rel)) %>%
+    dplyr::filter(z %in% z_rounded) %>%
     .[[2]] %>%
     round(., 2)
   
   kappa_coef <- subkoviak_data$kappa_tab %>%
-    select(z, contains(rel)) %>%
-    filter(z %in% z_rounded) %>%
+    dplyr::select(z, contains(rel)) %>%
+    dplyr::filter(z %in% z_rounded) %>%
     .[[2]] %>%
     round(., 2)
     
