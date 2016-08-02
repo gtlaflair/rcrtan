@@ -1,9 +1,4 @@
-# data2 <- readRDS('data/brown-T_5_1a.rda')
 
-# agree_tab <- readRDS('data/subkoviak-agreement-coefficient.rds')
-# kappa_tab <- readRDS('data/subkoviak-kappa-coefficient.rds')
-
-# subkoviak_data <- lst(agree_tab, kappa_tab)
 
 subkoviak <- function(data, items, raw_cut_score){
   
