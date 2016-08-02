@@ -4,10 +4,13 @@ Title: Criterion-referenced Test Analysis
 Version: 0.1.0
 Author: Geoff LaFlair
 Maintainer: Geoff LaFlair <gtlaflair@gmail.com>
-Description: Functions for criterion-referenced test analyses as described in Brown & Hudson (2002)
+Description: Functions for criterion-referenced test analyses as described in
+    Brown & Hudson (2002)
 License: GPL-3
 LazyData: TRUE
-Imports: plyr,
+Imports:
+    plyr,
     dplyr,
     tidyr,
     psych
+RoxygenNote: 5.0.1
