@@ -16,5 +16,6 @@ Imports:
     psych,
     readr,
     tidyr
-Suggests: testthat
+Suggests: 
+    testthat
 RoxygenNote: 5.0.1
