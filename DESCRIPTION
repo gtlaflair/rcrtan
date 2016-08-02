@@ -16,9 +16,6 @@ Imports:
     psych,
     readr,
     tidyr
-<<<<<<< HEAD
-Suggests: 
+Suggests:
     testthat
-=======
->>>>>>> parent of 00e3db5... added testthat to description
 RoxygenNote: 5.0.1
