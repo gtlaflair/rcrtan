@@ -4,7 +4,7 @@
 \alias{b_index}
 \title{Calculate B-index}
 \usage{
-b_index(data, items, cut_score, scale)
+b_index(data, items, cut_score, scale = "raw")
 }
 \arguments{
 \item{data}{A data frame of dichotomously scored test times}

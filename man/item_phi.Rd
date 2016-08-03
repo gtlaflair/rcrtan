@@ -4,7 +4,7 @@
 \alias{item_phi}
 \title{Calculate Agreement statistic}
 \usage{
-item_phi(data, items, cut_score, scale)
+item_phi(data, items, cut_score, scale = "raw")
 }
 \arguments{
 \item{data}{A data frame of dichotomously scored test times}

@@ -4,7 +4,7 @@
 \alias{IF_pass}
 \title{Calculate item facility for passing students}
 \usage{
-IF_pass(data, items, cut_score, scale)
+IF_pass(data, items, cut_score, scale = "raw")
 }
 \arguments{
 \item{data}{A data frame of dichotomously scored test times}

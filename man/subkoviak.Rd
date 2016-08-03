@@ -4,7 +4,7 @@
 \alias{subkoviak}
 \title{Calculate Subkoviak's (1988) single administration consistency indices}
 \usage{
-subkoviak(data, items, raw_cut_score)
+subkoviak(data, items, raw_cut_score, look_up = FALSE)
 }
 \arguments{
 \item{data}{A data frame of dichotomously scored test items}
@@ -12,6 +12,8 @@ subkoviak(data, items, raw_cut_score)
 \item{items}{Raw column indices representing the test items}
 
 \item{raw_cut_score}{The raw cut-score for the test}
+
+\item{look_up}{If TRUE, the agreement and kappa tables from Subkoviak (1988) are returned with the results}
 }
 \value{
 The \code{z_cut} score and the rounded \code{z_cut_rounded} score for the test and rounded values for the \code{agree_coef} (agreement) and \code{kappa_coef} (kappa) coefficients from Subkoviak's (1988) tables
@@ -22,5 +24,9 @@ The \code{z_cut} score and the rounded \code{z_cut_rounded} score for the test a
 }
 \description{
 Calculate Subkoviak's (1988) single administration consistency indices
+}
+\examples{
+ 
+subkoviak(brown_depend, 2:31, 21)
 }
 
