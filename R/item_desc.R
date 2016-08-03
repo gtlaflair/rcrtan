@@ -1,16 +1,15 @@
 
 #' Calculate item facility
 #' 
-#' @importFrom base sum
-#' @import dplyr
+#' @importFrom magrittr %>%
 #' 
-#' @export
+#' @export IF_total
 #' 
 #' @param data A data frame of dichotomously scored test times
 #' @param items Raw column indices representing the test items
 #' @return Item_facility Item facility values for test items
 
-IF <- function(data, items){
+IF_total <- function(data, items){
   
   Item_facility <- data %>%
     .[items] %>%
@@ -22,11 +21,10 @@ IF <- function(data, items){
 
 #' Calculate item facility for passing students
 #' 
-
-#' @importFrom base sum
-#' @import dplyr 
+#' @importFrom magrittr %>% 
+#' @importFrom dplyr filter
 #' 
-#' @export
+#' @export IF_pass
 #' 
 #' @param data A data frame of dichotomously scored test times
 #' @param items Raw column indices representing the test items
@@ -55,11 +53,10 @@ IF_pass <- function(data, items, cut_score, scale = 'raw'){
 
 #' Calculate item facility for failing students
 #' 
-
-#' @importFrom base sum
-#' @import dplyr 
+#' @importFrom magrittr %>%
+#' @importFrom dplyr filter
 #' 
-#' @export
+#' @export IF_fail
 #' 
 #' @param data A data frame of dichotomously scored test times
 #' @param items Raw column indices representing the test items
@@ -88,11 +85,10 @@ IF_fail <- function(data, items, cut_score, scale = 'raw'){
 
 #' Calculate B-index
 #' 
-
-#' @importFrom base sum
-#' @import dplyr 
+#' @importFrom magrittr %>%
+#' @importFrom dplyr filter
 #' 
-#' @export
+#' @export b_index
 #' 
 #' @param data A data frame of dichotomously scored test times
 #' @param items Raw column indices representing the test items
@@ -127,11 +123,13 @@ b_index <- function(data, items, cut_score, scale = 'raw'){
 
 #' Calculate Agreement statistic
 #' 
-
-#' @importFrom base sum
-#' @import dplyr 
+#' @importFrom magrittr %>% 
+#' @importFrom dplyr filter
+#' @importFrom dplyr summarise_all
+#' @importFrom dplyr summarise
+#' @importFrom dplyr funs
 #' 
-#' @export
+#' @export agree_stat
 #' 
 #' @param data A data frame of dichotomously scored test times
 #' @param items Raw column indices representing the test items
@@ -172,11 +170,12 @@ agree_stat <- function(data, items, cut_score, scale = 'raw'){
 
 #' Calculate Item Phi
 #' 
-
-#' @importFrom base sum
-#' @import dplyr 
+#' @importFrom magrittr %>%
+#' @importFrom dplyr filter
+#' @importFrom dplyr summarise_all
+#' @importFrom dplyr funs
 #' 
-#' @export
+#' @export item_phi
 #' 
 #' @param data A data frame of dichotomously scored test times
 #' @param items Raw column indices representing the test items
@@ -222,12 +221,10 @@ item_phi <- function(data, items, cut_score, scale = 'raw'){
 
 #' Calculate item discrimination indices
 #' 
-
 #' @importFrom stats setNames
-#' @importFrom base sum
-#' @import dplyr 
+#' @importFrom magrittr %>%
 #' 
-#' @export
+#' @export crt_iteman
 #' 
 #' @param data A data frame of dichotomously scored test times
 #' @param items Raw column indices representing the test items
@@ -242,9 +239,9 @@ crt_iteman <- function(data, items, cut_score, scale = 'raw'){
 
   iteman <- data %>% {
     
-    item_fac <- IF(., items = items) %>%
+    item_fac <- IF_total(., items = items) %>%
       data.frame(.) %>%
-      setNames(., 'IF')
+      setNames(., 'IF_total')
     
     item_fac_pass <- IF_pass(., items = items, cut_score = cut_score, scale = scale) %>%
       data.frame(.) %>%
@@ -277,3 +274,5 @@ crt_iteman <- function(data, items, cut_score, scale = 'raw'){
   
   return(iteman)
 }
+
+globalVariables(c('pass', '.'))

@@ -8,7 +8,11 @@
 #' @return The \code{z_cut} score and the rounded \code{z_cut_rounded} score for the test and rounded values for the \code{agree_coef} (agreement) and \code{kappa_coef} (kappa) coefficients from Subkoviak's (1988) tables
 #' @return The \code{z_cut} score and the rounded \code{z_cut_rounded} score for the test and rounded values for the \code{agree_coef} (agreement) and \code{kappa_coef} (kappa) coefficients from Subkoviak's (1988) tables
 #' 
-#' @import dplyr
+#' @importFrom magrittr %>%
+#' @importFrom dplyr filter
+#' @importFrom dplyr select
+#' @importFrom dplyr contains
+#' @importFrom dplyr bind_cols
 #' 
 #' @export subkoviak
 #' 
@@ -54,3 +58,5 @@ subkoviak <- function(data, items, raw_cut_score, look_up = FALSE){
          return(subkoviak_consistency))
 
   }
+
+globalVariables(c('pass', '.'))
