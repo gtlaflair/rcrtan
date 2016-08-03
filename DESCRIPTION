@@ -15,6 +15,7 @@ Imports:
     plyr,
     psych,
     readr,
+    stats,
     tidyr
 Suggests:
     testthat

@@ -26,7 +26,6 @@ The \code{z_cut} score and the rounded \code{z_cut_rounded} score for the test a
 Calculate Subkoviak's (1988) single administration consistency indices
 }
 \examples{
- 
 subkoviak(brown_depend, 2:31, 21)
 }
 

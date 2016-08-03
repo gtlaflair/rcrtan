@@ -1,6 +1,8 @@
 
 #' Calculate item facility
 #' 
+#' @importFrom magrittr %>%
+#' 
 #' @param data A data frame of dichotomously scored test times
 #' @param items Raw column indices representing the test items
 #' @return Item_facility Item facility values for test items
@@ -8,7 +10,6 @@
 IF <- function(data, items){
   
   Item_facility <- data %>%
-    dplyr::filter(pass %in% 'pass') %>%
     .[items] %>%
     colMeans()
   
@@ -17,6 +18,8 @@ IF <- function(data, items){
 }
 
 #' Calculate item facility for passing students
+#' 
+#' @importFrom magrittr %>%
 #' 
 #' @param data A data frame of dichotomously scored test times
 #' @param items Raw column indices representing the test items
@@ -45,6 +48,8 @@ IF_pass <- function(data, items, cut_score, scale = 'raw'){
 
 #' Calculate item facility for failing students
 #' 
+#' @importFrom magrittr %>%
+#' 
 #' @param data A data frame of dichotomously scored test times
 #' @param items Raw column indices representing the test items
 #' @param cut_score A raw or percentage cut-score
@@ -71,6 +76,8 @@ IF_fail <- function(data, items, cut_score, scale = 'raw'){
 }
 
 #' Calculate B-index
+#' 
+#' @importFrom magrittr %>%
 #' 
 #' @param data A data frame of dichotomously scored test times
 #' @param items Raw column indices representing the test items
@@ -106,6 +113,8 @@ b_index <- function(data, items, cut_score, scale = 'raw'){
 }
 
 #' Calculate Agreement statistic
+#' 
+#' @importFrom magrittr %>%
 #' 
 #' @param data A data frame of dichotomously scored test times
 #' @param items Raw column indices representing the test items
@@ -147,6 +156,8 @@ agree_stat <- function(data, items, cut_score, scale = 'raw'){
 }
 
 #' Calculate Agreement statistic
+#' 
+#' @importFrom magrittr %>%
 #' 
 #' @param data A data frame of dichotomously scored test times
 #' @param items Raw column indices representing the test items
@@ -193,6 +204,8 @@ item_phi <- function(data, items, cut_score, scale = 'raw'){
 }
 
 #' Calculate item discrimination indices
+#' 
+#' @importFrom magrittr %>%
 #' 
 #' @param data A data frame of dichotomously scored test times
 #' @param items Raw column indices representing the test items

@@ -8,7 +8,13 @@
 #' @return The \code{z_cut} score and the rounded \code{z_cut_rounded} score for the test and rounded values for the \code{agree_coef} (agreement) and \code{kappa_coef} (kappa) coefficients from Subkoviak's (1988) tables
 #' @return The \code{z_cut} score and the rounded \code{z_cut_rounded} score for the test and rounded values for the \code{agree_coef} (agreement) and \code{kappa_coef} (kappa) coefficients from Subkoviak's (1988) tables
 #' 
-#' @examples  
+#' @importFrom magrittr %>%
+#' @import dplyr
+#' @import tidyr
+#' 
+#' @export subkoviak
+#' 
+#' @examples 
 #' subkoviak(brown_depend, 2:31, 21)
 
 subkoviak <- function(data, items, raw_cut_score, look_up = FALSE){
