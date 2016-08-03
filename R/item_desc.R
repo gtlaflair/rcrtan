@@ -1,7 +1,10 @@
 
 #' Calculate item facility
 #' 
-#' @importFrom magrittr %>%
+#' @importFrom base sum
+#' @import dplyr
+#' 
+#' @export
 #' 
 #' @param data A data frame of dichotomously scored test times
 #' @param items Raw column indices representing the test items
@@ -19,7 +22,11 @@ IF <- function(data, items){
 
 #' Calculate item facility for passing students
 #' 
-#' @importFrom magrittr %>%
+
+#' @importFrom base sum
+#' @import dplyr 
+#' 
+#' @export
 #' 
 #' @param data A data frame of dichotomously scored test times
 #' @param items Raw column indices representing the test items
@@ -39,7 +46,7 @@ IF_pass <- function(data, items, cut_score, scale = 'raw'){
   data$pass <- ifelse(data$total >= cut_score, 'pass', 'fail')
   
   Item_facility_pass <- data %>%
-    dplyr::filter(pass %in% 'pass') %>%
+    filter(pass %in% 'pass') %>%
     .[items] %>%
     colMeans()
 
@@ -48,7 +55,11 @@ IF_pass <- function(data, items, cut_score, scale = 'raw'){
 
 #' Calculate item facility for failing students
 #' 
-#' @importFrom magrittr %>%
+
+#' @importFrom base sum
+#' @import dplyr 
+#' 
+#' @export
 #' 
 #' @param data A data frame of dichotomously scored test times
 #' @param items Raw column indices representing the test items
@@ -68,7 +79,7 @@ IF_fail <- function(data, items, cut_score, scale = 'raw'){
   data$pass <- ifelse(data$total >= cut_score, 'pass', 'fail')
   
   Item_facility_fail <- data %>%
-    dplyr::filter(pass %in% 'fail') %>%
+    filter(pass %in% 'fail') %>%
     .[items] %>%
     colMeans()
   
@@ -77,7 +88,11 @@ IF_fail <- function(data, items, cut_score, scale = 'raw'){
 
 #' Calculate B-index
 #' 
-#' @importFrom magrittr %>%
+
+#' @importFrom base sum
+#' @import dplyr 
+#' 
+#' @export
 #' 
 #' @param data A data frame of dichotomously scored test times
 #' @param items Raw column indices representing the test items
@@ -96,7 +111,7 @@ b_index <- function(data, items, cut_score, scale = 'raw'){
   data$pass <- ifelse(data$total >= cut_score, 'pass', 'fail')
   
   Item_facility_pass <- data %>%
-    dplyr::filter(pass %in% 'pass') %>%
+    filter(pass %in% 'pass') %>%
     .[items] %>%
     colMeans()
   
@@ -112,7 +127,11 @@ b_index <- function(data, items, cut_score, scale = 'raw'){
 
 #' Calculate Agreement statistic
 #' 
-#' @importFrom magrittr %>%
+
+#' @importFrom base sum
+#' @import dplyr 
+#' 
+#' @export
 #' 
 #' @param data A data frame of dichotomously scored test times
 #' @param items Raw column indices representing the test items
@@ -131,29 +150,33 @@ agree_stat <- function(data, items, cut_score, scale = 'raw'){
   data$pass <- ifelse(data$total >= cut_score, 'pass', 'fail')
 
   PiT <- data %>%
-    dplyr::filter(pass %in% 'pass') %>%
+    filter(pass %in% 'pass') %>%
     .[items] %>%
-    dplyr::summarise_all(funs(sum)) %>%
+    summarise_all(funs(sum)) %>%
     .[] / length(data[[1]])
 
   Qi <- data %>%
     .[items] %>%
-    dplyr::summarise_each(funs(counts=sum(. == 0,na.rm=TRUE))) %>%
+    summarise_all(funs(counts=sum(. == 0,na.rm=TRUE))) %>%
     .[] / length(data[[1]])
 
   Pt <- data %>%
-    dplyr::summarise(pass_prop = length(which(pass %in% 'pass'))/length(pass)) %>%
+    summarise(pass_prop = length(which(pass %in% 'pass'))/length(pass)) %>%
     rep(.,length(items)) %>%
     unlist
 
-  Agree <- (2*PiT) + Qi - Pt
+  Agree <- (2 * PiT) + Qi - Pt
 
   return(Agree)
 }
 
-#' Calculate Agreement statistic
+#' Calculate Item Phi
 #' 
-#' @importFrom magrittr %>%
+
+#' @importFrom base sum
+#' @import dplyr 
+#' 
+#' @export
 #' 
 #' @param data A data frame of dichotomously scored test times
 #' @param items Raw column indices representing the test items
@@ -172,20 +195,20 @@ item_phi <- function(data, items, cut_score, scale = 'raw'){
   data$pass <- ifelse(data$total >= cut_score, 'pass', 'fail')
   
   PiT <- data %>%
-    dplyr::filter(pass %in% 'pass') %>%
+    filter(pass %in% 'pass') %>%
     .[items] %>%
-    dplyr::summarise_all(funs(sum)) %>%
+    summarise_all(funs(sum)) %>%
     .[] / length(data[[1]])
   
   Qi <- data %>%
     .[items] %>%
-    dplyr::summarise_all(funs(counts=sum(. == 0,na.rm=TRUE))) %>%
+    summarise_all(funs(counts=sum(. == 0,na.rm=TRUE))) %>%
     .[]/length(data[[1]])
   
   Pi <- 1 - Qi
   
   Pt <- data %>%
-    dplyr::summarise(pass_prop = length(which(pass %in% 'pass'))/length(pass)) %>%
+    summarise(pass_prop = length(which(pass %in% 'pass'))/length(pass)) %>%
     rep(.,length(items)) %>%
     unlist
   
@@ -199,8 +222,12 @@ item_phi <- function(data, items, cut_score, scale = 'raw'){
 
 #' Calculate item discrimination indices
 #' 
-#' @importFrom magrittr %>%
+
 #' @importFrom stats setNames
+#' @importFrom base sum
+#' @import dplyr 
+#' 
+#' @export
 #' 
 #' @param data A data frame of dichotomously scored test times
 #' @param items Raw column indices representing the test items

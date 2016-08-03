@@ -2,7 +2,7 @@
 % Please edit documentation in R/item_desc.R
 \name{item_phi}
 \alias{item_phi}
-\title{Calculate Agreement statistic}
+\title{Calculate Item Phi}
 \usage{
 item_phi(data, items, cut_score, scale = "raw")
 }
@@ -20,6 +20,6 @@ is 'raw' (default) or 'percent'}
 Phi Item Phi values for items on the test
 }
 \description{
-Calculate Agreement statistic
+Calculate Item Phi
 }
 
