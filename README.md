@@ -13,3 +13,12 @@ rcrtan provides functions for criterion-referenced test analyses as described in
 * Test dependability
      + Subkoviak's (1988) single administration $\kappa$
      + Subkoviak's (1988) single administration $\rho$
+
+# Installation
+
+Get the development version from github:
+
+```R
+# install.packages('devtools')
+devtools::install_github('gtlaflair/rcrtan)
+```
