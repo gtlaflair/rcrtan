@@ -88,8 +88,6 @@ IF_fail <- function(data, items, cut_score, scale = 'raw'){
 
 b_index <- function(data, items, cut_score, scale = 'raw'){
   
-  # data$pass <- ifelse(data$Total >= cut_score, 'pass', 'fail') # For testing against Brown (2002)
-  
   data$raw_total <- rowSums(data[items])
   data$perc_total <- (rowSums(data[items]) / length(items)) * 100
   
@@ -124,8 +122,6 @@ b_index <- function(data, items, cut_score, scale = 'raw'){
 #' @return Agree Agreement statistic values for items on the test
 
 agree_stat <- function(data, items, cut_score, scale = 'raw'){
-  
-  # data$pass <- ifelse(data$Total >= cut_score, 'pass', 'fail') # For testing against Brown (2002)
   
   data$raw_total <- rowSums(data[items])
   data$perc_total <- (rowSums(data[items]) / length(items)) * 100
@@ -168,8 +164,6 @@ agree_stat <- function(data, items, cut_score, scale = 'raw'){
 
 item_phi <- function(data, items, cut_score, scale = 'raw'){
   
-  # data$pass <- ifelse(data$Total >= cut_score, 'pass', 'fail') # For testing against Brown (2002)
-  
   data$raw_total <- rowSums(data[items])
   data$perc_total <- (rowSums(data[items]) / length(items)) * 100
   
@@ -206,6 +200,7 @@ item_phi <- function(data, items, cut_score, scale = 'raw'){
 #' Calculate item discrimination indices
 #' 
 #' @importFrom magrittr %>%
+#' @importFrom stats setNames
 #' 
 #' @param data A data frame of dichotomously scored test times
 #' @param items Raw column indices representing the test items

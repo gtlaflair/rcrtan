@@ -40,7 +40,7 @@
 \item G_10. Grammar question 10.
 }}
 \source{
-Brown (2002)
+Brown and Hudson (2002)
 }
 \usage{
 data(brown_depend)#'

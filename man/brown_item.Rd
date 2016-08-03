@@ -21,7 +21,7 @@
 \item Total. Total score.
 }}
 \source{
-Brown (2002)
+Brown and Hudson (2002)
 }
 \usage{
 data(brown_item)#'

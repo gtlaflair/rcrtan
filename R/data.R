@@ -25,7 +25,7 @@
 #' }
 #' 
 #' 
-#' @source Brown (2002)
+#' @source Brown and Hudson (2002)
 NULL
 
 #' Brown's (2002, p. 153) Table 5.1a Data for 45 examinees on 30 test items
@@ -73,7 +73,7 @@ NULL
 #' \item G_10. Grammar question 10.
 #' }
 #' 
-#' @source Brown (2002)
+#' @source Brown and Hudson (2002)
 NULL
 
 #' Subkoviak's (1988) table of approximate values of the agreement coefficient
