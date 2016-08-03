@@ -23,4 +23,7 @@ of test takers who failed the test
 \description{
 Calculate item facility for failing students
 }
+\examples{
+IF_fail(brown_depend, 2:31, 21, scale = 'raw')
+}
 

@@ -8,6 +8,9 @@
 #' @param data A data frame of dichotomously scored test times
 #' @param items Raw column indices representing the test items
 #' @return Item_facility Item facility values for test items
+#' 
+#' @examples 
+#' IF_total(brown_depend, 2:31)
 
 IF_total <- function(data, items){
   
@@ -33,6 +36,9 @@ IF_total <- function(data, items){
 #' is 'raw' (default) or 'percent'
 #' @return Item_facility_pass Item facility values for test items of
 #' of test takers who passed the test
+#' 
+#' @examples 
+#' IF_pass(brown_depend, 2:31, 21, scale = 'raw')
 
 IF_pass <- function(data, items, cut_score, scale = 'raw'){
   
@@ -66,6 +72,8 @@ IF_pass <- function(data, items, cut_score, scale = 'raw'){
 #' @return Item_facility_fail Item facility values for test items of
 #' of test takers who failed the test
 #' 
+#' @examples 
+#' IF_fail(brown_depend, 2:31, 21, scale = 'raw')
 IF_fail <- function(data, items, cut_score, scale = 'raw'){
   
   data$raw_total <- rowSums(data[items])
@@ -96,6 +104,9 @@ IF_fail <- function(data, items, cut_score, scale = 'raw'){
 #' @param scale A character vector indicataing wheter the cut-score
 #' is 'raw' (default) or 'percent'
 #' @return Bindex B-index values for items on the test
+#' 
+#' @examples 
+#' b_index(brown_depend, 2:31, 21, scale = 'raw')
 
 b_index <- function(data, items, cut_score, scale = 'raw'){
   
@@ -137,6 +148,9 @@ b_index <- function(data, items, cut_score, scale = 'raw'){
 #' @param scale A character vector indicataing wheter the cut-score
 #' is 'raw' (default) or 'percent'
 #' @return Agree Agreement statistic values for items on the test
+#' 
+#' @examples 
+#' agree_stat(brown_depend, 2:31, 21, scale = 'raw')
 
 agree_stat <- function(data, items, cut_score, scale = 'raw'){
   
@@ -183,6 +197,9 @@ agree_stat <- function(data, items, cut_score, scale = 'raw'){
 #' @param scale A character vector indicataing wheter the cut-score
 #' is 'raw' (default) or 'percent'
 #' @return Phi Item Phi values for items on the test
+#' 
+#' @examples 
+#' item_phi(brown_depend, 2:31, 21, scale = 'raw')
 
 item_phi <- function(data, items, cut_score, scale = 'raw'){
   
@@ -231,9 +248,17 @@ item_phi <- function(data, items, cut_score, scale = 'raw'){
 #' @param cut_score A raw or percentage cut-score
 #' @param scale A character vector indicataing wheter the cut-score
 #' is 'raw' (default) or 'percent'
+#' @return IF_pass Item facility values for test items for students who
+#'     passed the test
+#' @return IF_fail Item facility values for test items for students who
+#      failed the test
+#' @return Item_total Item facility values for test items 
 #' @return B_index B-index values for items on the test
 #' @return Agree_stat Agreement statistic values for items on the test
 #' @return Item_Phi Item Phi values for items on the test
+#' 
+#' @examples 
+#' crt_iteman(brown_depend, 2:31, 21, scale = 'raw')
 
 crt_iteman <- function(data, items, cut_score, scale = 'raw'){
 

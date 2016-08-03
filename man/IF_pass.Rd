@@ -23,4 +23,7 @@ of test takers who passed the test
 \description{
 Calculate item facility for passing students
 }
+\examples{
+IF_pass(brown_depend, 2:31, 21, scale = 'raw')
+}
 

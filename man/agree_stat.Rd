@@ -22,4 +22,7 @@ Agree Agreement statistic values for items on the test
 \description{
 Calculate Agreement statistic
 }
+\examples{
+agree_stat(brown_depend, 2:31, 21, scale = 'raw')
+}
 

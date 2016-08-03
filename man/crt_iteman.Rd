@@ -17,6 +17,13 @@ crt_iteman(data, items, cut_score, scale = "raw")
 is 'raw' (default) or 'percent'}
 }
 \value{
+IF_pass Item facility values for test items for students who
+    passed the test
+
+IF_fail Item facility values for test items for students who
+
+Item_total Item facility values for test items
+
 B_index B-index values for items on the test
 
 Agree_stat Agreement statistic values for items on the test
@@ -25,5 +32,8 @@ Item_Phi Item Phi values for items on the test
 }
 \description{
 Calculate item discrimination indices
+}
+\examples{
+crt_iteman(brown_depend, 2:31, 21, scale = 'raw')
 }
 

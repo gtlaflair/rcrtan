@@ -17,4 +17,7 @@ Item_facility Item facility values for test items
 \description{
 Calculate item facility
 }
+\examples{
+IF_total(brown_depend, 2:31)
+}
 
