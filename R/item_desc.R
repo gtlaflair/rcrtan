@@ -16,7 +16,9 @@ IF_total <- function(data, items){
   
   Item_facility <- data %>%
     .[items] %>%
-    colMeans()
+    colMeans() %>%
+    data.frame(.) %>%
+    setNames(., 'IF_total')
   
   return(Item_facility)
   
@@ -24,6 +26,7 @@ IF_total <- function(data, items){
 
 #' Calculate item facility for passing students
 #' 
+#' @importFrom stats setNames
 #' @importFrom magrittr %>% 
 #' @importFrom dplyr filter
 #' 
@@ -52,7 +55,10 @@ IF_pass <- function(data, items, cut_score, scale = 'raw'){
   Item_facility_pass <- data %>%
     filter(pass %in% 'pass') %>%
     .[items] %>%
-    colMeans()
+    colMeans() %>%
+    data.frame(.) %>%
+    setNames(., 'IF_pass')
+    
 
   return(Item_facility_pass)
 }
@@ -86,7 +92,9 @@ IF_fail <- function(data, items, cut_score, scale = 'raw'){
   Item_facility_fail <- data %>%
     filter(pass %in% 'fail') %>%
     .[items] %>%
-    colMeans()
+    colMeans() %>%
+    data.frame(.) %>%
+    setNames(., 'IF_fail')
   
   return(Item_facility_fail)
 }
