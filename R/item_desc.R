@@ -16,7 +16,8 @@ IF_total <- function(data, items){
   
   Item_facility <- data %>%
     .[items] %>%
-    colMeans() %>%
+    summarise_all(funs(mean)) %>%
+    t(.) %>%
     data.frame(.) %>%
     setNames(., 'IF_total')
   
@@ -45,17 +46,31 @@ IF_total <- function(data, items){
 
 IF_pass <- function(data, items, cut_score, scale = 'raw'){
   
-  data$raw_total <- rowSums(data[items])
-  data$perc_total <- (rowSums(data[items]) / length(items)) * 100
+  data$raw_total <- data %>%
+    .[items] %>%
+    rowSums(.)
   
-  ifelse(scale == 'percent', data$total <- data$perc_total, data$total <- data$raw_total)
+  data$perc_total <- data %>%
+    .[items] %>% {
+      (rowSums(.) / length(items)) * 100
+    }
+  
+  if (scale == 'percent') {
+    data$total <- data$perc_total
+  }
+  
+  if (scale == 'raw') {
+    data$total <- data$raw_total
+  }
+  
   
   data$pass <- ifelse(data$total >= cut_score, 'pass', 'fail')
   
   Item_facility_pass <- data %>%
     filter(pass %in% 'pass') %>%
     .[items] %>%
-    colMeans() %>%
+    summarise_all(funs(mean)) %>%
+    t(.) %>%
     data.frame(.) %>%
     setNames(., 'IF_pass')
     
@@ -82,17 +97,30 @@ IF_pass <- function(data, items, cut_score, scale = 'raw'){
 #' IF_fail(brown_depend, 2:31, 21, scale = 'raw')
 IF_fail <- function(data, items, cut_score, scale = 'raw'){
   
-  data$raw_total <- rowSums(data[items])
-  data$perc_total <- (rowSums(data[items]) / length(items)) * 100
+  data$raw_total <- data %>%
+    .[items] %>%
+    rowSums(.)
   
-  ifelse(scale == 'percent', data$total <- data$perc_total, data$total <- data$raw_total)
+  data$perc_total <- data %>%
+    .[items] %>% {
+      (rowSums(.) / length(items)) * 100
+    }
+  
+  if (scale == 'percent') {
+    data$total <- data$perc_total
+  }
+  
+  if (scale == 'raw') {
+    data$total <- data$raw_total
+  }
   
   data$pass <- ifelse(data$total >= cut_score, 'pass', 'fail')
   
   Item_facility_fail <- data %>%
     filter(pass %in% 'fail') %>%
     .[items] %>%
-    colMeans() %>%
+    summarise_all(funs(mean)) %>%
+    t(.) %>%
     data.frame(.) %>%
     setNames(., 'IF_fail')
   
@@ -308,4 +336,4 @@ crt_iteman <- function(data, items, cut_score, scale = 'raw'){
   return(iteman)
 }
 
-globalVariables(c('pass', '.'))
+globalVariables(c('pass', '.', 'total'))
