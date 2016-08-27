@@ -17,10 +17,10 @@ crt_iteman(data, items, cut_score, scale = "raw")
 is 'raw' (default) or 'percent'}
 }
 \value{
-IF_pass Item facility values for test items for students who
+if_pass Item facility values for test items for students who
     passed the test
 
-IF_fail Item facility values for test items for students who
+if_fail Item facility values for test items for students who
 
 Item_total Item facility values for test items
 

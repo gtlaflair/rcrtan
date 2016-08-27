@@ -3,9 +3,10 @@ title: "rcrtan"
 author: "Geoff LaFlair"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
-r_packages: rmarkdown
 vignette: >
-    %\VignetteIndexEntry{rcrtan}
     %\VignetteEngine{knitr::rmarkdown}
+    %\VignetteIndexEntry{rcrtan}
     \usepackage[utf8]{inputenc}
 ---
+
+## dependability

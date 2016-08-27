@@ -3,23 +3,23 @@
 #' 
 #' @importFrom magrittr %>%
 #' 
-#' @export IF_total
+#' @export if_total
 #' 
 #' @param data A data frame of dichotomously scored test times
 #' @param items Raw column indices representing the test items
 #' @return Item_facility Item facility values for test items
 #' 
 #' @examples 
-#' IF_total(brown_depend, 2:31)
+#' if_total(brown_depend, 2:31)
 
-IF_total <- function(data, items){
+if_total <- function(data, items){
   
   Item_facility <- data %>%
     .[items] %>%
     summarise_all(funs(mean)) %>%
     t(.) %>%
     data.frame(.) %>%
-    setNames(., 'IF_total')
+    setNames(., 'if_total')
   
   return(Item_facility)
   
@@ -31,7 +31,7 @@ IF_total <- function(data, items){
 #' @importFrom magrittr %>% 
 #' @importFrom dplyr filter
 #' 
-#' @export IF_pass
+#' @export if_pass
 #' 
 #' @param data A data frame of dichotomously scored test times
 #' @param items Raw column indices representing the test items
@@ -42,9 +42,9 @@ IF_total <- function(data, items){
 #' of test takers who passed the test
 #' 
 #' @examples 
-#' IF_pass(brown_depend, 2:31, 21, scale = 'raw')
+#' if_pass(brown_depend, 2:31, 21, scale = 'raw')
 
-IF_pass <- function(data, items, cut_score, scale = 'raw'){
+if_pass <- function(data, items, cut_score, scale = 'raw'){
   
   data$raw_total <- data %>%
     .[items] %>%
@@ -72,7 +72,7 @@ IF_pass <- function(data, items, cut_score, scale = 'raw'){
     summarise_all(funs(mean)) %>%
     t(.) %>%
     data.frame(.) %>%
-    setNames(., 'IF_pass')
+    setNames(., 'if_pass')
     
 
   return(Item_facility_pass)
@@ -83,7 +83,7 @@ IF_pass <- function(data, items, cut_score, scale = 'raw'){
 #' @importFrom magrittr %>%
 #' @importFrom dplyr filter
 #' 
-#' @export IF_fail
+#' @export if_fail
 #' 
 #' @param data A data frame of dichotomously scored test times
 #' @param items Raw column indices representing the test items
@@ -94,8 +94,8 @@ IF_pass <- function(data, items, cut_score, scale = 'raw'){
 #' of test takers who failed the test
 #' 
 #' @examples 
-#' IF_fail(brown_depend, 2:31, 21, scale = 'raw')
-IF_fail <- function(data, items, cut_score, scale = 'raw'){
+#' if_fail(brown_depend, 2:31, 21, scale = 'raw')
+if_fail <- function(data, items, cut_score, scale = 'raw'){
   
   data$raw_total <- data %>%
     .[items] %>%
@@ -122,7 +122,7 @@ IF_fail <- function(data, items, cut_score, scale = 'raw'){
     summarise_all(funs(mean)) %>%
     t(.) %>%
     data.frame(.) %>%
-    setNames(., 'IF_fail')
+    setNames(., 'if_fail')
   
   return(Item_facility_fail)
 }
@@ -284,9 +284,9 @@ item_phi <- function(data, items, cut_score, scale = 'raw'){
 #' @param cut_score A raw or percentage cut-score
 #' @param scale A character vector indicataing wheter the cut-score
 #' is 'raw' (default) or 'percent'
-#' @return IF_pass Item facility values for test items for students who
+#' @return if_pass Item facility values for test items for students who
 #'     passed the test
-#' @return IF_fail Item facility values for test items for students who
+#' @return if_fail Item facility values for test items for students who
 #      failed the test
 #' @return Item_total Item facility values for test items 
 #' @return B_index B-index values for items on the test
@@ -300,17 +300,17 @@ crt_iteman <- function(data, items, cut_score, scale = 'raw'){
 
   iteman <- data %>% {
     
-    item_fac <- IF_total(., items = items) %>%
+    item_fac <- if_total(., items = items) %>%
       data.frame(.) %>%
-      setNames(., 'IF_total')
+      setNames(., 'if_total')
     
-    item_fac_pass <- IF_pass(., items = items, cut_score = cut_score, scale = scale) %>%
+    item_fac_pass <- if_pass(., items = items, cut_score = cut_score, scale = scale) %>%
       data.frame(.) %>%
-      setNames(., 'IF_pass')
+      setNames(., 'if_pass')
     
-    item_fac_fail <- IF_fail(., items = items, cut_score = cut_score, scale = scale) %>%
+    item_fac_fail <- if_fail(., items = items, cut_score = cut_score, scale = scale) %>%
       data.frame(.) %>%
-      setNames(., 'IF_fail')
+      setNames(., 'if_fail')
     
     b <- b_index(.,items = items, cut_score = cut_score, scale = scale) %>%
       data.frame(.) %>%
