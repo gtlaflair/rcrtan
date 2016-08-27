@@ -19,6 +19,6 @@ rcrtan provides functions for criterion-referenced test analyses as described in
 Get the development version from github:
 
 ```R
-# install.packages('devtools')
+install.packages('devtools')
 devtools::install_github('gtlaflair/rcrtan')
 ```
