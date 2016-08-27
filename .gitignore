@@ -1,5 +1,5 @@
 .Rproj.user
 .Rhistory
 .RData
-*.html
 data-raw/Book1.csv
+inst/doc
