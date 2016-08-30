@@ -1,11 +1,11 @@
 Package: rcrtan
 Type: Package
-Title: rcrtan: Criterion-referenced test analysis R functions
+Title: Rcrtan: R Functions for Criterion-referenced Test Analysis
 Version: 0.1.0
 Author: Geoff LaFlair
 Maintainer: Geoff LaFlair <gtlaflair@gmail.com>
 Description: This package provides R functions for criterion-referenced test analyses as 
-    described in Brown & Hudson (2002). These functions include cut-score item descrimination 
+    described in Brown & Hudson (2002). These functions include cut-score item discrimination 
     analyses and measures of dependability.
 Depends: R (>= 2.10)
 Date: 2016-8-3
