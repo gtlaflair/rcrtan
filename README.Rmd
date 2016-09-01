@@ -13,6 +13,7 @@ rcrtan provides functions for criterion-referenced test analyses as described in
 * Test dependability
      + Subkoviak's (1988) single administration kappa coefficient
      + Subkoviak's (1988) single administration agreement coefficient
+     + Brennan's (1980) short-cut estimate of the generalizability coefficient for absolute decisions
 
 # Installation & Documentation
 
@@ -66,7 +67,7 @@ item_stats <- crt_iteman(data = brown_depend, items = 2:31, raw_cut_score = 21, 
 
 This package contains two functions for estimating test dependability. he formulas have been adapted from Brown and Hudson (2002).
 
-* `subkoviak`: This function uses Subkoviak's (1980) methods for estimating kappa and rho from a single test administration.
+* `subkoviak`: This function uses Subkoviak's (1988) methods for estimating kappa and rho from a single test administration.
 
 <!-- _z_ is the standardized cut-score. _c_ is the raw cut-score. _M_ is the mean of the raw test scores. _S_ is the standard deviation of the raw test scores, and 0.5 is a constant adjustment factor. This function uses the _z_ cut-score and an estimate of coefficient reliability, both rounded to the nearest $\frac{1}{10}$, in order to look up the single-test administration $\kappa$ and $\rho$ estimates. -->
 
