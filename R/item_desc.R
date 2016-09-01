@@ -330,6 +330,9 @@ crt_iteman <- function(data, items, cut_score, scale = 'raw'){
     
     row.names(res) <- names(data[items])
     
+    res <- res %>%
+      dplyr::tbl_df(.)
+    
     return(res)
   }
   
