@@ -84,5 +84,5 @@ sub_estimate <- subkoviak(data = brown_depend, items = 2:31, raw_cut_score = 21,
 <!-- $$ \phi = \frac{\frac{n * S_{p}^2}{n - 1} * \alpha}{\frac{n * S_{p}^2}{n - 1} * \alpha + \frac{M_{p} * (1 - M_{p}) - S_{p}^2}{k-1}}$$ -->
 
 ```{r}
-short_phi(data = brown_depend, items  = 2:31)
+phi_estimate <- short_phi(data = brown_depend, items  = 2:31)
 ```
