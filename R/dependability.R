@@ -106,7 +106,7 @@ short_phi <- function(data, items){
   Sp <- data %>%
     .[items] %>%
     purrr::by_row(., sum, .collate = 'rows', .to = 'total') %$%
-    var(total)/k
+    (sd(total)/k)^2
   
   rel <- data %>%
     .[items]%>%

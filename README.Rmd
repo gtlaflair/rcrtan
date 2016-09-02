@@ -80,7 +80,7 @@ sub_estimate <- subkoviak(data = brown_depend, items = 2:31, raw_cut_score = 21,
 
 * `short_phi`: This function uses Brennan's (1980) formula for a short-cut estimate of generalizability coefficients for absolute decisions. 
 
-<!-- _n_ is the number of test takers. _k_ is the number of items on the test. _M_~p~ is the mean of the total scores divided by the number of items. _S_~p~^2^ is the variance of the total scores divided by the number of items. $\alpha$ is the coefficient alpha reliability estimate. -->
+<!-- _n_ is the number of test takers. _k_ is the number of items on the test. _M_~p~ is the mean of the total scores divided by the number of items. _S_~p~^2^ is the standard deviation of the total scores divided by the number of items squared. $\alpha$ is the coefficient alpha reliability estimate. -->
 
 <!-- $$ \phi = \frac{\frac{n * S_{p}^2}{n - 1} * \alpha}{\frac{n * S_{p}^2}{n - 1} * \alpha + \frac{M_{p} * (1 - M_{p}) - S_{p}^2}{k-1}}$$ -->
 
