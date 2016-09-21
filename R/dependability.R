@@ -51,11 +51,11 @@ subkoviak <- function(data, items, raw_cut_score, look_up = FALSE){
     round(raw_alpha, 1) %>%
     as.character(.)
   
-  agree_coef <- subkoviak_data$sub_agree_coef %>%
+  agree_coef <- sub_agree_coef %>%
     filter(., z %in% z_cut_rounded) %>%
     select(., contains(rel)) 
  
-  kappa_coef <- subkoviak_data$sub_kappa_coef %>%
+  kappa_coef <- sub_kappa_coef %>%
     filter(., z %in% z_cut_rounded) %>%
     select(.,contains(rel))
     
