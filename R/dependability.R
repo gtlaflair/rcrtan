@@ -39,9 +39,10 @@ subkoviak <- function(data, items, raw_cut_score, look_up = FALSE){
   
   z <- (c - .5 - M) / (S)
   
-  z_cut <- round(z, digits = 2)
+  z_cut <- round(abs(z), digits = 2)
   
-  z_cut_rounded <- round(z, digits = 1)
+  z_cut_rounded <- ifelse(abs(z) <= 2.0, round(z, digits = 1), 2) %>%
+    abs()
   
   rel <- data %>%
     .[items]%>%
