@@ -25,4 +25,3 @@ Calculate Agreement statistic
 \examples{
 agree_stat(brown_depend, 2:31, 21, scale = 'raw')
 }
-

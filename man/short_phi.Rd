@@ -20,4 +20,3 @@ Calculate Brown's short-cut estimate for domain score dependability
 \examples{
 short_phi(brown_depend, 2:31)
 }
-

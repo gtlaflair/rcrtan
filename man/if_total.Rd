@@ -20,4 +20,3 @@ Calculate item facility
 \examples{
 if_total(brown_depend, 2:31)
 }
-

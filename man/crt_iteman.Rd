@@ -36,4 +36,3 @@ Calculate item discrimination indices
 \examples{
 crt_iteman(brown_depend, 2:31, 21, scale = 'raw')
 }
-

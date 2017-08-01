@@ -31,4 +31,3 @@ A data set containing the scored responses to first 10 items of a
 test and the total scores for 15 people
 }
 \keyword{datasets}
-

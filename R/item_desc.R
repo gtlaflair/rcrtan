@@ -1,6 +1,9 @@
 
 #' Calculate item facility
 #' 
+#' @useDynLib rcrtan
+#' @importFrom Rcpp sourceCpp
+#' 
 #' @importFrom magrittr %>%
 #' 
 #' @export if_total
