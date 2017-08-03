@@ -7,13 +7,14 @@ Maintainer: Geoff LaFlair <gtlaflair@gmail.com>
 Description: This package provides R functions for criterion-referenced test analyses as 
     described in Brown & Hudson (2002). These functions include cut-score item discrimination 
     analyses and measures of dependability.
-Depends: R (>= 2.10)
+Depends: R (>= 3.4.1)
 Date: 2016-8-3
 License: GPL-3
 LazyData: TRUE
 Imports:
     dplyr,
     magrittr,
+    plogr,
     plyr,
     psych,
     purrr,
@@ -28,4 +29,9 @@ Suggests:
 VignetteBuilder:
     knitr
 RoxygenNote: 6.0.1
-LinkingTo: Rcpp
+LinkingTo:
+    BH,
+    bindrcpp,
+    dplyr,
+    plogr,
+    Rcpp
