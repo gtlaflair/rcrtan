@@ -65,7 +65,7 @@ item_stats <- crt_iteman(data = brown_depend, items = 2:31, raw_cut_score = 21, 
 
 # Test dependability functions
 
-This package contains two functions for estimating test dependability. he formulas have been adapted from Brown and Hudson (2002).
+This package contains two functions for estimating test dependability. The formulas have been adapted from Brown and Hudson (2002).
 
 * `subkoviak`: This function uses Subkoviak's (1988) methods for estimating kappa and rho from a single test administration.
 
