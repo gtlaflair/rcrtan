@@ -28,4 +28,3 @@ data(sub_kappa_coef)#'
 Subkoviak's (1988) table of approximate values of the kappa coefficient
 }
 \keyword{datasets}
-

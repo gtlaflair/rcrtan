@@ -28,4 +28,3 @@ Calculate Subkoviak's (1988) single administration consistency indices
 \examples{
 subkoviak(brown_depend, 2:31, 21)
 }
-

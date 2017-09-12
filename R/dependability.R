@@ -15,6 +15,7 @@
 #' @importFrom dplyr contains
 #' @importFrom dplyr bind_cols
 #' @importFrom stats sd
+#' @importFrom purrrlyr by_row
 #' 
 #' @export subkoviak
 #' 
@@ -29,12 +30,12 @@ subkoviak <- function(data, items, raw_cut_score, look_up = FALSE){
   
   M <- data %>%
     .[items] %>%
-    purrr::by_row(., sum, .collate = 'rows', .to = 'total') %$%
+    by_row(., sum, .collate = 'rows', .to = 'total') %$%
     mean(total)
   
   S <- data %>%
     .[items] %>%
-    purrr::by_row(., sum, .collate = 'rows', .to = 'total') %$%
+    by_row(., sum, .collate = 'rows', .to = 'total') %$%
     sd(total)
   
   z <- (c - .5 - M) / (S)
@@ -99,14 +100,14 @@ short_phi <- function(data, items){
   
   k <- length(items)
   
-  Mp <- data %>%
+  mp <- data %>%
     .[items] %>%
-    purrr::by_row(., sum, .collate = 'rows', .to = 'total') %$%
+    by_row(., sum, .collate = 'rows', .to = 'total') %$%
     mean(total)/k 
   
-  Sp <- data %>%
+  sp <- data %>%
     .[items] %>%
-    purrr::by_row(., sum, .collate = 'rows', .to = 'total') %$%
+    by_row(., sum, .collate = 'rows', .to = 'total') %$%
     (sd(total)/k)^2
   
   rel <- data %>%
@@ -116,7 +117,7 @@ short_phi <- function(data, items){
     total %$%
     raw_alpha
   
-  phi <- round((((n*Sp)/(n-1))*rel)/(((n*Sp)/(n-1))+((Mp*(1-Mp)-Sp)/(k-1))), 2) %>%
+  phi <- round((((n * sp)/(n - 1)) * rel)/(((n * sp)/(n - 1))+((mp * (1 - mp) - sp)/(k - 1))), 2) %>%
     data.frame(.) %>%
     setNames(., 'Dependability Phi')
   
@@ -127,4 +128,4 @@ short_phi <- function(data, items){
 
 
 
-globalVariables(c('pass', '.', 'total', 'raw_alpha'))
+globalVariables(c('pass', '.', 'total', 'raw_alpha', 'sub_agree_coef', 'sub_kappa_coef'))

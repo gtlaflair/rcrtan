@@ -25,4 +25,3 @@ Calculate Item Phi
 \examples{
 item_phi(brown_depend, 2:31, 21, scale = 'raw')
 }
-

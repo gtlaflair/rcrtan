@@ -28,4 +28,3 @@ data(sub_agree_coef)#'
 Subkoviak's (1988) table of approximate values of the agreement coefficient
 }
 \keyword{datasets}
-
