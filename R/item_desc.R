@@ -30,7 +30,6 @@ if_total <- function(data, items){
 #' @importFrom stats setNames
 #' @importFrom magrittr %>% 
 #' @importFrom dplyr filter
-#' 
 #' @export if_pass
 #' 
 #' @param data A data frame of dichotomously scored test times
@@ -131,6 +130,7 @@ if_fail <- function(data, items, cut_score, scale = 'raw'){
 #' 
 #' @importFrom magrittr %>%
 #' @importFrom dplyr filter
+#' @importFrom tibble as_data_frame
 #' 
 #' @export b_index
 #' 
@@ -163,7 +163,9 @@ b_index <- function(data, items, cut_score, scale = 'raw'){
     .[items] %>%
     colMeans()
   
-  Bindex <- Item_facility_pass - Item_facility_fail
+  Bindex <- Item_facility_pass - Item_facility_fail %>%
+    t(.) %>%
+    as_data_frame(.)
   
   return(Bindex)
 }
