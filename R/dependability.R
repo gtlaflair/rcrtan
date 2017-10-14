@@ -118,7 +118,7 @@ short_phi <- function(data, items){
     raw_alpha
   
   phi <- round((((n * sp)/(n - 1)) * rel)/(((n * sp)/(n - 1))+((mp * (1 - mp) - sp)/(k - 1))), 2) %>%
-    data.frame(.) %>%
+    as_data_frame(.) %>%
     setNames(., 'Dependability Phi')
   
   return(phi)

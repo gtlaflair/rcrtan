@@ -18,7 +18,7 @@ if_total <- function(data, items){
     .[items] %>%
     summarise_all(funs(mean)) %>%
     t(.) %>%
-    data.frame(.) %>%
+    as_data_frame(.) %>%
     setNames(., 'if_total')
   
   return(Item_facility)
@@ -70,7 +70,7 @@ if_pass <- function(data, items, cut_score, scale = 'raw'){
     .[items] %>%
     summarise_all(funs(mean)) %>%
     t(.) %>%
-    data.frame(.) %>%
+    as_data_frame(.) %>%
     setNames(., 'if_pass')
     
 
@@ -120,7 +120,7 @@ if_fail <- function(data, items, cut_score, scale = 'raw'){
     .[items] %>%
     summarise_all(funs(mean)) %>%
     t(.) %>%
-    data.frame(.) %>%
+    as_data_frame(.) %>%
     setNames(., 'if_fail')
   
   return(Item_facility_fail)
@@ -278,6 +278,7 @@ item_phi <- function(data, items, cut_score, scale = 'raw'){
 #' 
 #' @importFrom stats setNames
 #' @importFrom magrittr %>%
+#' @importFrom tibble as_data_frame
 #' 
 #' @export crt_iteman
 #' 
@@ -303,34 +304,35 @@ crt_iteman <- function(data, items, cut_score, scale = 'raw'){
   iteman <- data %>% {
     
     item_fac <- if_total(., items = items) %>%
-      data.frame(.) %>%
+      as_data_frame(.) %>%
       setNames(., 'if_total')
     
     item_fac_pass <- if_pass(., items = items, cut_score = cut_score, scale = scale) %>%
-      data.frame(.) %>%
+      as_data_frame(.) %>%
       setNames(., 'if_pass')
     
     item_fac_fail <- if_fail(., items = items, cut_score = cut_score, scale = scale) %>%
-      data.frame(.) %>%
+      as_data_frame(.) %>%
       setNames(., 'if_fail')
     
     b <- b_index(.,items = items, cut_score = cut_score, scale = scale) %>%
-      data.frame(.) %>%
+      t() %>%
+      as_data_frame(.) %>%
       setNames(., 'B_index')
     
     a <- agree_stat(.,items = items, cut_score = cut_score, scale = scale) %>%
       t() %>%
-      data.frame(.) %>%
+      as_data_frame(.) %>%
       setNames(., 'Agree_stat')
     
     p <- item_phi(.,items = items, cut_score = cut_score, scale = scale) %>%
       t() %>%
-      data.frame(.) %>%
+      as_data_frame(.) %>%
       setNames(., 'Item_Phi')
     
     res <- bind_cols(item_fac_pass, item_fac_fail, item_fac, b, a, p)
     
-    row.names(res) <- names(data[items])
+    res$Items <- names(data[items])
     
     res <- res %>%
       dplyr::tbl_df(.)
