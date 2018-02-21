@@ -63,7 +63,7 @@ if_pass <- function(data, items, cut_score, scale = 'raw'){
   }
   
   
-  data$pass <- ifelse(data$total >= cut_score, 'pass', 'fail')
+  data$pass <- ifelse(data$total > cut_score, 'pass', 'fail')
   
   Item_facility_pass <- data %>%
     filter(pass %in% 'pass') %>%
@@ -113,7 +113,7 @@ if_fail <- function(data, items, cut_score, scale = 'raw'){
     data$total <- data$raw_total
   }
   
-  data$pass <- ifelse(data$total >= cut_score, 'pass', 'fail')
+  data$pass <- ifelse(data$total > cut_score, 'pass', 'fail')
   
   Item_facility_fail <- data %>%
     filter(pass %in% 'fail') %>%
@@ -151,7 +151,7 @@ b_index <- function(data, items, cut_score, scale = 'raw'){
   
   ifelse(scale == 'percent', data$total <- data$perc_total, data$total <- data$raw_total)
   
-  data$pass <- ifelse(data$total >= cut_score, 'pass', 'fail')
+  data$pass <- ifelse(data$total > cut_score, 'pass', 'fail')
   
   Item_facility_pass <- data %>%
     filter(pass %in% 'pass') %>%
@@ -197,7 +197,7 @@ agree_stat <- function(data, items, cut_score, scale = 'raw'){
   
   ifelse(scale == 'percent', data$total <- data$perc_total, data$total <- data$raw_total)
   
-  data$pass <- ifelse(data$total >= cut_score, 'pass', 'fail')
+  data$pass <- ifelse(data$total > cut_score, 'pass', 'fail')
 
   PiT <- data %>%
     filter(pass %in% 'pass') %>%
@@ -246,7 +246,7 @@ item_phi <- function(data, items, cut_score, scale = 'raw'){
   
   ifelse(scale == 'percent', data$total <- data$perc_total, data$total <- data$raw_total)
   
-  data$pass <- ifelse(data$total >= cut_score, 'pass', 'fail')
+  data$pass <- ifelse(data$total > cut_score, 'pass', 'fail')
   
   PiT <- data %>%
     filter(pass %in% 'pass') %>%
