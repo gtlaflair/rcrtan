@@ -156,17 +156,15 @@ b_index <- function(data, items, cut_score, scale = 'raw'){
   Item_facility_pass <- data %>%
     filter(pass %in% 'pass') %>%
     .[items] %>%
-    colMeans()
+    summarize_all(., mean)
   
   Item_facility_fail <- data %>%
     filter(pass %in% 'fail') %>%
     .[items] %>%
-    colMeans()
+    summarize_all(., mean)
   
-  Bindex <- Item_facility_pass - Item_facility_fail %>%
-    t(.) %>%
-    as_data_frame(.)
-  
+  Bindex <- Item_facility_pass - Item_facility_fail
+
   return(Bindex)
 }
 
