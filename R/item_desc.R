@@ -15,7 +15,7 @@
 if_total <- function(data, items){
   
   Item_facility <- data %>%
-    .[items] %>%
+    select(., items) %>%
     summarise_all(funs(mean)) %>%
     t(.) %>%
     as_data_frame(.) %>%
@@ -46,11 +46,11 @@ if_total <- function(data, items){
 if_pass <- function(data, items, cut_score, scale = 'raw'){
   
   data$raw_total <- data %>%
-    .[items] %>%
+    select(., items) %>%
     rowSums(.)
   
   data$perc_total <- data %>%
-    .[items] %>% {
+    select(., items) %>% {
       (rowSums(.) / length(items)) * 100
     }
   
@@ -67,7 +67,7 @@ if_pass <- function(data, items, cut_score, scale = 'raw'){
   
   Item_facility_pass <- data %>%
     filter(pass %in% 'pass') %>%
-    .[items] %>%
+    select(., items) %>%
     summarise_all(funs(mean)) %>%
     t(.) %>%
     as_data_frame(.) %>%
@@ -97,11 +97,11 @@ if_pass <- function(data, items, cut_score, scale = 'raw'){
 if_fail <- function(data, items, cut_score, scale = 'raw'){
   
   data$raw_total <- data %>%
-    .[items] %>%
+    select(., items) %>%
     rowSums(.)
   
   data$perc_total <- data %>%
-    .[items] %>% {
+    select(., items) %>% {
       (rowSums(.) / length(items)) * 100
     }
   
@@ -117,7 +117,7 @@ if_fail <- function(data, items, cut_score, scale = 'raw'){
   
   Item_facility_fail <- data %>%
     filter(pass %in% 'fail') %>%
-    .[items] %>%
+    select(., items) %>%
     summarise_all(funs(mean)) %>%
     t(.) %>%
     as_data_frame(.) %>%
@@ -155,12 +155,12 @@ b_index <- function(data, items, cut_score, scale = 'raw'){
   
   Item_facility_pass <- data %>%
     filter(pass %in% 'pass') %>%
-    .[items] %>%
+    select(., items) %>%
     summarize_all(., mean)
   
   Item_facility_fail <- data %>%
     filter(pass %in% 'fail') %>%
-    .[items] %>%
+    select(., items) %>%
     summarize_all(., mean)
   
   Bindex <- Item_facility_pass - Item_facility_fail
@@ -199,12 +199,12 @@ agree_stat <- function(data, items, cut_score, scale = 'raw'){
 
   PiT <- data %>%
     filter(pass %in% 'pass') %>%
-    .[items] %>%
+    select(., items) %>%
     summarise_all(funs(sum)) %>%
     .[] / length(data[[1]])
 
   Qi <- data %>%
-    .[items] %>%
+    select(., items) %>%
     summarise_all(funs(counts=sum(. == 0,na.rm=TRUE))) %>%
     .[] / length(data[[1]])
 
@@ -248,12 +248,12 @@ item_phi <- function(data, items, cut_score, scale = 'raw'){
   
   PiT <- data %>%
     filter(pass %in% 'pass') %>%
-    .[items] %>%
+    select(., items) %>%
     summarise_all(funs(sum)) %>%
     .[] / length(data[[1]])
   
   Qi <- data %>%
-    .[items] %>%
+    select(., items) %>%
     summarise_all(funs(counts=sum(. == 0,na.rm=TRUE))) %>%
     .[]/length(data[[1]])
   

@@ -29,12 +29,12 @@ subkoviak <- function(data, items, raw_cut_score, look_up = FALSE){
   c <- raw_cut_score 
   
   M <- data %>%
-    .[items] %>%
+    select(., items) %>%
     by_row(., sum, .collate = 'rows', .to = 'total') %$%
     mean(total)
   
   S <- data %>%
-    .[items] %>%
+    select(., items) %>%
     by_row(., sum, .collate = 'rows', .to = 'total') %$%
     sd(total)
   
@@ -46,7 +46,7 @@ subkoviak <- function(data, items, raw_cut_score, look_up = FALSE){
     abs()
   
   rel <- data %>%
-    .[items]%>%
+    select(., items)%>%
     as.matrix(.) %>%
     psych::alpha(., check.keys = FALSE, warnings = FALSE) %$%
     total %$%
@@ -101,17 +101,17 @@ short_phi <- function(data, items){
   k <- length(items)
   
   mp <- data %>%
-    .[items] %>%
+    select(., items) %>%
     by_row(., sum, .collate = 'rows', .to = 'total') %$%
     mean(total)/k 
   
   sp <- data %>%
-    .[items] %>%
+    select(., items) %>%
     by_row(., sum, .collate = 'rows', .to = 'total') %$%
     (sd(total)/k)^2
   
   rel <- data %>%
-    .[items]%>%
+    select(., items) %>%
     as.matrix(.) %>%
     psych::alpha(., check.keys = FALSE, warnings = FALSE) %$%
     total %$%
