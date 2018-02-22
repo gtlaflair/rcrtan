@@ -2,6 +2,7 @@
 #' Calculate item facility
 #' 
 #' @importFrom magrittr %>%
+#' @importFrom dplyr summarise_all
 #' 
 #' @export if_total
 #' 
@@ -30,6 +31,7 @@ if_total <- function(data, items){
 #' @importFrom stats setNames
 #' @importFrom magrittr %>% 
 #' @importFrom dplyr filter
+#' @importFrom dplyr summarise_all
 #' @export if_pass
 #' 
 #' @param data A data frame of dichotomously scored test times
@@ -81,6 +83,7 @@ if_pass <- function(data, items, cut_score, scale = 'raw'){
 #' 
 #' @importFrom magrittr %>%
 #' @importFrom dplyr filter
+#' @importFrom dplyr summarise_all
 #' 
 #' @export if_fail
 #' 
@@ -131,6 +134,7 @@ if_fail <- function(data, items, cut_score, scale = 'raw'){
 #' @importFrom magrittr %>%
 #' @importFrom dplyr filter
 #' @importFrom tibble as_data_frame
+#' @importFrom dplyr summarise_all
 #' 
 #' @export b_index
 #' 
@@ -156,12 +160,12 @@ b_index <- function(data, items, cut_score, scale = 'raw'){
   Item_facility_pass <- data %>%
     filter(pass %in% 'pass') %>%
     select(., items) %>%
-    summarize_all(., mean)
+    summarise_all(., mean)
   
   Item_facility_fail <- data %>%
     filter(pass %in% 'fail') %>%
     select(., items) %>%
-    summarize_all(., mean)
+    summarise_all(., mean)
   
   Bindex <- Item_facility_pass - Item_facility_fail
 
