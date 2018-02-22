@@ -289,10 +289,10 @@ item_phi <- function(data, items, cut_score, scale = 'raw'){
 #'     passed the test
 #' @return if_fail Item facility values for test items for students who
 #      failed the test
-#' @return Item_total Item facility values for test items 
-#' @return B_index B-index values for items on the test
-#' @return Agree_stat Agreement statistic values for items on the test
-#' @return Item_Phi Item Phi values for items on the test
+#' @return if_total Item facility values for test items 
+#' @return b_index B-index values for items on the test
+#' @return agree_stat Agreement statistic values for items on the test
+#' @return item_phi Item Phi values for items on the test
 #' 
 #' @examples 
 #' crt_iteman(brown_depend, 2:31, 21, scale = 'raw')
@@ -316,21 +316,21 @@ crt_iteman <- function(data, items, cut_score, scale = 'raw'){
     b <- b_index(.,items = items, cut_score = cut_score, scale = scale) %>%
       t() %>%
       as_data_frame(.) %>%
-      setNames(., 'B_index')
+      setNames(., 'b_index')
     
     a <- agree_stat(.,items = items, cut_score = cut_score, scale = scale) %>%
       t() %>%
       as_data_frame(.) %>%
-      setNames(., 'Agree_stat')
+      setNames(., 'agree_stat')
     
     p <- item_phi(.,items = items, cut_score = cut_score, scale = scale) %>%
       t() %>%
       as_data_frame(.) %>%
-      setNames(., 'Item_Phi')
+      setNames(., 'item_phi')
     
     res <- bind_cols(item_fac_pass, item_fac_fail, item_fac, b, a, p)
     
-    res$Items <- names(data[items])
+    res$items <- names(data[items])
     
     res <- res %>%
       dplyr::tbl_df(.)
