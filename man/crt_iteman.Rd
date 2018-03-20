@@ -22,13 +22,13 @@ if_pass Item facility values for test items for students who
 
 if_fail Item facility values for test items for students who
 
-Item_total Item facility values for test items
+if_total Item facility values for test items
 
-B_index B-index values for items on the test
+b_index B-index values for items on the test
 
-Agree_stat Agreement statistic values for items on the test
+agree_stat Agreement statistic values for items on the test
 
-Item_Phi Item Phi values for items on the test
+item_phi Item Phi values for items on the test
 }
 \description{
 Calculate item discrimination indices
