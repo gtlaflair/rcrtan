@@ -31,6 +31,13 @@ subkoviak <- function(data, items, n_items = NULL, raw_cut_score, look_up = FALS
     M <- data %>%
       select(., items) %$%
       mean(items)
+    
+    S <- data %>%
+      select(., items) %$%
+      sd(items)
+    
+    rel <- (n_items / (n_items - 1)) * (1 - ((M * (n_items - M)) / (n_items * (S^2)))) %>%
+      as.character(.)
   
   }
   
@@ -39,36 +46,12 @@ subkoviak <- function(data, items, n_items = NULL, raw_cut_score, look_up = FALS
       select(., items) %>%
       by_row(., sum, .collate = 'rows', .to = 'total') %$%
       mean(total)
-  }
-  
-  if(is.character(items)){
-    S <- data %>%
-      select(., items) %$%
-      sd(items)
     
-  }
-  
-  if(!is.character(items)){
     S <- data %>%
       select(., items) %>%
       by_row(., sum, .collate = 'rows', .to = 'total') %$%
       sd(total)
-  }
-  
-  z <- (c - .5 - M) / (S)
-  
-  z_cut <- round(abs(z), digits = 2)
-  
-  z_cut_rounded <- ifelse(abs(z) <= 2.0, round(z, digits = 1), 2) %>%
-    abs()
-  
-  if(is.character(items)){
-    rel <- (n_items / (n_items - 1)) * (1 - ((M * (n_items - M)) / (n_items * (S^2)))) %>%
-      as.character(.)
-  }
-  
-  
-  if(!is.character(items)){
+    
     sigma_y <- data %>%
       summarise_at(., items, var) %>%
       gather(., key, value) %>%
@@ -81,8 +64,19 @@ subkoviak <- function(data, items, n_items = NULL, raw_cut_score, look_up = FALS
       by_row(., sum, .collate = 'rows', .to = 'total') %$%
       var(total)
     
-    rel <- (K / (K - 1)) * (1 - (sigma_y / sigma_x)) %>% as.character(.)
+    rel <- (K / (K - 1)) * (1 - (sigma_y / sigma_x)) 
   }
+  
+  rel <- ifelse(round(rel, 1) < 1, round(rel, 1), 0.9)
+  
+  rel <- as.character(rel)
+  
+  z <- (c - .5 - M) / (S)
+  
+  z_cut <- round(abs(z), digits = 2)
+  
+  z_cut_rounded <- ifelse(abs(z) <= 2.0, round(z, digits = 1), 2) %>%
+    abs()
   
   agree_coef <- sub_agree_coef %>%
     filter(., z %in% z_cut_rounded) %>%
