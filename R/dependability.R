@@ -69,13 +69,19 @@ subkoviak <- function(data, items, n_items = NULL, raw_cut_score, look_up = FALS
   
   
   if(!is.character(items)){
-    rel <- data %>%
-      select(., items)%>%
-      as.matrix(.) %>%
-      psych::alpha(., check.keys = FALSE, warnings = FALSE) %$%
-      total %$%
-      round(raw_alpha, 1) %>%
-      as.character(.)
+    sigma_y <- data %>%
+      summarise_at(., items, var) %>%
+      gather(., key, value) %>%
+      summarise(., sigma_y = sum(value))
+    
+    K <- length(items)
+    
+    sigma_x <- data %>%
+      select(., items) %>%
+      by_row(., sum, .collate = 'rows', .to = 'total') %$%
+      var(total)
+    
+    rel <- (K / (K - 1)) * (1 - (sigma_y / sigma_x)) %>% as.character(.)
   }
   
   agree_coef <- sub_agree_coef %>%
