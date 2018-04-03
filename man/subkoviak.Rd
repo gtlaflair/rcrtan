@@ -4,12 +4,14 @@
 \alias{subkoviak}
 \title{Calculate Subkoviak's (1988) single administration consistency indices}
 \usage{
-subkoviak(data, items, raw_cut_score, look_up = FALSE)
+subkoviak(data, items, n_items = NULL, raw_cut_score, look_up = FALSE)
 }
 \arguments{
 \item{data}{A data frame of dichotomously scored test items}
 
-\item{items}{Raw column indices representing the test items}
+\item{items}{Raw column indices representing the test items or the index of a column with the total score}
+
+\item{n_items}{Number of items on the test (need if data does not contain item-level information)}
 
 \item{raw_cut_score}{The raw cut-score for the test}
 
@@ -26,5 +28,5 @@ The \code{z_cut} score and the rounded \code{z_cut_rounded} score for the test a
 Calculate Subkoviak's (1988) single administration consistency indices
 }
 \examples{
-subkoviak(brown_depend, 2:31, 21)
+subkoviak(data = brown_depend, items = 2:31, raw_cut_score = 21)
 }

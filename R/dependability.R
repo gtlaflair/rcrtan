@@ -1,7 +1,8 @@
 #' Calculate Subkoviak's (1988) single administration consistency indices
 #' 
 #' @param data A data frame of dichotomously scored test items
-#' @param items Raw column indices representing the test items
+#' @param items Raw column indices representing the test items or the index of a column with the total score
+#' @param n_items Number of items on the test (needed if data does not contain item-level information)
 #' @param raw_cut_score The raw cut-score for the test
 #' @param look_up If TRUE, the agreement and kappa tables from Subkoviak (1988) are returned with the results
 #' @return The \code{z_cut} score and the rounded \code{z_cut_rounded} score for the test and rounded values for the \code{agree_coef} (agreement) and \code{kappa_coef} (kappa) coefficients from Subkoviak's (1988) tables
@@ -20,23 +21,39 @@
 #' @export subkoviak
 #' 
 #' @examples 
-#' subkoviak(brown_depend, 2:31, 21)
+#' subkoviak(data = brown_depend, items = 2:31, raw_cut_score = 21)
 
-subkoviak <- function(data, items, raw_cut_score, look_up = FALSE){
-  
-  data_temp <- data[items]
+subkoviak <- function(data, items, n_items = NULL, raw_cut_score, look_up = FALSE){
   
   c <- raw_cut_score 
   
-  M <- data %>%
-    select(., items) %>%
-    by_row(., sum, .collate = 'rows', .to = 'total') %$%
-    mean(total)
+  if(length(items) == 1 & !is.null(n_items)){
+    M <- data %>%
+      select(., items) %$%
+      mean(.[[1]])
   
-  S <- data %>%
-    select(., items) %>%
-    by_row(., sum, .collate = 'rows', .to = 'total') %$%
-    sd(total)
+  }
+  
+  if(length(items) > 1 & is.null(n_items)){
+    M <- data %>%
+      select(., items) %>%
+      by_row(., sum, .collate = 'rows', .to = 'total') %$%
+      mean(total)
+  }
+  
+  if(length(items) == 1 & !is.null(n_items)){
+    S <- data %>%
+      select(., items) %$%
+      sd(.[[1]])
+    
+  }
+  
+  if(length(items) > 1 & is.null(n_items)){
+    S <- data %>%
+      select(., items) %>%
+      by_row(., sum, .collate = 'rows', .to = 'total') %$%
+      sd(total)
+  }
   
   z <- (c - .5 - M) / (S)
   
@@ -45,13 +62,20 @@ subkoviak <- function(data, items, raw_cut_score, look_up = FALSE){
   z_cut_rounded <- ifelse(abs(z) <= 2.0, round(z, digits = 1), 2) %>%
     abs()
   
-  rel <- data %>%
-    select(., items)%>%
-    as.matrix(.) %>%
-    psych::alpha(., check.keys = FALSE, warnings = FALSE) %$%
-    total %$%
-    round(raw_alpha, 1) %>%
-    as.character(.)
+  if(length(items) == 1 & !is.null(n_items)){
+    rel <- (n_items / (n_items - 1)) * (1 - ((M * (n_items - M)) / (n_items * (S^2))))
+  }
+  
+  
+  if(length(items) > 1 & is.null(n_items)){
+    rel <- data %>%
+      select(., items)%>%
+      as.matrix(.) %>%
+      psych::alpha(., check.keys = FALSE, warnings = FALSE) %$%
+      total %$%
+      round(raw_alpha, 1) %>%
+      as.character(.)
+  }
   
   agree_coef <- sub_agree_coef %>%
     filter(., z %in% z_cut_rounded) %>%
