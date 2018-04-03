@@ -27,7 +27,7 @@ subkoviak <- function(data, items, n_items = NULL, raw_cut_score, look_up = FALS
   
   c <- raw_cut_score 
   
-  if(length(items) == 1 & !is.null(n_items)){
+  if(length(items) < 2 & !is.null(n_items)){
     M <- data %>%
       select(., items) %$%
       mean(.[[1]])
@@ -41,7 +41,7 @@ subkoviak <- function(data, items, n_items = NULL, raw_cut_score, look_up = FALS
       mean(total)
   }
   
-  if(length(items) == 1 & !is.null(n_items)){
+  if(length(items) < 2 & !is.null(n_items)){
     S <- data %>%
       select(., items) %$%
       sd(.[[1]])
@@ -62,7 +62,7 @@ subkoviak <- function(data, items, n_items = NULL, raw_cut_score, look_up = FALS
   z_cut_rounded <- ifelse(abs(z) <= 2.0, round(z, digits = 1), 2) %>%
     abs()
   
-  if(length(items) == 1 & !is.null(n_items)){
+  if(length(items) < 2 & !is.null(n_items)){
     rel <- (n_items / (n_items - 1)) * (1 - ((M * (n_items - M)) / (n_items * (S^2))))
   }
   
