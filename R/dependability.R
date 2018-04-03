@@ -9,14 +9,17 @@
 #' @return The \code{z_cut} score and the rounded \code{z_cut_rounded} score for the test and rounded values for the \code{agree_coef} (agreement) and \code{kappa_coef} (kappa) coefficients from Subkoviak's (1988) tables
 #' @return The \code{z_cut} score and the rounded \code{z_cut_rounded} score for the test and rounded values for the \code{agree_coef} (agreement) and \code{kappa_coef} (kappa) coefficients from Subkoviak's (1988) tables
 #' 
-#' @importFrom magrittr %>%
-#' @importFrom magrittr %$%
 #' @importFrom dplyr filter
+#' @importFrom dplyr summarise_at
 #' @importFrom dplyr select
 #' @importFrom dplyr contains
 #' @importFrom dplyr bind_cols
-#' @importFrom stats sd
+#' @importFrom magrittr %>%
+#' @importFrom magrittr %$%
 #' @importFrom purrrlyr by_row
+#' @importFrom stats sd
+#' @importFrom stats var
+#' @importFrom tidyr gather
 #' 
 #' @export subkoviak
 #' 
@@ -27,20 +30,20 @@ subkoviak <- function(data, items, n_items = NULL, raw_cut_score, look_up = FALS
   
   c <- raw_cut_score 
   
-  if(is.character(items)){
+  if(is.character(items) == TRUE){
     M <- data %>%
       select(., items) %$%
-      mean(items)
+      mean(.[[items]])
     
     S <- data %>%
       select(., items) %$%
-      sd(items)
+      sd(.[[items]])
     
-    rel <- (n_items / (n_items - 1)) * (1 - ((M * (n_items - M)) / (n_items * (S^2)))) 
+    kr21 <- (n_items / (n_items - 1)) * (1 - ((M * (n_items - M)) / (n_items * (S^2)))) 
   
   }
   
-  if(!is.character(items)){
+  if(is.character(items) == FALSE){
     M <- data %>%
       select(., items) %>%
       by_row(., sum, .collate = 'rows', .to = 'total') %$%
@@ -63,12 +66,20 @@ subkoviak <- function(data, items, n_items = NULL, raw_cut_score, look_up = FALS
       by_row(., sum, .collate = 'rows', .to = 'total') %$%
       var(total)
     
-    rel <- (K / (K - 1)) * (1 - (sigma_y / sigma_x)) 
+    kr20 <- (K / (K - 1)) * (1 - (sigma_y / sigma_x)) 
   }
   
-  rel <- ifelse(round(rel, 1) < 1, round(rel, 1), 0.9)
+  if(is.character(items) == TRUE){
+    rel <- kr21
+  }
   
-  rel <- as.character(rel)
+  if(is.character(items) == FALSE){
+    rel <- kr20
+  }
+  
+  rel_rounded <- ifelse(round(rel, 1) < 1, round(rel, 1), 0.9)
+  
+  rel_rounded <- as.character(rel_rounded)
   
   z <- (c - .5 - M) / (S)
   
@@ -79,13 +90,13 @@ subkoviak <- function(data, items, n_items = NULL, raw_cut_score, look_up = FALS
   
   agree_coef <- sub_agree_coef %>%
     filter(., z %in% z_cut_rounded) %>%
-    select(., contains(rel)) 
+    select(., contains(rel_rounded)) 
  
   kappa_coef <- sub_kappa_coef %>%
     filter(., z %in% z_cut_rounded) %>%
-    select(.,contains(rel))
+    select(.,contains(rel_rounded))
     
-  subkoviak_consistency <- c('z' = z_cut, 'z_rounded' = z_cut_rounded, 'raw_alpha' = as.numeric(rel), 'agree_coef' = agree_coef, 'kappa_coef' = kappa_coef) %>%
+  subkoviak_consistency <- c('z' = z_cut, 'z_rounded' = z_cut_rounded, 'KR_est' = as.numeric(rel), 'agree_coef' = agree_coef, 'kappa_coef' = kappa_coef) %>%
     data.frame(.)
   
   if(look_up == TRUE) {

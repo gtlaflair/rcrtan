@@ -11,7 +11,7 @@ subkoviak(data, items, n_items = NULL, raw_cut_score, look_up = FALSE)
 
 \item{items}{Raw column indices representing the test items or the index of a column with the total score}
 
-\item{n_items}{Number of items on the test (need if data does not contain item-level information)}
+\item{n_items}{Number of items on the test (needed if data does not contain item-level information)}
 
 \item{raw_cut_score}{The raw cut-score for the test}
 
