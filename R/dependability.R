@@ -115,52 +115,136 @@ subkoviak <- function(data, items, n_items = NULL, raw_cut_score, look_up = FALS
 
 }
 
-#' Calculate Brown's short-cut estimate for domain score dependability 
+#' Calculate Brennan's short-cut estimate for domain score dependability 
 #' 
 #' @param data A data frame of dichotomously scored test items
 #' @param items Raw column indices representing the test items
+#' @param n_items Number of items on the test (needed if data does not contain item-level information)
 #' @return The \code{phi} estimate for domain score dependability
 #' 
 #' @importFrom magrittr %>%
 #' @importFrom magrittr %$%
 #' @importFrom stats sd
+#' @importFrom stats var
 #' 
-#' @export short_phi
+#' @export phi_domain
 #' 
 #' @examples 
-#' short_phi(brown_depend, 2:31)
-short_phi <- function(data, items){
+#' phi_domain(brown_depend, 2:31)
+phi_domain <- function(data, items, n_items = NULL){
   
   n <- length(data[[1]])
   
-  k <- length(items)
+  if(is.character(items) == FALSE) {
   
-  mp <- data %>%
-    select(., items) %>%
-    by_row(., sum, .collate = 'rows', .to = 'total') %$%
-    mean(total)/k 
+    k <- length(items)
+    
+    mp <- data %>%
+      select(., items) %>%
+      by_row(., sum, .collate = 'rows', .to = 'total') %$%
+      mean(total)/k 
   
-  sp <- data %>%
-    select(., items) %>%
-    by_row(., sum, .collate = 'rows', .to = 'total') %$%
-    (sd(total)/k)^2
+    sp <- data %>%
+      select(., items) %>%
+      by_row(., sum, .collate = 'rows', .to = 'total') %$%
+      (sd(total)/k)^2
   
-  rel <- data %>%
-    select(., items) %>%
-    as.matrix(.) %>%
-    psych::alpha(., check.keys = FALSE, warnings = FALSE) %$%
-    total %$%
-    raw_alpha
+    M <- data %>%
+      select(., items) %>%
+      by_row(., sum, .collate = 'rows', .to = 'total') %$%
+      mean(total)
   
-  phi <- round((((n * sp)/(n - 1)) * rel)/(((n * sp)/(n - 1))+((mp * (1 - mp) - sp)/(k - 1))), 2) %>%
-    as_data_frame(.) %>%
-    setNames(., 'Dependability Phi')
+    S <- data %>%
+      select(., items) %>%
+      by_row(., sum, .collate = 'rows', .to = 'total') %$%
+      sd(total)
+  
+    sigma_y <- data %>%
+      summarise_at(., items, var) %>%
+      gather(., key, value) %>%
+      summarise(., sigma_y = sum(value))
+  
+    sigma_x <- data %>%
+      select(., items) %>%
+      by_row(., sum, .collate = 'rows', .to = 'total') %$%
+      var(total)
+  
+    rel <- (k / (k - 1)) * (1 - (sigma_y / sigma_x)) # kr-20
+  
+    phi <- round((((n * sp)/(n - 1)) * rel)/(((n * sp)/(n - 1))+((mp * (1 - mp) - sp)/(k - 1))), 2) %>%
+      as_data_frame(.) %>%
+      setNames(., 'Dependability Phi')
+  
+  }
+  
+  if(is.character(items) == TRUE){
+    
+    k <- n_items
+    
+    mp <- data %>%
+      select(., items) %$%
+      mean(.[[items]]) / k
+    
+    sp <- data %>%
+      select(., items) %$%
+      (sd(.[[items]]) / k)^2
+    
+    M <- data %>%
+      select(., items) %$%
+      mean(.[[items]])
+    
+    S <- data %>%
+      select(., items) %$%
+      sd(.[[items]])
+    
+    rel <- (n_items / (n_items - 1)) * (1 - ((M * (n_items - M)) / (n_items * (S^2)))) # kr-21
+    
+    phi <- round((((n * sp)/(n - 1)) * rel)/(((n * sp)/(n - 1))+((mp * (1 - mp) - sp)/(k - 1))), 2) %>%
+      as_data_frame(.) %>%
+      setNames(., 'Dependability Phi')
+    
+  }
   
   return(phi)
   
 }
 
 
+#' Calculate Brennan's short-cut estimate for phi lambda
+#' 
+#' @param data A data frame of dichotomously scored test items
+#' @param scores Column name of raw test scores
+#' @param cut_score Cut-score of the test expressed as a proportion (e.g., 0.70)
+#' @param n_items Number of items on the test (needed if data does not contain item-level information)
+#' @return The phi lambda estimate for dependability
+#' 
+#' @importFrom magrittr %>%
+#' @importFrom magrittr %$%
+#' @importFrom stats sd
+#' 
+#' @export phi_lambda
+#' 
+#' @examples 
+#' phi_lambda(data = brown_item, n_items = 100, scores = "Total", cut_score = 0.70)
+phi_lambda <- function(data, n_items, scores, cut_score){
+  k <- n_items
+  lambda <- cut_score
+  n_persons <- length(data[[1]])
+  lambda <- cut_score
+  
+  mp <- data %>%
+    select(., scores) %$%
+    mean(.[[scores]]) / k
+  
+  sp <- data %>%
+    select(., scores) %$%
+    (sd(.[[scores]]) / k)^2
+  
+  phi <- 1 - ((1 / (k - 1)) * ((mp * (1 - mp) - sp) / ((mp - lambda)^2 + sp)))
+  
+  return(phi)
+
+}
 
 
-globalVariables(c('pass', '.', 'total', 'raw_alpha', 'sub_agree_coef', 'sub_kappa_coef'))
+globalVariables(c('pass', '.', 'key', 'value', 'total', 'raw_alpha', 'sub_agree_coef', 'sub_kappa_coef'))
