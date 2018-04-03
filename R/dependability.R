@@ -201,7 +201,7 @@ phi_domain <- function(data, items, n_items = NULL){
     
     phi <- round((((n * sp)/(n - 1)) * rel)/(((n * sp)/(n - 1))+((mp * (1 - mp) - sp)/(k - 1))), 2) %>%
       as_data_frame(.) %>%
-      setNames(., 'Dependability Phi')
+      setNames(., 'Domain Phi')
     
   }
   
@@ -240,7 +240,9 @@ phi_lambda <- function(data, n_items, scores, cut_score){
     select(., scores) %$%
     (sd(.[[scores]]) / k)^2
   
-  phi <- 1 - ((1 / (k - 1)) * ((mp * (1 - mp) - sp) / ((mp - lambda)^2 + sp)))
+  phi <- 1 - ((1 / (k - 1)) * ((mp * (1 - mp) - sp) / ((mp - lambda)^2 + sp))) %>%
+    as_data_frame(.) %>%
+    setNames(., 'Phi Lambda')
   
   return(phi)
 
