@@ -36,8 +36,7 @@ subkoviak <- function(data, items, n_items = NULL, raw_cut_score, look_up = FALS
       select(., items) %$%
       sd(items)
     
-    rel <- (n_items / (n_items - 1)) * (1 - ((M * (n_items - M)) / (n_items * (S^2)))) %>%
-      as.character(.)
+    rel <- (n_items / (n_items - 1)) * (1 - ((M * (n_items - M)) / (n_items * (S^2)))) 
   
   }
   
