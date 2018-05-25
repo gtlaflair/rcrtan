@@ -14,11 +14,7 @@ LazyData: TRUE
 Imports:
     dplyr,
     magrittr,
-    plyr,
-    psych,
-    purrr,
     purrrlyr,
-    readr,
     stats,
     tibble,
     tidyr
