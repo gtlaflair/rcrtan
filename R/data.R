@@ -1,12 +1,12 @@
-#' Brown's (2002, p. 124) Table 4.8 Item analysis data (first 10 items only)
+#' Brown and Hudson's (2002, p. 124) Table 4.8 Item analysis data (first 10 items only)
 #'
 #' A data set containing the scored responses to first 10 items of a
 #' test and the total scores for 15 people
 #' 
 #' @docType data
 #' @keywords datasets
-#' @name brown_item
-#' @usage data(brown_item)#' 
+#' @name bh_item
+#' @usage data(bh_item)#' 
 #' @format A data frame with 15 rows and 12 variables
 #' 
 #' \itemize{
@@ -28,15 +28,15 @@
 #' @source Brown and Hudson (2002)
 NULL
 
-#' Brown's (2002, p. 153) Table 5.1a Data for 45 examinees on 30 test items
+#' Brown and Hudson's (2002, p. 153) Table 5.1a Data for 45 examinees on 30 test items
 #'
 #' A data set containing the 45 scored responses to 30 items on a
 #' test of Listening (1-10), Reading (11-20), and Grammar (20-30)
 #' 
 #' @docType data
 #' @keywords datasets
-#' @name brown_depend
-#' @usage data(brown_depend)#' 
+#' @name bh_depend
+#' @usage data(bh_depend)#' 
 #' @format A data frame with 45 rows and 30 variables
 #' 
 #' \itemize{
@@ -75,6 +75,57 @@ NULL
 #' 
 #' @source Brown and Hudson (2002)
 NULL
+
+#' Brown and Hudson's (2002, p. 177) Table 5.8 Data for 30 examinees 
+#' on 30 test items with an ID column and a total score column.
+#'
+#' A data set containing the 30 scored responses to 30 items on a test
+#' 
+#' @docType data
+#' @keywords datasets
+#' @name bh_gstudy
+#' @usage data(bh_gstudy)#' 
+#' @format A data frame with 30 rows and 32 variables
+#' 
+#' \itemize{
+#' \item ID. ID numbers.
+#' \item I1. Item 1
+#' \item I2. Item 2
+#' \item I3. Item 3
+#' \item I4. Item 4
+#' \item I5. Item 5
+#' \item I6. Item 6
+#' \item I7. Item 7
+#' \item I8. Item 8
+#' \item I9. Item 9
+#' \item I10. Item 10
+#' \item I11. Item 11
+#' \item I12. Item 12
+#' \item I13. Item 13
+#' \item I14. Item 14
+#' \item I15. Item 15
+#' \item I16. Item 16
+#' \item I17. Item 17
+#' \item I18. Item 18
+#' \item I19. Item 19
+#' \item I20. Item 20
+#' \item I21. Item 21
+#' \item I22. Item 22
+#' \item I23. Item 23
+#' \item I24. Item 24
+#' \item I25. Item 25
+#' \item I26. Item 26
+#' \item I27. Item 27
+#' \item I28. Item 28
+#' \item I29. Item 29
+#' \item I30. Item 30
+#' \item SCORE. Total score
+#' }
+#' 
+#' @source Brown and Hudson (2002)
+NULL
+
+
 
 #' Subkoviak's (1988) table of approximate values of the agreement coefficient
 #'

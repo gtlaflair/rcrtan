@@ -3,7 +3,7 @@
 \docType{data}
 \name{brown_depend}
 \alias{brown_depend}
-\title{Brown's (2002, p. 153) Table 5.1a Data for 45 examinees on 30 test items}
+\title{Brown and Hudson's (2002, p. 153) Table 5.1a Data for 45 examinees on 30 test items}
 \format{A data frame with 45 rows and 30 variables
 
 \itemize{

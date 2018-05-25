@@ -3,7 +3,7 @@
 \docType{data}
 \name{brown_item}
 \alias{brown_item}
-\title{Brown's (2002, p. 124) Table 4.8 Item analysis data (first 10 items only)}
+\title{Brown and Hudson's (2002, p. 124) Table 4.8 Item analysis data (first 10 items only)}
 \format{A data frame with 15 rows and 12 variables
 
 \itemize{
