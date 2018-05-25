@@ -45,7 +45,7 @@ on 30 test items with an ID column and a total score column.}
 Brown and Hudson (2002)
 }
 \usage{
-data(bh_gstudy)#'
+data(bh_gstudy)
 }
 \description{
 A data set containing the 30 scored responses to 30 items on a test

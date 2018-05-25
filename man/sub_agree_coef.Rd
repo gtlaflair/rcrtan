@@ -22,7 +22,7 @@
 Subkoviak (1988)
 }
 \usage{
-data(sub_agree_coef)#'
+data(sub_agree_coef)
 }
 \description{
 Subkoviak's (1988) table of approximate values of the agreement coefficient

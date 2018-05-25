@@ -4,16 +4,17 @@
 \alias{subkoviak}
 \title{Calculate Subkoviak's (1988) single administration consistency indices}
 \usage{
-subkoviak(data, items, n_items = NULL, raw_cut_score, look_up = FALSE)
+subkoviak(data, items, raw_cut_score, total = NULL, look_up = FALSE)
 }
 \arguments{
 \item{data}{A data frame of dichotomously scored test items}
 
-\item{items}{Raw column indices representing the test items or the index of a column with the total score}
-
-\item{n_items}{Number of items on the test (needed if data does not contain item-level information)}
+\item{items}{Raw column indices representing the test items or 
+Number of items on the test (needed if data does not contain item-level information)}
 
 \item{raw_cut_score}{The raw cut-score for the test}
+
+\item{total}{Total score of the test (needed if item level information is unavailable)}
 
 \item{look_up}{If TRUE, the agreement and kappa tables from Subkoviak (1988) are returned with the results}
 }

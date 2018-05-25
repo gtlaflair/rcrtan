@@ -22,7 +22,7 @@
 Subkoviak (1988)
 }
 \usage{
-data(sub_kappa_coef)#'
+data(sub_kappa_coef)
 }
 \description{
 Subkoviak's (1988) table of approximate values of the kappa coefficient

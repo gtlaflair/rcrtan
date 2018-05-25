@@ -4,14 +4,15 @@
 \alias{phi_domain}
 \title{Calculate Brennan's short-cut estimate for domain score dependability}
 \usage{
-phi_domain(data, items, n_items = NULL)
+phi_domain(data, items, total = NULL)
 }
 \arguments{
 \item{data}{A data frame of dichotomously scored test items}
 
-\item{items}{Raw column indices representing the test items}
+\item{items}{Raw column indices representing the test items or 
+Number of items on the test (needed if data does not contain item-level information)}
 
-\item{n_items}{Number of items on the test (needed if data does not contain item-level information)}
+\item{total}{Total score of the test (needed if item level information is unavailable)}
 }
 \value{
 The \code{phi} estimate for domain score dependability

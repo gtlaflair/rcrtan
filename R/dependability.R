@@ -194,20 +194,20 @@ phi_domain <- function(data, items, total = NULL){
     k <- n_items
     
     mp <- data %>%
-      select(., items) %$%
-      mean(.[[items]]) / k
+      select(., total) %$%
+      mean(.[[total]]) / k
     
     sp <- data %>%
-      select(., items) %$%
-      (sd(.[[items]]) / k)^2
+      select(., total) %$%
+      (sd(.[[total]]) / k)^2
     
     M <- data %>%
-      select(., items) %$%
-      mean(.[[items]])
+      select(., total) %$%
+      mean(.[[total]])
     
     S <- data %>%
-      select(., items) %$%
-      sd(.[[items]])
+      select(., total) %$%
+      sd(.[[total]])
     
     rel <- (n_items / (n_items - 1)) * (1 - ((M * (n_items - M)) / (n_items * (S^2)))) # kr-21
     
@@ -227,7 +227,7 @@ phi_domain <- function(data, items, total = NULL){
 #' @param data A data frame of dichotomously scored test items
 #' @param scores Column name of raw test scores
 #' @param cut_score Cut-score of the test expressed as a proportion (e.g., 0.70)
-#' @param n_items Number of items on the test (needed if data does not contain item-level information)
+#' @param items Number of items on the test (needed if data does not contain item-level information)
 #' @return The phi lambda estimate for dependability
 #' 
 #' @importFrom magrittr %>%
@@ -239,7 +239,7 @@ phi_domain <- function(data, items, total = NULL){
 #' @examples 
 #' phi_lambda(data = bh_item, items = 100, scores = "Total", cut_score = 0.70)
 phi_lambda <- function(data, items, scores, cut_score){
-  k <- n_items
+  k <- items
   lambda <- cut_score
   n_persons <- length(data[[1]])
   lambda <- cut_score

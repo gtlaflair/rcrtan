@@ -43,7 +43,7 @@
 Brown and Hudson (2002)
 }
 \usage{
-data(bh_depend)#'
+data(bh_depend)
 }
 \description{
 A data set containing the 45 scored responses to 30 items on a

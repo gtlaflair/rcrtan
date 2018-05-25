@@ -24,7 +24,7 @@
 Brown and Hudson (2002)
 }
 \usage{
-data(bh_item)#'
+data(bh_item)
 }
 \description{
 A data set containing the scored responses to first 10 items of a
