@@ -1,8 +1,9 @@
 #' Calculate Subkoviak's (1988) single administration consistency indices
 #' 
 #' @param data A data frame of dichotomously scored test items
-#' @param items Raw column indices representing the test items or the index of a column with the total score
-#' @param n_items Number of items on the test (needed if data does not contain item-level information)
+#' @param items Raw column indices representing the test items or 
+#' Number of items on the test (needed if data does not contain item-level information)
+#' @param total Total score of the test (needed if item level information is unavailable)
 #' @param raw_cut_score The raw cut-score for the test
 #' @param look_up If TRUE, the agreement and kappa tables from Subkoviak (1988) are returned with the results
 #' @return The \code{z_cut} score and the rounded \code{z_cut_rounded} score for the test and rounded values for the \code{agree_coef} (agreement) and \code{kappa_coef} (kappa) coefficients from Subkoviak's (1988) tables
@@ -26,26 +27,31 @@
 #' @examples 
 #' subkoviak(data = bh_depend, items = 2:31, raw_cut_score = 21)
 
-subkoviak <- function(data, items, n_items = NULL, raw_cut_score, look_up = FALSE){
+subkoviak <- function(data, items, raw_cut_score, total = NULL, look_up = FALSE){
   
-  c <- raw_cut_score 
+  c <- raw_cut_score
+  total <- total
   
-  if(is.character(items) == TRUE){
-    M <- data %>%
-      select(., items) %$%
-      mean(.[[items]])
-    
-    S <- data %>%
-      select(., items) %$%
-      sd(.[[items]])
-    
-    kr21 <- (n_items / (n_items - 1)) * (1 - ((M * (n_items - M)) / (n_items * (S^2)))) 
-  
+  if(length(items) == 1){
+    n_items <- items
   }
   
-  if(is.character(items) == FALSE){
+  if(length(items) == 1){
     M <- data %>%
-      select(., items) %>%
+      select(., total) %$%
+      mean(.[[total]])
+    
+    S <- data %>%
+      select(., total) %$%
+      var(.[[total]])
+    
+    kr21 <- (n_items / (n_items - 1)) * (1 - ((M * (n_items - M)) / (n_items * (S)))) 
+
+  }
+  
+  if(length(items) > 1){
+    M <- data %>%
+      dplyr::select(., items) %>%
       by_row(., sum, .collate = 'rows', .to = 'total') %$%
       mean(total)
     
@@ -69,11 +75,11 @@ subkoviak <- function(data, items, n_items = NULL, raw_cut_score, look_up = FALS
     kr20 <- (K / (K - 1)) * (1 - (sigma_y / sigma_x)) 
   }
   
-  if(is.character(items) == TRUE){
+  if(length(items) == 1){
     rel <- kr21
   }
   
-  if(is.character(items) == FALSE){
+  if(length(items) > 1){
     rel <- kr20
   }
   
@@ -118,8 +124,9 @@ subkoviak <- function(data, items, n_items = NULL, raw_cut_score, look_up = FALS
 #' Calculate Brennan's short-cut estimate for domain score dependability 
 #' 
 #' @param data A data frame of dichotomously scored test items
-#' @param items Raw column indices representing the test items
-#' @param n_items Number of items on the test (needed if data does not contain item-level information)
+#' @param items Raw column indices representing the test items or 
+#' Number of items on the test (needed if data does not contain item-level information)
+#' @param total Total score of the test (needed if item level information is unavailable)
 #' @return The \code{phi} estimate for domain score dependability
 #' 
 #' @importFrom magrittr %>%
@@ -131,11 +138,16 @@ subkoviak <- function(data, items, n_items = NULL, raw_cut_score, look_up = FALS
 #' 
 #' @examples 
 #' phi_domain(bh_depend, 2:31)
-phi_domain <- function(data, items, n_items = NULL){
+phi_domain <- function(data, items, total = NULL){
   
   n <- length(data[[1]])
+  total <- total
   
-  if(is.character(items) == FALSE) {
+  if(length(items) == 1){
+    n_items <- items
+  }
+  
+  if(length(items) > 1) {
   
     k <- length(items)
     
@@ -177,7 +189,7 @@ phi_domain <- function(data, items, n_items = NULL){
   
   }
   
-  if(is.character(items) == TRUE){
+  if(length(items) == 1){
     
     k <- n_items
     
@@ -225,8 +237,8 @@ phi_domain <- function(data, items, n_items = NULL){
 #' @export phi_lambda
 #' 
 #' @examples 
-#' phi_lambda(data = bh_item, n_items = 100, scores = "Total", cut_score = 0.70)
-phi_lambda <- function(data, n_items, scores, cut_score){
+#' phi_lambda(data = bh_item, items = 100, scores = "Total", cut_score = 0.70)
+phi_lambda <- function(data, items, scores, cut_score){
   k <- n_items
   lambda <- cut_score
   n_persons <- length(data[[1]])
