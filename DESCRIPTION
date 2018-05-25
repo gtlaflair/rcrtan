@@ -1,6 +1,6 @@
 Package: rcrtan
 Type: Package
-Title: Rcrtan: R Functions for Criterion-referenced Test Analysis
+Title: rcrtan: R Functions for Criterion-referenced Test Analysis
 Version: 0.1.0
 Author: Geoff LaFlair
 Maintainer: Geoff LaFlair <gtlaflair@gmail.com>
