@@ -9,4 +9,10 @@ vignette: >
     \usepackage[utf8]{inputenc}
 ---
 
-## dependability
+## Dependability
+
+### subkoviak
+
+### phi_domain
+
+### phi_lambda
