@@ -24,7 +24,7 @@
 #' @export subkoviak
 #' 
 #' @examples 
-#' subkoviak(data = brown_depend, items = 2:31, raw_cut_score = 21)
+#' subkoviak(data = bh_depend, items = 2:31, raw_cut_score = 21)
 
 subkoviak <- function(data, items, n_items = NULL, raw_cut_score, look_up = FALSE){
   
@@ -130,7 +130,7 @@ subkoviak <- function(data, items, n_items = NULL, raw_cut_score, look_up = FALS
 #' @export phi_domain
 #' 
 #' @examples 
-#' phi_domain(brown_depend, 2:31)
+#' phi_domain(bh_depend, 2:31)
 phi_domain <- function(data, items, n_items = NULL){
   
   n <- length(data[[1]])
@@ -225,7 +225,7 @@ phi_domain <- function(data, items, n_items = NULL){
 #' @export phi_lambda
 #' 
 #' @examples 
-#' phi_lambda(data = brown_item, n_items = 100, scores = "Total", cut_score = 0.70)
+#' phi_lambda(data = bh_item, n_items = 100, scores = "Total", cut_score = 0.70)
 phi_lambda <- function(data, n_items, scores, cut_score){
   k <- n_items
   lambda <- cut_score

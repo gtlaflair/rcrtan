@@ -34,5 +34,5 @@ item_phi Item Phi values for items on the test
 Calculate item discrimination indices
 }
 \examples{
-crt_iteman(brown_depend, 2:31, 21, scale = 'raw')
+crt_iteman(bh_depend, 2:31, 21, scale = 'raw')
 }

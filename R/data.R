@@ -6,7 +6,7 @@
 #' @docType data
 #' @keywords datasets
 #' @name bh_item
-#' @usage data(bh_item)#' 
+#' @usage data(bh_item) 
 #' @format A data frame with 15 rows and 12 variables
 #' 
 #' \itemize{
@@ -36,7 +36,7 @@ NULL
 #' @docType data
 #' @keywords datasets
 #' @name bh_depend
-#' @usage data(bh_depend)#' 
+#' @usage data(bh_depend) 
 #' @format A data frame with 45 rows and 30 variables
 #' 
 #' \itemize{
@@ -84,7 +84,7 @@ NULL
 #' @docType data
 #' @keywords datasets
 #' @name bh_gstudy
-#' @usage data(bh_gstudy)#' 
+#' @usage data(bh_gstudy) 
 #' @format A data frame with 30 rows and 32 variables
 #' 
 #' \itemize{
@@ -132,7 +132,7 @@ NULL
 #' @docType data
 #' @keywords datasets
 #' @name sub_agree_coef
-#' @usage data(sub_agree_coef)#' 
+#' @usage data(sub_agree_coef) 
 #' @format A data frame with 21 rows and 10 columns
 #' 
 #' \itemize{
@@ -156,7 +156,7 @@ NULL
 #' @docType data
 #' @keywords datasets
 #' @name sub_kappa_coef
-#' @usage data(sub_kappa_coef)#' 
+#' @usage data(sub_kappa_coef) 
 #' @format A data frame with 21 rows and 10 columns
 #' 
 #' \itemize{

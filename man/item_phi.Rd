@@ -23,5 +23,5 @@ Phi Item Phi values for items on the test
 Calculate Item Phi
 }
 \examples{
-item_phi(brown_depend, 2:31, 21, scale = 'raw')
+item_phi(bh_depend, 2:31, 21, scale = 'raw')
 }

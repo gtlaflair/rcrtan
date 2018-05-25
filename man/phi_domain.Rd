@@ -20,5 +20,5 @@ The \code{phi} estimate for domain score dependability
 Calculate Brennan's short-cut estimate for domain score dependability
 }
 \examples{
-phi_domain(brown_depend, 2:31)
+phi_domain(bh_depend, 2:31)
 }

@@ -24,5 +24,5 @@ of test takers who passed the test
 Calculate item facility for passing students
 }
 \examples{
-if_pass(brown_depend, 2:31, 21, scale = 'raw')
+if_pass(bh_depend, 2:31, 21, scale = 'raw')
 }

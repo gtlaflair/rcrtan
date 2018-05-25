@@ -22,5 +22,5 @@ The phi lambda estimate for dependability
 Calculate Brennan's short-cut estimate for phi lambda
 }
 \examples{
-phi_lambda(data = brown_item, n_items = 100, scores = "Total", cut_score = 0.70)
+phi_lambda(data = bh_item, n_items = 100, scores = "Total", cut_score = 0.70)
 }

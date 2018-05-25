@@ -11,7 +11,7 @@
 #' @return Item_facility Item facility values for test items
 #' 
 #' @examples 
-#' if_total(brown_depend, 2:31)
+#' if_total(bh_depend, 2:31)
 
 if_total <- function(data, items){
   
@@ -43,7 +43,7 @@ if_total <- function(data, items){
 #' of test takers who passed the test
 #' 
 #' @examples 
-#' if_pass(brown_depend, 2:31, 21, scale = 'raw')
+#' if_pass(bh_depend, 2:31, 21, scale = 'raw')
 
 if_pass <- function(data, items, cut_score, scale = 'raw'){
   
@@ -96,7 +96,7 @@ if_pass <- function(data, items, cut_score, scale = 'raw'){
 #' of test takers who failed the test
 #' 
 #' @examples 
-#' if_fail(brown_depend, 2:31, 21, scale = 'raw')
+#' if_fail(bh_depend, 2:31, 21, scale = 'raw')
 if_fail <- function(data, items, cut_score, scale = 'raw'){
   
   data$raw_total <- data %>%
@@ -146,7 +146,7 @@ if_fail <- function(data, items, cut_score, scale = 'raw'){
 #' @return Bindex B-index values for items on the test
 #' 
 #' @examples 
-#' b_index(brown_depend, 2:31, 21, scale = 'raw')
+#' b_index(bh_depend, 2:31, 21, scale = 'raw')
 
 b_index <- function(data, items, cut_score, scale = 'raw'){
   
@@ -190,7 +190,7 @@ b_index <- function(data, items, cut_score, scale = 'raw'){
 #' @return Agree Agreement statistic values for items on the test
 #' 
 #' @examples 
-#' agree_stat(brown_depend, 2:31, 21, scale = 'raw')
+#' agree_stat(bh_depend, 2:31, 21, scale = 'raw')
 
 agree_stat <- function(data, items, cut_score, scale = 'raw'){
   
@@ -239,7 +239,7 @@ agree_stat <- function(data, items, cut_score, scale = 'raw'){
 #' @return Phi Item Phi values for items on the test
 #' 
 #' @examples 
-#' item_phi(brown_depend, 2:31, 21, scale = 'raw')
+#' item_phi(bh_depend, 2:31, 21, scale = 'raw')
 
 item_phi <- function(data, items, cut_score, scale = 'raw'){
   
@@ -299,7 +299,7 @@ item_phi <- function(data, items, cut_score, scale = 'raw'){
 #' @return item_phi Item Phi values for items on the test
 #' 
 #' @examples 
-#' crt_iteman(brown_depend, 2:31, 21, scale = 'raw')
+#' crt_iteman(bh_depend, 2:31, 21, scale = 'raw')
 
 crt_iteman <- function(data, items, cut_score, scale = 'raw'){
 

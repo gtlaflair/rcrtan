@@ -23,5 +23,5 @@ Bindex B-index values for items on the test
 Calculate B-index
 }
 \examples{
-b_index(brown_depend, 2:31, 21, scale = 'raw')
+b_index(bh_depend, 2:31, 21, scale = 'raw')
 }
