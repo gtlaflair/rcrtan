@@ -276,7 +276,7 @@ item_phi <- function(data, items, cut_score, scale = 'raw'){
   
 }
 
-#' Calculate item discrimination indices
+#' Calculate criterion-referenced item discrimination indices
 #' 
 #' @importFrom stats setNames
 #' @importFrom magrittr %>%
@@ -289,14 +289,13 @@ item_phi <- function(data, items, cut_score, scale = 'raw'){
 #' @param cut_score A raw or percentage cut-score
 #' @param scale A character vector indicataing wheter the cut-score
 #' is 'raw' (default) or 'percent'
-#' @return if_pass Item facility values for test items for students who
-#'     passed the test
-#' @return if_fail Item facility values for test items for students who
-#      failed the test
-#' @return if_total Item facility values for test items 
-#' @return b_index B-index values for items on the test
-#' @return agree_stat Agreement statistic values for items on the test
-#' @return item_phi Item Phi values for items on the test
+#' @return \code{if_pass} contains item facility values for test items for students who 
+#' passed the test
+#' @return \code{if_fail} contains item facility values for test items for students who did not pass the test
+#' @return \code{if_total} contains item facility values for test items 
+#' @return \code{b_index} contains b-index values for items on the test
+#' @return \code{agree_stat} contains agreement statistic values for items on the test
+#' @return \code{item_phi} contains item phi values for items on the test
 #' 
 #' @examples 
 #' crt_iteman(bh_depend, 2:31, 21, scale = 'raw')

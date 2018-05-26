@@ -15,7 +15,7 @@ Number of items on the test (needed if data does not contain item-level informat
 \item{total}{Total score of the test (needed if item level information is unavailable)}
 }
 \value{
-The \code{phi} estimate for domain score dependability
+The \code{phi} estimate for domain score dependability.
 }
 \description{
 Calculate Brennan's short-cut estimate for domain score dependability

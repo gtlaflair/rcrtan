@@ -4,19 +4,16 @@
 \alias{phi_lambda}
 \title{Calculate Brennan's short-cut estimate for phi lambda}
 \usage{
-phi_lambda(data, items, scores, cut_score)
+phi_lambda(data, items, cut_score, scores = NULL)
 }
 \arguments{
 \item{data}{A data frame of dichotomously scored test items}
 
 \item{items}{Number of items on the test (needed if data does not contain item-level information)}
 
-\item{scores}{Column name of raw test scores}
-
 \item{cut_score}{Cut-score of the test expressed as a proportion (e.g., 0.70)}
-}
-\value{
-The phi lambda estimate for dependability
+
+\item{scores}{Column name of raw test scores}
 }
 \description{
 Calculate Brennan's short-cut estimate for phi lambda

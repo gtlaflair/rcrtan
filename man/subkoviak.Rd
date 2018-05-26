@@ -19,11 +19,12 @@ Number of items on the test (needed if data does not contain item-level informat
 \item{look_up}{If TRUE, the agreement and kappa tables from Subkoviak (1988) are returned with the results}
 }
 \value{
-The \code{z_cut} score and the rounded \code{z_cut_rounded} score for the test and rounded values for the \code{agree_coef} (agreement) and \code{kappa_coef} (kappa) coefficients from Subkoviak's (1988) tables
+The \code{z_cut} score and the rounded \code{z_cut_rounded} score for the test
 
-The \code{z_cut} score and the rounded \code{z_cut_rounded} score for the test and rounded values for the \code{agree_coef} (agreement) and \code{kappa_coef} (kappa) coefficients from Subkoviak's (1988) tables
+The estimated alpha coefficient. K-R21 is used when there is no item-level information.
+Otherwise, K-R20 is used.
 
-The \code{z_cut} score and the rounded \code{z_cut_rounded} score for the test and rounded values for the \code{agree_coef} (agreement) and \code{kappa_coef} (kappa) coefficients from Subkoviak's (1988) tables
+The rounded values for the \code{agree_coef} (agreement) and \code{kappa_coef} (kappa) coefficients from Subkoviak's (1988) tables
 }
 \description{
 Calculate Subkoviak's (1988) single administration consistency indices

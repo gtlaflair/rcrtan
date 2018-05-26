@@ -1,5 +1,5 @@
-library(readr)
+# library(readr)
 
-bh_item <- read_csv('data-raw/bh_item.csv')
+bh_item <- read.csv('data-raw/bh_item.csv')
 
 devtools::use_data(bh_item, overwrite = TRUE)

@@ -2,7 +2,7 @@
 % Please edit documentation in R/item_desc.R
 \name{crt_iteman}
 \alias{crt_iteman}
-\title{Calculate item discrimination indices}
+\title{Calculate criterion-referenced item discrimination indices}
 \usage{
 crt_iteman(data, items, cut_score, scale = "raw")
 }
@@ -17,21 +17,21 @@ crt_iteman(data, items, cut_score, scale = "raw")
 is 'raw' (default) or 'percent'}
 }
 \value{
-if_pass Item facility values for test items for students who
-    passed the test
+\code{if_pass} contains item facility values for test items for students who 
+passed the test
 
-if_fail Item facility values for test items for students who
+\code{if_fail} contains item facility values for test items for students who did not pass the test
 
-if_total Item facility values for test items
+\code{if_total} contains item facility values for test items
 
-b_index B-index values for items on the test
+\code{b_index} contains b-index values for items on the test
 
-agree_stat Agreement statistic values for items on the test
+\code{agree_stat} contains agreement statistic values for items on the test
 
-item_phi Item Phi values for items on the test
+\code{item_phi} contains item phi values for items on the test
 }
 \description{
-Calculate item discrimination indices
+Calculate criterion-referenced item discrimination indices
 }
 \examples{
 crt_iteman(bh_depend, 2:31, 21, scale = 'raw')

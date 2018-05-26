@@ -6,9 +6,10 @@
 #' @param total Total score of the test (needed if item level information is unavailable)
 #' @param raw_cut_score The raw cut-score for the test
 #' @param look_up If TRUE, the agreement and kappa tables from Subkoviak (1988) are returned with the results
-#' @return The \code{z_cut} score and the rounded \code{z_cut_rounded} score for the test and rounded values for the \code{agree_coef} (agreement) and \code{kappa_coef} (kappa) coefficients from Subkoviak's (1988) tables
-#' @return The \code{z_cut} score and the rounded \code{z_cut_rounded} score for the test and rounded values for the \code{agree_coef} (agreement) and \code{kappa_coef} (kappa) coefficients from Subkoviak's (1988) tables
-#' @return The \code{z_cut} score and the rounded \code{z_cut_rounded} score for the test and rounded values for the \code{agree_coef} (agreement) and \code{kappa_coef} (kappa) coefficients from Subkoviak's (1988) tables
+#' @return The \code{z_cut} score and the rounded \code{z_cut_rounded} score for the test 
+#' @return The estimated alpha coefficient. K-R21 is used when there is no item-level information.
+#' Otherwise, K-R20 is used.
+#' @return The rounded values for the \code{agree_coef} (agreement) and \code{kappa_coef} (kappa) coefficients from Subkoviak's (1988) tables
 #' 
 #' @importFrom dplyr filter
 #' @importFrom dplyr summarise_at
@@ -16,7 +17,6 @@
 #' @importFrom dplyr contains
 #' @importFrom dplyr bind_cols
 #' @importFrom magrittr %>%
-#' @importFrom magrittr %$%
 #' @importFrom purrrlyr by_row
 #' @importFrom stats sd
 #' @importFrom stats var
@@ -32,33 +32,41 @@ subkoviak <- function(data, items, raw_cut_score, total = NULL, look_up = FALSE)
   c <- raw_cut_score
   total <- total
   
+  if(length(items) == 1 & is.null(total)){
+    stop("If you do not have item-level data, you need to fill the 'total' argument with the name of a column that contains the total raw scores.")
+  }
+  
   if(length(items) == 1){
     n_items <- items
   }
   
   if(length(items) == 1){
     M <- data %>%
-      select(., total) %$%
-      mean(.[[total]])
+      # select(., total) %$%
+      summarise(m = mean(total)) %>%
+      as.numeric()
     
     S <- data %>%
-      select(., total) %$%
-      var(.[[total]])
+      # select(., total) %$%
+      summarise(s = sd(total)) %>%
+      as.numeric()
     
-    kr21 <- (n_items / (n_items - 1)) * (1 - ((M * (n_items - M)) / (n_items * (S)))) 
+    kr21 <- (n_items / (n_items - 1)) * (1 - ((M * (n_items - M)) / (n_items * (S^2)))) 
 
   }
   
   if(length(items) > 1){
     M <- data %>%
       dplyr::select(., items) %>%
-      by_row(., sum, .collate = 'rows', .to = 'total') %$%
-      mean(total)
+      by_row(., sum, .collate = 'rows', .to = 'total') %>%
+      summarise(m = mean(total)) %>%
+      as.numeric()
     
     S <- data %>%
       select(., items) %>%
-      by_row(., sum, .collate = 'rows', .to = 'total') %$%
-      sd(total)
+      by_row(., sum, .collate = 'rows', .to = 'total') %>%
+      summarise(s = sd(total)) %>%
+      as.numeric()
     
     sigma_y <- data %>%
       summarise_at(., items, var) %>%
@@ -69,8 +77,9 @@ subkoviak <- function(data, items, raw_cut_score, total = NULL, look_up = FALSE)
     
     sigma_x <- data %>%
       select(., items) %>%
-      by_row(., sum, .collate = 'rows', .to = 'total') %$%
-      var(total)
+      by_row(., sum, .collate = 'rows', .to = 'total') %>%
+      summarise(v = var(total)) %>%
+      as.numeric()
     
     kr20 <- (K / (K - 1)) * (1 - (sigma_y / sigma_x)) 
   }
@@ -127,10 +136,9 @@ subkoviak <- function(data, items, raw_cut_score, total = NULL, look_up = FALSE)
 #' @param items Raw column indices representing the test items or 
 #' Number of items on the test (needed if data does not contain item-level information)
 #' @param total Total score of the test (needed if item level information is unavailable)
-#' @return The \code{phi} estimate for domain score dependability
+#' @return The \code{phi} estimate for domain score dependability.
 #' 
 #' @importFrom magrittr %>%
-#' @importFrom magrittr %$%
 #' @importFrom stats sd
 #' @importFrom stats var
 #' 
@@ -140,8 +148,14 @@ subkoviak <- function(data, items, raw_cut_score, total = NULL, look_up = FALSE)
 #' phi_domain(bh_depend, 2:31)
 phi_domain <- function(data, items, total = NULL){
   
+
+  
   n <- length(data[[1]])
   total <- total
+  
+  if(length(items) == 1 & is.null(total)){
+    stop("If you do not have item-level data, you need to fill the 'total' argument with the name of a column that contains the total raw scores.")
+  }
   
   if(length(items) == 1){
     n_items <- items
@@ -153,65 +167,64 @@ phi_domain <- function(data, items, total = NULL){
     
     mp <- data %>%
       select(., items) %>%
-      by_row(., sum, .collate = 'rows', .to = 'total') %$%
-      mean(total)/k 
+      by_row(., sum, .collate = 'rows', .to = 'total') %>%
+      summarise(m = mean(total) / k) %>%
+      as.numeric()
   
-    sp <- data %>%
+    sp2 <- data %>%
       select(., items) %>%
-      by_row(., sum, .collate = 'rows', .to = 'total') %$%
-      (sd(total)/k)^2
-  
-    M <- data %>%
-      select(., items) %>%
-      by_row(., sum, .collate = 'rows', .to = 'total') %$%
-      mean(total)
-  
-    S <- data %>%
-      select(., items) %>%
-      by_row(., sum, .collate = 'rows', .to = 'total') %$%
-      sd(total)
+      by_row(., sum, .collate = 'rows', .to = 'total') %>%
+      summarise(s_p = (sd_pop(total, n = length(total))/k)^2) %>%
+      as.numeric()
   
     sigma_y <- data %>%
       summarise_at(., items, var) %>%
       gather(., key, value) %>%
-      summarise(., sigma_y = sum(value))
+      summarise(s = sum(value)) %>%
+      as.numeric()
   
     sigma_x <- data %>%
       select(., items) %>%
-      by_row(., sum, .collate = 'rows', .to = 'total') %$%
-      var(total)
+      by_row(., sum, .collate = 'rows', .to = 'total') %>%
+      summarise(v = var(total)) %>%
+      as.numeric()
   
     rel <- (k / (k - 1)) * (1 - (sigma_y / sigma_x)) # kr-20
   
-    phi <- round((((n * sp)/(n - 1)) * rel)/(((n * sp)/(n - 1))+((mp * (1 - mp) - sp)/(k - 1))), 2) %>%
+    phi <- (((n * sp2)/(n - 1)) * rel)/((((n * sp2)/(n - 1)) * rel) + ((mp * (1 - mp) - sp2)/(k - 1))) %>%
       as_data_frame(.) %>%
-      setNames(., 'Dependability Phi')
+      setNames(., 'Domain Phi')
   
   }
   
   if(length(items) == 1){
     
-    k <- n_items
+    k <- items
     
     mp <- data %>%
-      select(., total) %$%
-      mean(.[[total]]) / k
+      # select(., total) %$%
+      summarise(mean_p = mean(total) / k) %>%
+      as.numeric()
     
-    sp <- data %>%
-      select(., total) %$%
-      (sd(.[[total]]) / k)^2
+    sp2 <- data %>%
+      select(., items) %>%
+      by_row(., sum, .collate = 'rows', .to = 'total') %>%
+      summarise(s_p = (sd_pop(total, n = length(total))/k)^2) %>%
+      as.numeric()
     
     M <- data %>%
-      select(., total) %$%
-      mean(.[[total]])
+      # select(., total) %$%
+      summarise(mean = mean(total)) %>%
+      as.numeric()
     
     S <- data %>%
-      select(., total) %$%
-      sd(.[[total]])
+      # select(., total) %$%
+      summarise(sd = sd(total)) %>%
+      as.numeric()
     
-    rel <- (n_items / (n_items - 1)) * (1 - ((M * (n_items - M)) / (n_items * (S^2)))) # kr-21
+    rel <- (k / (k - 1)) * (1 - ((M * (k - M)) / (k * (S^2)))) # kr-21
     
-    phi <- round((((n * sp)/(n - 1)) * rel)/(((n * sp)/(n - 1))+((mp * (1 - mp) - sp)/(k - 1))), 2) %>%
+    phi <- (((n * sp2)/(n - 1)) * rel)/((((n * sp2)/(n - 1)) * rel) + ((mp * (1 - mp) - sp2)/(k - 1))) %>%
       as_data_frame(.) %>%
       setNames(., 'Domain Phi')
     
@@ -228,36 +241,68 @@ phi_domain <- function(data, items, total = NULL){
 #' @param scores Column name of raw test scores
 #' @param cut_score Cut-score of the test expressed as a proportion (e.g., 0.70)
 #' @param items Number of items on the test (needed if data does not contain item-level information)
-#' @return The phi lambda estimate for dependability
 #' 
 #' @importFrom magrittr %>%
-#' @importFrom magrittr %$%
 #' @importFrom stats sd
 #' 
 #' @export phi_lambda
 #' 
 #' @examples 
 #' phi_lambda(data = bh_item, items = 100, scores = "Total", cut_score = 0.70)
-phi_lambda <- function(data, items, scores, cut_score){
-  k <- items
+phi_lambda <- function(data, items, cut_score, scores = NULL){
+
   lambda <- cut_score
   n_persons <- length(data[[1]])
-  lambda <- cut_score
+
+  if(is.null(scores)){
+    data <- data %>%
+      select(., 2:26) %>%
+      by_row(., sum, .collate = 'rows', .to = 'scores')
+  }
+  
+  if(!is.null(scores)){
+    colnames(data)[which(colnames(data) == scores)] <- "scores"
+  }
+  
+  if(length(items) > 1){
+    k <- length(items)
+  }
+  
+  if(length(items) == 1){
+    k <- items
+  }
   
   mp <- data %>%
-    select(., scores) %$%
-    mean(.[[scores]]) / k
+    # select(., scores) %>%
+    summarise(mean = mean(scores) / k) %>%
+    as.numeric()
   
-  sp <- data %>%
-    select(., scores) %$%
-    (sd(.[[scores]]) / k)^2
+  sp2 <- data %>%
+    # select(., scores) %$%
+    summarise(sd_pop = (sd_pop(scores, length(scores)) / k) ^2) %>%
+    as.numeric()
   
-  phi <- 1 - ((1 / (k - 1)) * ((mp * (1 - mp) - sp) / ((mp - lambda)^2 + sp))) %>%
+  phi <- 1 - ((1 / (k - 1)) * ((mp * (1 - mp) - sp2) / ((mp - lambda)^2 + sp2))) %>%
     as_data_frame(.) %>%
     setNames(., 'Phi Lambda')
   
   return(phi)
 
+}
+
+#' Calculate standard deviation for the population
+#' 
+#' @param x A vector of total scores from a dichotomously score test.
+#' @param n The number of people who took the test
+#' 
+#' @export sd_pop
+#' 
+#' @examples 
+#' sd_pop(bh_item$Total, nrow(bh_item))
+
+sd_pop <- function(x, n){
+  sdpop <- sqrt(sum((x - mean(x))^2) / n)
+  return(sdpop)
 }
 
 
