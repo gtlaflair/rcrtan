@@ -10,15 +10,20 @@ phi_domain(data, items, total = NULL)
 \item{data}{A data frame of dichotomously scored test items}
 
 \item{items}{Raw column indices representing the test items or 
-Number of items on the test (needed if data does not contain item-level information)}
+number of items on the test (see Details).}
 
-\item{total}{Total score of the test (needed if item level information is unavailable)}
+\item{total}{Total score of the test (see Details)}
 }
 \value{
 The \code{phi} estimate for domain score dependability.
 }
 \description{
 Calculate Brennan's short-cut estimate for domain score dependability
+}
+\details{
+When the item-level information is available, Kuder-Richardson 20 is used
+as an estimate of alpha. If only the total scores on the test are available and the
+number of items is known, Kuder-Richardson 21 is used as an estimate of alpha.
 }
 \examples{
 phi_domain(bh_depend, 2:31)

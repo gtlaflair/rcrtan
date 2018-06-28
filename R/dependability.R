@@ -2,8 +2,8 @@
 #' 
 #' @param data A data frame of dichotomously scored test items
 #' @param items Raw column indices representing the test items or 
-#' Number of items on the test (needed if data does not contain item-level information)
-#' @param total Total score of the test (needed if item level information is unavailable)
+#' number of items on the test (see Details)
+#' @param total Total score of the test (see Details)
 #' @param raw_cut_score The raw cut-score for the test
 #' @param look_up If TRUE, the agreement and kappa tables from Subkoviak (1988) are returned with the results
 #' @return The \code{z_cut} score and the rounded \code{z_cut_rounded} score for the test 
@@ -23,6 +23,10 @@
 #' @importFrom tidyr gather
 #' 
 #' @export subkoviak
+#' 
+#' @details When the item-level information is available, Kuder-Richardson 20 is used
+#' as an estimate of alpha. If only the total scores on the test are available and the
+#' number of items is known, Kuder-Richardson 21 is used as an estimate of alpha.
 #' 
 #' @examples 
 #' subkoviak(data = bh_depend, items = 2:31, raw_cut_score = 21)
@@ -134,8 +138,8 @@ subkoviak <- function(data, items, raw_cut_score, total = NULL, look_up = FALSE)
 #' 
 #' @param data A data frame of dichotomously scored test items
 #' @param items Raw column indices representing the test items or 
-#' Number of items on the test (needed if data does not contain item-level information)
-#' @param total Total score of the test (needed if item level information is unavailable)
+#' number of items on the test (see Details).
+#' @param total Total score of the test (see Details)
 #' @return The \code{phi} estimate for domain score dependability.
 #' 
 #' @importFrom magrittr %>%
@@ -143,6 +147,10 @@ subkoviak <- function(data, items, raw_cut_score, total = NULL, look_up = FALSE)
 #' @importFrom stats var
 #' 
 #' @export phi_domain
+#' 
+#' @details When the item-level information is available, Kuder-Richardson 20 is used
+#' as an estimate of alpha. If only the total scores on the test are available and the
+#' number of items is known, Kuder-Richardson 21 is used as an estimate of alpha.
 #' 
 #' @examples 
 #' phi_domain(bh_depend, 2:31)

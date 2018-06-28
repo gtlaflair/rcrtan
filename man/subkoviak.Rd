@@ -10,11 +10,11 @@ subkoviak(data, items, raw_cut_score, total = NULL, look_up = FALSE)
 \item{data}{A data frame of dichotomously scored test items}
 
 \item{items}{Raw column indices representing the test items or 
-Number of items on the test (needed if data does not contain item-level information)}
+number of items on the test (see Details)}
 
 \item{raw_cut_score}{The raw cut-score for the test}
 
-\item{total}{Total score of the test (needed if item level information is unavailable)}
+\item{total}{Total score of the test (see Details)}
 
 \item{look_up}{If TRUE, the agreement and kappa tables from Subkoviak (1988) are returned with the results}
 }
@@ -28,6 +28,11 @@ The rounded values for the \code{agree_coef} (agreement) and \code{kappa_coef} (
 }
 \description{
 Calculate Subkoviak's (1988) single administration consistency indices
+}
+\details{
+When the item-level information is available, Kuder-Richardson 20 is used
+as an estimate of alpha. If only the total scores on the test are available and the
+number of items is known, Kuder-Richardson 21 is used as an estimate of alpha.
 }
 \examples{
 subkoviak(data = bh_depend, items = 2:31, raw_cut_score = 21)
