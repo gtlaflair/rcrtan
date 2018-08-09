@@ -12,12 +12,50 @@
 
 <meta name="author" content="Geoff LaFlair" />
 
-<meta name="date" content="2018-05-25" />
+<meta name="date" content="2018-08-09" />
 
 <title>rcrtan</title>
 
 
 
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
 
 
 
@@ -32,20 +70,87 @@
 
 <h1 class="title toc-ignore">rcrtan</h1>
 <h4 class="author"><em>Geoff LaFlair</em></h4>
-<h4 class="date"><em>2018-05-25</em></h4>
+<h4 class="date"><em>2018-08-09</em></h4>
 
 
 
-<div id="dependability" class="section level2">
-<h2>Dependability</h2>
+<p>This package contains functions for criterion-referenced test and item analysis.</p>
+<div id="test-analysis-dependability" class="section level2">
+<h2>Test Analysis: Dependability</h2>
+<p>The functions below can be used to examine the dependability of <em>single administration</em> CRT assessments.</p>
 <div id="subkoviak" class="section level3">
 <h3>subkoviak</h3>
+<p>The <code>subkoviak</code> function follows <span class="citation">Subkoviak (1988)</span>’s single administration procedures for estimating <span class="math inline">\(\kappa\)</span> and <span class="math inline">\(\rho\)</span>. To use the <code>subkoviak</code> function the data can come in one of two forms:</p>
+<ol style="list-style-type: decimal">
+<li>A dataframe of dichotomously scored items</li>
+<li>A dataframe of total (raw) scores on the test. This also requires the analyst/researcher to know how many (dichotomous) items were on the test.</li>
+</ol>
+<p>In both situations, the analyst/researcher needs to know the raw cut score of the test.</p>
+<p>The procedure uses two pieces of information to estimate <span class="math inline">\(\kappa\)</span> and <span class="math inline">\(\rho\)</span>. They are a reliability coefficient (estimated in this function using Kuder-Richardson 20 or 21) and a standardized cut-score, which is estimated following <span class="citation">Subkoviak (1988)</span>. The estimated <span class="math inline">\(\alpha\)</span> coefficient and standardized cut-score are used to look up the values for <span class="math inline">\(\kappa\)</span> and <span class="math inline">\(\rho\)</span> in look up tables, which the function will return if <code>look_up = TRUE</code></p>
+<p><span class="math display">\[ z = \frac{c - 0.5 - M}{S}\]</span></p>
+<p>where:</p>
+<ul>
+<li><em>z</em> = The standardized cut-score Examples:</li>
+<li><em>c</em> = The raw cut-score of the test</li>
+<li><em>M</em> = The mean raw total score of the test</li>
+<li><em>S</em> = The standard deviation of the raw total scores of the test</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">
+<span class="co"># Load the library</span>
+<span class="kw">library</span>(rcrtan)
+
+<span class="co"># Some data</span>
+test_data &lt;-<span class="st"> </span>tibble<span class="op">::</span><span class="kw">tribble</span>(
+                 <span class="op">~</span>ID, <span class="op">~</span>Q1, <span class="op">~</span>Q2, <span class="op">~</span>Q3, <span class="op">~</span>Q4, <span class="op">~</span>Q5, <span class="op">~</span>Q6, <span class="op">~</span>Q7, <span class="op">~</span>Q8, <span class="op">~</span>Q9, <span class="op">~</span>Q10, <span class="op">~</span>Total,
+               1441L,  1L,  1L,  1L,  1L,  1L,  1L,  1L,  1L,  1L,   1L,    10L,
+               1387L,  1L,  1L,  1L,  1L,  1L,  0L,  0L,  1L,  1L,   1L,     8L,
+               1994L,  1L,  1L,  1L,  1L,  1L,  0L,  0L,  1L,  1L,   1L,     8L,
+               1453L,  1L,  1L,  1L,  1L,  0L,  1L,  0L,  1L,  1L,   1L,     8L,
+               1679L,  1L,  0L,  1L,  0L,  0L,  1L,  1L,  1L,  1L,   1L,     7L,
+               1899L,  1L,  1L,  1L,  1L,  0L,  1L,  0L,  1L,  1L,   1L,     8L,
+               1631L,  1L,  1L,  1L,  1L,  1L,  1L,  0L,  1L,  1L,   1L,     9L,
+               1894L,  1L,  0L,  1L,  1L,  1L,  1L,  1L,  1L,  1L,   1L,     9L,
+               1206L,  0L,  0L,  1L,  1L,  0L,  1L,  0L,  1L,  0L,   1L,     5L,
+               1163L,  1L,  1L,  1L,  1L,  1L,  0L,  0L,  1L,  1L,   1L,     8L,
+               1964L,  1L,  1L,  1L,  1L,  1L,  1L,  1L,  1L,  1L,   1L,    10L,
+               1050L,  1L,  1L,  1L,  1L,  1L,  1L,  1L,  1L,  1L,   1L,    10L,
+               1034L,  1L,  1L,  1L,  1L,  1L,  1L,  1L,  1L,  1L,   1L,    10L,
+               1826L,  1L,  0L,  1L,  1L,  1L,  1L,  1L,  1L,  1L,   1L,     9L,
+               1973L,  1L,  1L,  1L,  1L,  0L,  1L,  0L,  1L,  1L,   1L,     8L,
+               1936L,  0L,  1L,  1L,  1L,  1L,  1L,  1L,  1L,  1L,   0L,     8L,
+               1114L,  1L,  0L,  0L,  1L,  1L,  0L,  0L,  0L,  1L,   1L,     5L,
+               1181L,  0L,  1L,  1L,  1L,  0L,  0L,  1L,  1L,  1L,   1L,     7L,
+               1917L,  1L,  1L,  1L,  1L,  0L,  1L,  0L,  1L,  1L,   1L,     8L
+               )
+
+
+<span class="co"># Analyze the dichomous data. Use look_up = TRUE if you want to see the look up tables from Subkoviak (1988).</span>
+sub_ex_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">subkoviak</span>(<span class="dt">data =</span> test_data, <span class="dt">items =</span> <span class="dv">2</span><span class="op">:</span><span class="dv">11</span>, <span class="dt">raw_cut_score =</span> <span class="dv">8</span>)</code></pre></div>
+<p>The output from the analysis contains five variables.</p>
+<ol style="list-style-type: decimal">
+<li><em>z</em>: The actual estimated standardized cut-score</li>
+<li><em>z_rounded</em>: The rounded standardized cut-score used in the table look up</li>
+<li><em>KR_est</em>: The estimated alpha coefficient using one the Kuder-Richardson methods</li>
+<li><em>agree_coef.r_0.4</em>: The estimated agreement (<em>p<sub>o</sub></em>) coefficient</li>
+<li><em>kappa_coef.r_0.4</em>: The estimated kappa (<span class="math inline">\(\kappa\)</span>) coefficient</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sub_ex_<span class="dv">1</span>
+<span class="co">#&gt;      z z_rounded    KR_est agree_coef.r_0.4 kappa_coef.r_0.4</span>
+<span class="co">#&gt; 1 0.45       0.4 0.4250152             0.66             0.25</span></code></pre></div>
 </div>
 <div id="phi_domain" class="section level3">
 <h3>phi_domain</h3>
 </div>
 <div id="phi_lambda" class="section level3">
 <h3>phi_lambda</h3>
+</div>
+</div>
+<div id="references" class="section level1 unnumbered">
+<h1>References</h1>
+<div id="refs" class="references">
+<div id="ref-subkoviak1988practitioner">
+<p>Subkoviak, Michael J. 1988. “A Practitioner’s Guide to Computation and Interpretation of Reliability Indices for Mastery Tests.” <em>Journal of Educational Measurement</em> 25. Wiley Online Library: 47–55.</p>
+</div>
 </div>
 </div>
 

@@ -7,12 +7,99 @@ vignette: >
     %\VignetteEngine{knitr::rmarkdown}
     %\VignetteIndexEntry{rcrtan}
     \usepackage[utf8]{inputenc}
+bibliography: "../book.bib"
 ---
 
-## Dependability
+This package contains functions for criterion-referenced test and item analysis. 
+
+## Test Analysis: Dependability
+
+The functions below can be used to examine the dependability of _single administration_ CRT assessments. 
 
 ### subkoviak
 
+The `subkoviak` function follows @subkoviak1988practitioner's single administration procedures for estimating $\kappa$ and *p~o~*. To use the `subkoviak` function the data can come in one of two forms:
+
+1. A dataframe of dichotomously scored items
+2. A dataframe of total (raw) scores on the test. This also requires the analyst/researcher to know how many (dichotomous) items were on the test.
+
+In both situations, the analyst/researcher needs to know the raw cut score of the test.
+
+The procedure uses two pieces of information to estimate $\kappa$ and *p~o~*. They are a reliability coefficient (estimated in this function using Kuder-Richardson 20 or 21) and a standardized cut-score, which is estimated following @subkoviak1988practitioner. The estimated $\alpha$ coefficient and standardized cut-score are used to look up the values for $\kappa$ and *p~o~* in look up tables, which the function will return if `look_up = TRUE`
+
+$$ z = \frac{c - 0.5 - M}{S}$$
+
+where:
+
+- _z_ = The standardized cut-score
+- _c_ = The raw cut-score of the test
+- _M_ =  The mean raw total score of the test
+- _S_ = The standard deviation of the raw total scores of the test
+
+#### Examples: With item information
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE, error=FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>", echo=TRUE, warning=FALSE, message=FALSE, error=FALSE)
+```
+
+```{r}
+
+# Load the library
+library(rcrtan)
+
+# Some data
+test_data <- tibble::tribble(
+                 ~ID, ~Q1, ~Q2, ~Q3, ~Q4, ~Q5, ~Q6, ~Q7, ~Q8, ~Q9, ~Q10, ~Total,
+               1441L,  1L,  1L,  1L,  1L,  1L,  1L,  1L,  1L,  1L,   1L,    10L,
+               1387L,  1L,  1L,  1L,  1L,  1L,  0L,  0L,  1L,  1L,   1L,     8L,
+               1994L,  1L,  1L,  1L,  1L,  1L,  0L,  0L,  1L,  1L,   1L,     8L,
+               1453L,  1L,  1L,  1L,  1L,  0L,  1L,  0L,  1L,  1L,   1L,     8L,
+               1679L,  1L,  0L,  1L,  0L,  0L,  1L,  1L,  1L,  1L,   1L,     7L,
+               1899L,  1L,  1L,  1L,  1L,  0L,  1L,  0L,  1L,  1L,   1L,     8L,
+               1631L,  1L,  1L,  1L,  1L,  1L,  1L,  0L,  1L,  1L,   1L,     9L,
+               1894L,  1L,  0L,  1L,  1L,  1L,  1L,  1L,  1L,  1L,   1L,     9L,
+               1206L,  0L,  0L,  1L,  1L,  0L,  1L,  0L,  1L,  0L,   1L,     5L,
+               1163L,  1L,  1L,  1L,  1L,  1L,  0L,  0L,  1L,  1L,   1L,     8L,
+               1964L,  1L,  1L,  1L,  1L,  1L,  1L,  1L,  1L,  1L,   1L,    10L,
+               1050L,  1L,  1L,  1L,  1L,  1L,  1L,  1L,  1L,  1L,   1L,    10L,
+               1034L,  1L,  1L,  1L,  1L,  1L,  1L,  1L,  1L,  1L,   1L,    10L,
+               1826L,  1L,  0L,  1L,  1L,  1L,  1L,  1L,  1L,  1L,   1L,     9L,
+               1973L,  1L,  1L,  1L,  1L,  0L,  1L,  0L,  1L,  1L,   1L,     8L,
+               1936L,  0L,  1L,  1L,  1L,  1L,  1L,  1L,  1L,  1L,   0L,     8L,
+               1114L,  1L,  0L,  0L,  1L,  1L,  0L,  0L,  0L,  1L,   1L,     5L,
+               1181L,  0L,  1L,  1L,  1L,  0L,  0L,  1L,  1L,  1L,   1L,     7L,
+               1917L,  1L,  1L,  1L,  1L,  0L,  1L,  0L,  1L,  1L,   1L,     8L
+               )
+
+
+# Analyze the dichomous data. Use look_up = TRUE if you want to see the look up tables from Subkoviak (1988).
+sub_ex_1 <- subkoviak(data = test_data, items = 2:11, raw_cut_score = 8)
+```
+
+The output from the analysis contains five variables.
+
+1. _z_: The actual estimated standardized cut-score 
+2. *z_rounded*: The rounded standardized cut-score used in the table look up
+3. *KR_est*: The estimated alpha coefficient using one the Kuder-Richardson methods
+4. *agree_coef.r_0.4*: The estimated agreement (*p~o~*) coefficient 
+5. *kappa_coef.r_0.4*: The estimated kappa ($\kappa$) coefficient
+
+```{r}
+sub_ex_1
+```
+
+#### Examples: Without item information
+
+When item-level information is not available the _items_ argument takes the number of dichotomous items on the test, and the _total_ argument takes the name of the column in the dataframe with the total score.
+
+```{r}
+sub_ex_2 <- subkoviak(data = test_data, items = 10, raw_cut_score = 8, total = 'Total')
+```
+
 ### phi_domain
 
+The `phi_domain` function calculates Brennan's (1980) short-cut estimate of the generalizability coefficient for absolute decisions.
+
 ### phi_lambda
+
+# References

@@ -4,3 +4,9 @@
 ^data-raw$
 ^tests
 ^revdep$
+.Rhistory
+.gitignore
+.travis.yml
+.Rproj.user
+.git
+.bib
