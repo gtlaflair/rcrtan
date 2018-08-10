@@ -1,3 +1,11 @@
+## Resubmission
+
+This is a resubmission. In this version, I have:
+
+* Removed the .bib file that was causing a NOTE
+* Added cran-comments.md to .Rbuildignore, which was also causing a NOTE
+
+
 ## Test environments
 
 
