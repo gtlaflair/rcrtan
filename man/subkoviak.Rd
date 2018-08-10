@@ -14,7 +14,7 @@ number of items on the test (see Details)}
 
 \item{raw_cut_score}{The raw cut-score for the test}
 
-\item{total}{Total score of the test (see Details)}
+\item{total}{Total score column of the test (see Details)}
 
 \item{look_up}{If TRUE, the agreement and kappa tables from Subkoviak (1988) are returned with the results}
 }

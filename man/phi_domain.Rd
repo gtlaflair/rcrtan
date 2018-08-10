@@ -2,7 +2,7 @@
 % Please edit documentation in R/dependability.R
 \name{phi_domain}
 \alias{phi_domain}
-\title{Calculate Brennan's short-cut estimate for domain score dependability}
+\title{Calculate Brown's (1990) short-cut estimate for phi dependability}
 \usage{
 phi_domain(data, items, total = NULL)
 }
@@ -12,13 +12,13 @@ phi_domain(data, items, total = NULL)
 \item{items}{Raw column indices representing the test items or 
 number of items on the test (see Details).}
 
-\item{total}{Total score of the test (see Details)}
+\item{total}{Total score column name of the test (see Details)}
 }
 \value{
 The \code{phi} estimate for domain score dependability.
 }
 \description{
-Calculate Brennan's short-cut estimate for domain score dependability
+Calculate Brown's (1990) short-cut estimate for phi dependability
 }
 \details{
 When the item-level information is available, Kuder-Richardson 20 is used

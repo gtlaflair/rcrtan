@@ -32,8 +32,33 @@ test_data <- tibble::tribble(
 
 
 # Analyze the dichomous data. Use look_up = TRUE if you want to see the look up tables from Subkoviak (1988).
-sub_ex_1 <- subkoviak(data = test_data, items = 2:11, raw_cut_score = 8)
+sub_ex_one <- subkoviak(data = test_data, items = 2:11, raw_cut_score = 8)
 
 ## ------------------------------------------------------------------------
-sub_ex_1
+sub_ex_one
+
+## ------------------------------------------------------------------------
+sub_ex_two <- subkoviak(data = test_data, items = 10, raw_cut_score = 8, total = "Total")
+
+sub_ex_two
+
+## ------------------------------------------------------------------------
+# When item level information is known
+phi_d_one <- phi_domain(data = test_data, items = 2:11)
+
+# When only total scores and number of items on the test are known
+phi_d_two <- phi_domain(data = test_data, items = 10, total = "Total")
+
+phi_d_one
+
+phi_d_two
+
+## ------------------------------------------------------------------------
+phi_l_one <- rcrtan::phi_lambda(test_data, 2:11, cut_score = 0.80)
+
+phi_l_two <- phi_lambda(test_data, 10, cut_score = 0.80, total = 'Total')
+
+phi_l_one
+
+phi_l_two
 

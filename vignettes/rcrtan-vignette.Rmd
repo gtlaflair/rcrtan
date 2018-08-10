@@ -7,7 +7,7 @@ vignette: >
     %\VignetteEngine{knitr::rmarkdown}
     %\VignetteIndexEntry{rcrtan}
     \usepackage[utf8]{inputenc}
-bibliography: "../book.bib"
+bibliography: "../bibs.bib"
 ---
 
 This package contains functions for criterion-referenced test and item analysis. 
@@ -73,7 +73,7 @@ test_data <- tibble::tribble(
 
 
 # Analyze the dichomous data. Use look_up = TRUE if you want to see the look up tables from Subkoviak (1988).
-sub_ex_1 <- subkoviak(data = test_data, items = 2:11, raw_cut_score = 8)
+sub_ex_one <- subkoviak(data = test_data, items = 2:11, raw_cut_score = 8)
 ```
 
 The output from the analysis contains five variables.
@@ -85,7 +85,7 @@ The output from the analysis contains five variables.
 5. *kappa_coef.r_0.4*: The estimated kappa ($\kappa$) coefficient
 
 ```{r}
-sub_ex_1
+sub_ex_one
 ```
 
 #### Examples: Without item information
@@ -93,13 +93,39 @@ sub_ex_1
 When item-level information is not available the _items_ argument takes the number of dichotomous items on the test, and the _total_ argument takes the name of the column in the dataframe with the total score.
 
 ```{r}
-sub_ex_2 <- subkoviak(data = test_data, items = 10, raw_cut_score = 8, total = 'Total')
+sub_ex_two <- subkoviak(data = test_data, items = 10, raw_cut_score = 8, total = "Total")
+
+sub_ex_two
 ```
 
 ### phi_domain
 
-The `phi_domain` function calculates Brennan's (1980) short-cut estimate of the generalizability coefficient for absolute decisions.
+The `phi_domain` function calculates @brown1988short short-cut estimate of the generalizability coefficient ($\phi$ dependability) for absolute decisions.
+
+```{r}
+# When item level information is known
+phi_d_one <- phi_domain(data = test_data, items = 2:11)
+
+# When only total scores and number of items on the test are known
+phi_d_two <- phi_domain(data = test_data, items = 10, total = "Total")
+
+phi_d_one
+
+phi_d_two
+```
 
 ### phi_lambda
+
+The `phi_lambda` function uses @brennan1984estimating formula to estimate the dependability of a test. One difference to note between this function and `subkoviak` is that the *cut_score* argument is expressed as a proportion.
+
+```{r}
+phi_l_one <- rcrtan::phi_lambda(test_data, 2:11, cut_score = 0.80)
+
+phi_l_two <- phi_lambda(test_data, 10, cut_score = 0.80, total = 'Total')
+
+phi_l_one
+
+phi_l_two
+```
 
 # References

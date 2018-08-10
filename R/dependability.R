@@ -3,7 +3,7 @@
 #' @param data A data frame of dichotomously scored test items
 #' @param items Raw column indices representing the test items or 
 #' number of items on the test (see Details)
-#' @param total Total score of the test (see Details)
+#' @param total Total score column of the test (see Details)
 #' @param raw_cut_score The raw cut-score for the test
 #' @param look_up If TRUE, the agreement and kappa tables from Subkoviak (1988) are returned with the results
 #' @return The \code{z_cut} score and the rounded \code{z_cut_rounded} score for the test 
@@ -34,7 +34,10 @@
 subkoviak <- function(data, items, raw_cut_score, total = NULL, look_up = FALSE){
   
   c <- raw_cut_score
-  total <- total
+
+  if(!is.null(total)){
+    colnames(data)[which(colnames(data) == total)] <- "total"
+  }
   
   if(length(items) == 1 & is.null(total)){
     stop("If you do not have item-level data, you need to fill the 'total' argument with the name of a column that contains the total raw scores.")
@@ -134,12 +137,12 @@ subkoviak <- function(data, items, raw_cut_score, total = NULL, look_up = FALSE)
 
 }
 
-#' Calculate Brennan's short-cut estimate for domain score dependability 
+#' Calculate Brown's (1990) short-cut estimate for phi dependability 
 #' 
 #' @param data A data frame of dichotomously scored test items
 #' @param items Raw column indices representing the test items or 
 #' number of items on the test (see Details).
-#' @param total Total score of the test (see Details)
+#' @param total Total score column name of the test (see Details)
 #' @return The \code{phi} estimate for domain score dependability.
 #' 
 #' @importFrom magrittr %>%
@@ -159,7 +162,10 @@ phi_domain <- function(data, items, total = NULL){
 
   
   n <- length(data[[1]])
-  total <- total
+
+  if(!is.null(total)){
+    colnames(data)[which(colnames(data) == total)] <- "total"
+  }
   
   if(length(items) == 1 & is.null(total)){
     stop("If you do not have item-level data, you need to fill the 'total' argument with the name of a column that contains the total raw scores.")
@@ -215,8 +221,8 @@ phi_domain <- function(data, items, total = NULL){
       as.numeric()
     
     sp2 <- data %>%
-      select(., items) %>%
-      by_row(., sum, .collate = 'rows', .to = 'total') %>%
+      # select(., items) %>%
+      # by_row(., sum, .collate = 'rows', .to = 'total') %>%
       summarise(s_p = (sd_pop(total, n = length(total))/k)^2) %>%
       as.numeric()
     
@@ -243,33 +249,35 @@ phi_domain <- function(data, items, total = NULL){
 }
 
 
-#' Calculate Brennan's short-cut estimate for phi lambda
+#' Calculate Brennan's (1984) estimate for phi lambda
 #' 
 #' @param data A data frame of dichotomously scored test items
-#' @param scores Column name of raw test scores
+#' @param total Column name of raw test scores.
 #' @param cut_score Cut-score of the test expressed as a proportion (e.g., 0.70)
-#' @param items Number of items on the test (needed if data does not contain item-level information)
+#' @param items Raw column indices representing the test items or 
+#' number of items on the test
 #' 
 #' @importFrom magrittr %>%
 #' @importFrom stats sd
+#' @importFrom purrrlyr by_row
 #' 
 #' @export phi_lambda
 #' 
 #' @examples 
-#' phi_lambda(data = bh_item, items = 100, scores = "Total", cut_score = 0.70)
-phi_lambda <- function(data, items, cut_score, scores = NULL){
+#' phi_lambda(data = bh_item, items = 100, total = "Total", cut_score = 0.70)
+phi_lambda <- function(data, items, cut_score, total = NULL){
 
   lambda <- cut_score
   n_persons <- length(data[[1]])
 
-  if(is.null(scores)){
+  if(is.null(total)){
     data <- data %>%
-      select(., 2:26) %>%
-      by_row(., sum, .collate = 'rows', .to = 'scores')
+      select(., items) %>%
+      by_row(., sum, .collate = 'rows', .to = 'total')
   }
   
-  if(!is.null(scores)){
-    colnames(data)[which(colnames(data) == scores)] <- "scores"
+  if(!is.null(total)){
+    colnames(data)[which(colnames(data) == total)] <- "total"
   }
   
   if(length(items) > 1){
@@ -282,12 +290,12 @@ phi_lambda <- function(data, items, cut_score, scores = NULL){
   
   mp <- data %>%
     # select(., scores) %>%
-    summarise(mean = mean(scores) / k) %>%
+    summarise(mean = mean(total) / k) %>%
     as.numeric()
   
   sp2 <- data %>%
     # select(., scores) %$%
-    summarise(sd_pop = (sd_pop(scores, length(scores)) / k) ^2) %>%
+    summarise(sd_pop = (sd_pop(total, length(total)) / k) ^2) %>%
     as.numeric()
   
   phi <- 1 - ((1 / (k - 1)) * ((mp * (1 - mp) - sp2) / ((mp - lambda)^2 + sp2))) %>%

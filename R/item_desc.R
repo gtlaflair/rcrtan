@@ -37,7 +37,7 @@ if_total <- function(data, items){
 #' @param data A data frame of dichotomously scored test times
 #' @param items Raw column indices representing the test items
 #' @param cut_score A raw or percentage cut-score
-#' @param scale A character vector indicataing wheter the cut-score
+#' @param scale A character vector indicating wheter the cut-score
 #' is 'raw' (default) or 'percent'
 #' @return Item_facility_pass Item facility values for test items of
 #' of test takers who passed the test
@@ -90,7 +90,7 @@ if_pass <- function(data, items, cut_score, scale = 'raw'){
 #' @param data A data frame of dichotomously scored test times
 #' @param items Raw column indices representing the test items
 #' @param cut_score A raw or percentage cut-score
-#' @param scale A character vector indicataing wheter the cut-score
+#' @param scale A character vector indicating wheter the cut-score
 #' is 'raw' (default) or 'percent'
 #' @return Item_facility_fail Item facility values for test items of
 #' of test takers who failed the test
@@ -141,7 +141,7 @@ if_fail <- function(data, items, cut_score, scale = 'raw'){
 #' @param data A data frame of dichotomously scored test times
 #' @param items Raw column indices representing the test items
 #' @param cut_score A raw or percentage cut-score
-#' @param scale A character vector indicataing wheter the cut-score
+#' @param scale A character vector indicating wheter the cut-score
 #' is 'raw' (default) or 'percent'
 #' @return Bindex B-index values for items on the test
 #' 
@@ -185,7 +185,7 @@ b_index <- function(data, items, cut_score, scale = 'raw'){
 #' @param data A data frame of dichotomously scored test times
 #' @param items Raw column indices representing the test items
 #' @param cut_score A raw or percentage cut-score
-#' @param scale A character vector indicataing wheter the cut-score
+#' @param scale A character vector indicating wheter the cut-score
 #' is 'raw' (default) or 'percent'
 #' @return Agree Agreement statistic values for items on the test
 #' 
@@ -234,7 +234,7 @@ agree_stat <- function(data, items, cut_score, scale = 'raw'){
 #' @param data A data frame of dichotomously scored test times
 #' @param items Raw column indices representing the test items
 #' @param cut_score A raw or percentage cut-score
-#' @param scale A character vector indicataing wheter the cut-score
+#' @param scale A character vector indicating wheter the cut-score
 #' is 'raw' (default) or 'percent'
 #' @return Phi Item Phi values for items on the test
 #' 
@@ -287,7 +287,7 @@ item_phi <- function(data, items, cut_score, scale = 'raw'){
 #' @param data A data frame of dichotomously scored test times
 #' @param items Raw column indices representing the test items
 #' @param cut_score A raw or percentage cut-score
-#' @param scale A character vector indicataing wheter the cut-score
+#' @param scale A character vector indicating wheter the cut-score
 #' is 'raw' (default) or 'percent'
 #' @return \code{if_pass} contains item facility values for test items for students who 
 #' passed the test

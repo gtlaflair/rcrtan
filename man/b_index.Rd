@@ -13,7 +13,7 @@ b_index(data, items, cut_score, scale = "raw")
 
 \item{cut_score}{A raw or percentage cut-score}
 
-\item{scale}{A character vector indicataing wheter the cut-score
+\item{scale}{A character vector indicating wheter the cut-score
 is 'raw' (default) or 'percent'}
 }
 \value{

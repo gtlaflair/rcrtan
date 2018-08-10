@@ -80,21 +80,23 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>The functions below can be used to examine the dependability of <em>single administration</em> CRT assessments.</p>
 <div id="subkoviak" class="section level3">
 <h3>subkoviak</h3>
-<p>The <code>subkoviak</code> function follows <span class="citation">Subkoviak (1988)</span>’s single administration procedures for estimating <span class="math inline">\(\kappa\)</span> and <span class="math inline">\(\rho\)</span>. To use the <code>subkoviak</code> function the data can come in one of two forms:</p>
+<p>The <code>subkoviak</code> function follows <span class="citation">Subkoviak (1988)</span>’s single administration procedures for estimating <span class="math inline">\(\kappa\)</span> and <em>p<sub>o</sub></em>. To use the <code>subkoviak</code> function the data can come in one of two forms:</p>
 <ol style="list-style-type: decimal">
 <li>A dataframe of dichotomously scored items</li>
 <li>A dataframe of total (raw) scores on the test. This also requires the analyst/researcher to know how many (dichotomous) items were on the test.</li>
 </ol>
 <p>In both situations, the analyst/researcher needs to know the raw cut score of the test.</p>
-<p>The procedure uses two pieces of information to estimate <span class="math inline">\(\kappa\)</span> and <span class="math inline">\(\rho\)</span>. They are a reliability coefficient (estimated in this function using Kuder-Richardson 20 or 21) and a standardized cut-score, which is estimated following <span class="citation">Subkoviak (1988)</span>. The estimated <span class="math inline">\(\alpha\)</span> coefficient and standardized cut-score are used to look up the values for <span class="math inline">\(\kappa\)</span> and <span class="math inline">\(\rho\)</span> in look up tables, which the function will return if <code>look_up = TRUE</code></p>
+<p>The procedure uses two pieces of information to estimate <span class="math inline">\(\kappa\)</span> and <em>p<sub>o</sub></em>. They are a reliability coefficient (estimated in this function using Kuder-Richardson 20 or 21) and a standardized cut-score, which is estimated following <span class="citation">Subkoviak (1988)</span>. The estimated <span class="math inline">\(\alpha\)</span> coefficient and standardized cut-score are used to look up the values for <span class="math inline">\(\kappa\)</span> and <em>p<sub>o</sub></em> in look up tables, which the function will return if <code>look_up = TRUE</code></p>
 <p><span class="math display">\[ z = \frac{c - 0.5 - M}{S}\]</span></p>
 <p>where:</p>
 <ul>
-<li><em>z</em> = The standardized cut-score Examples:</li>
+<li><em>z</em> = The standardized cut-score</li>
 <li><em>c</em> = The raw cut-score of the test</li>
 <li><em>M</em> = The mean raw total score of the test</li>
 <li><em>S</em> = The standard deviation of the raw total scores of the test</li>
 </ul>
+<div id="examples-with-item-information" class="section level4">
+<h4>Examples: With item information</h4>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">
 <span class="co"># Load the library</span>
 <span class="kw">library</span>(rcrtan)
@@ -125,7 +127,7 @@ test_data &lt;-<span class="st"> </span>tibble<span class="op">::</span><span cl
 
 
 <span class="co"># Analyze the dichomous data. Use look_up = TRUE if you want to see the look up tables from Subkoviak (1988).</span>
-sub_ex_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">subkoviak</span>(<span class="dt">data =</span> test_data, <span class="dt">items =</span> <span class="dv">2</span><span class="op">:</span><span class="dv">11</span>, <span class="dt">raw_cut_score =</span> <span class="dv">8</span>)</code></pre></div>
+sub_ex_one &lt;-<span class="st"> </span><span class="kw">subkoviak</span>(<span class="dt">data =</span> test_data, <span class="dt">items =</span> <span class="dv">2</span><span class="op">:</span><span class="dv">11</span>, <span class="dt">raw_cut_score =</span> <span class="dv">8</span>)</code></pre></div>
 <p>The output from the analysis contains five variables.</p>
 <ol style="list-style-type: decimal">
 <li><em>z</em>: The actual estimated standardized cut-score</li>
@@ -134,20 +136,62 @@ sub_ex_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">
 <li><em>agree_coef.r_0.4</em>: The estimated agreement (<em>p<sub>o</sub></em>) coefficient</li>
 <li><em>kappa_coef.r_0.4</em>: The estimated kappa (<span class="math inline">\(\kappa\)</span>) coefficient</li>
 </ol>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sub_ex_<span class="dv">1</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sub_ex_one
 <span class="co">#&gt;      z z_rounded    KR_est agree_coef.r_0.4 kappa_coef.r_0.4</span>
 <span class="co">#&gt; 1 0.45       0.4 0.4250152             0.66             0.25</span></code></pre></div>
 </div>
+<div id="examples-without-item-information" class="section level4">
+<h4>Examples: Without item information</h4>
+<p>When item-level information is not available the <em>items</em> argument takes the number of dichotomous items on the test, and the <em>total</em> argument takes the name of the column in the dataframe with the total score.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sub_ex_two &lt;-<span class="st"> </span><span class="kw">subkoviak</span>(<span class="dt">data =</span> test_data, <span class="dt">items =</span> <span class="dv">10</span>, <span class="dt">raw_cut_score =</span> <span class="dv">8</span>, <span class="dt">total =</span> <span class="st">&quot;Total&quot;</span>)
+
+sub_ex_two
+<span class="co">#&gt;      z z_rounded    KR_est agree_coef.r_0.3 kappa_coef.r_0.3</span>
+<span class="co">#&gt; 1 0.45       0.4 0.3309846             0.63             0.19</span></code></pre></div>
+</div>
+</div>
 <div id="phi_domain" class="section level3">
 <h3>phi_domain</h3>
+<p>The <code>phi_domain</code> function calculates <span class="citation">Brown (1988)</span> short-cut estimate of the generalizability coefficient (<span class="math inline">\(\phi\)</span> dependability) for absolute decisions.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># When item level information is known</span>
+phi_d_one &lt;-<span class="st"> </span><span class="kw">phi_domain</span>(<span class="dt">data =</span> test_data, <span class="dt">items =</span> <span class="dv">2</span><span class="op">:</span><span class="dv">11</span>)
+
+<span class="co"># When only total scores and number of items on the test are known</span>
+phi_d_two &lt;-<span class="st"> </span><span class="kw">phi_domain</span>(<span class="dt">data =</span> test_data, <span class="dt">items =</span> <span class="dv">10</span>, <span class="dt">total =</span> <span class="st">&quot;Total&quot;</span>)
+
+phi_d_one
+<span class="co">#&gt;   Domain Phi</span>
+<span class="co">#&gt; 1  0.3864201</span>
+
+phi_d_two
+<span class="co">#&gt;   Domain Phi</span>
+<span class="co">#&gt; 1  0.3290602</span></code></pre></div>
 </div>
 <div id="phi_lambda" class="section level3">
 <h3>phi_lambda</h3>
+<p>The <code>phi_lambda</code> function uses <span class="citation">Brennan (1984)</span> formula to estimate the dependability of a test. One difference to note between this function and <code>subkoviak</code> is that the <em>cut_score</em> argument is expressed as a proportion.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">phi_l_one &lt;-<span class="st"> </span>rcrtan<span class="op">::</span><span class="kw">phi_lambda</span>(test_data, <span class="dv">2</span><span class="op">:</span><span class="dv">11</span>, <span class="dt">cut_score =</span> <span class="fl">0.80</span>)
+
+phi_l_two &lt;-<span class="st"> </span><span class="kw">phi_lambda</span>(test_data, <span class="dv">10</span>, <span class="dt">cut_score =</span> <span class="fl">0.80</span>, <span class="dt">total =</span> <span class="st">'Total'</span>)
+
+phi_l_one
+<span class="co">#&gt;   Phi Lambda</span>
+<span class="co">#&gt; 1  0.2962963</span>
+
+phi_l_two
+<span class="co">#&gt;   Phi Lambda</span>
+<span class="co">#&gt; 1  0.2962963</span></code></pre></div>
 </div>
 </div>
 <div id="references" class="section level1 unnumbered">
 <h1>References</h1>
 <div id="refs" class="references">
+<div id="ref-brennan1984estimating">
+<p>Brennan, Robert L. 1984. “Estimating the Dependability of the Scores.” In <em>A Guide to Criterion-Referenced Test Construction</em>, edited by Ronald A Berk, 231–66. Baltimore, MD: The Johns Hopkins University Press.</p>
+</div>
+<div id="ref-brown1988short">
+<p>Brown, JD. 1988. “Short Cut Estimates of Criterion-Referenced Test Reliability.” <em>Language Testing</em> 7: 77–97.</p>
+</div>
 <div id="ref-subkoviak1988practitioner">
 <p>Subkoviak, Michael J. 1988. “A Practitioner’s Guide to Computation and Interpretation of Reliability Indices for Mastery Tests.” <em>Journal of Educational Measurement</em> 25. Wiley Online Library: 47–55.</p>
 </div>
