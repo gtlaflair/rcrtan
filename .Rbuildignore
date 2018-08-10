@@ -9,3 +9,5 @@
 .travis.yml
 .Rproj.user
 .git
+*.bib
+cran-comments.md
