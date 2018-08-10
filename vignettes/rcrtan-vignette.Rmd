@@ -1,13 +1,12 @@
 ---
 title: "rcrtan"
-author: "Geoff LaFlair"
+author: "Geoffrey T. LaFlair"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
     %\VignetteEngine{knitr::rmarkdown}
     %\VignetteIndexEntry{rcrtan}
     \usepackage[utf8]{inputenc}
-bibliography: "../bibs.bib"
 ---
 
 This package contains functions for criterion-referenced test and item analysis. 
@@ -18,14 +17,14 @@ The functions below can be used to examine the dependability of _single administ
 
 ### subkoviak
 
-The `subkoviak` function follows @subkoviak1988practitioner's single administration procedures for estimating $\kappa$ and *p~o~*. To use the `subkoviak` function the data can come in one of two forms:
+The `subkoviak` function follows Subkoviak's (1988) single administration procedures for estimating $\kappa$ and *p~o~*. To use the `subkoviak` function the data can come in one of two forms:
 
 1. A dataframe of dichotomously scored items
 2. A dataframe of total (raw) scores on the test. This also requires the analyst/researcher to know how many (dichotomous) items were on the test.
 
 In both situations, the analyst/researcher needs to know the raw cut score of the test.
 
-The procedure uses two pieces of information to estimate $\kappa$ and *p~o~*. They are a reliability coefficient (estimated in this function using Kuder-Richardson 20 or 21) and a standardized cut-score, which is estimated following @subkoviak1988practitioner. The estimated $\alpha$ coefficient and standardized cut-score are used to look up the values for $\kappa$ and *p~o~* in look up tables, which the function will return if `look_up = TRUE`
+The procedure uses two pieces of information to estimate $\kappa$ and *p~o~*. They are a reliability coefficient (estimated in this function using Kuder-Richardson 20 or 21) and a standardized cut-score, which is estimated following Subkoviak (1988). The estimated $\alpha$ coefficient and standardized cut-score are used to look up the values for $\kappa$ and *p~o~* in look up tables, which the function will return if `look_up = TRUE`
 
 $$ z = \frac{c - 0.5 - M}{S}$$
 
@@ -100,7 +99,7 @@ sub_ex_two
 
 ### phi_domain
 
-The `phi_domain` function calculates @brown1988short short-cut estimate of the generalizability coefficient ($\phi$ dependability) for absolute decisions.
+The `phi_domain` function calculates Brown (1988) short-cut estimate of the generalizability coefficient ($\phi$ dependability) for absolute decisions.
 
 ```{r}
 # When item level information is known
@@ -116,7 +115,7 @@ phi_d_two
 
 ### phi_lambda
 
-The `phi_lambda` function uses @brennan1984estimating formula to estimate the dependability of a test. One difference to note between this function and `subkoviak` is that the *cut_score* argument is expressed as a proportion.
+The `phi_lambda` function uses Brennan (1984) formula to estimate the dependability of a test. One difference to note between this function and `subkoviak` is that the *cut_score* argument is expressed as a proportion.
 
 ```{r}
 phi_l_one <- rcrtan::phi_lambda(test_data, 2:11, cut_score = 0.80)
@@ -129,3 +128,9 @@ phi_l_two
 ```
 
 # References
+
+Brennan, R. L. (1984). Estimating the dependability of the scores. In _A guide to criterion-referenced test construction_, (Ed.) Ronald A Berk. 231–66. Baltimore, MD: The Johns Hopkins University Press.
+
+Brown, J. D. (1988). Short cut estimates of criterion-referenced test reliability. _Language Testing_, _7_, 77–97.
+
+Subkoviak, M. J. (1988). A practitioner’s guide to computation and interpretation of reliability indices for mastery tests. _Journal of Educational Measurement, 25_, 47–55.
