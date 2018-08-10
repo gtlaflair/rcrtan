@@ -80,13 +80,13 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>The functions below can be used to examine the dependability of <em>single administration</em> CRT assessments.</p>
 <div id="subkoviak" class="section level3">
 <h3>subkoviak</h3>
-<p>The <code>subkoviak</code> function follows <span class="citation">Subkoviak (1988)</span>’s single administration procedures for estimating <span class="math inline">\(\kappa\)</span> and <em>p<sub>o</sub></em>. To use the <code>subkoviak</code> function the data can come in one of two forms:</p>
+<p>The <code>subkoviak</code> function follows Subkoviak’s (1988) single administration procedures for estimating <span class="math inline">\(\kappa\)</span> and <em>p<sub>o</sub></em>. To use the <code>subkoviak</code> function the data can come in one of two forms:</p>
 <ol style="list-style-type: decimal">
 <li>A dataframe of dichotomously scored items</li>
 <li>A dataframe of total (raw) scores on the test. This also requires the analyst/researcher to know how many (dichotomous) items were on the test.</li>
 </ol>
 <p>In both situations, the analyst/researcher needs to know the raw cut score of the test.</p>
-<p>The procedure uses two pieces of information to estimate <span class="math inline">\(\kappa\)</span> and <em>p<sub>o</sub></em>. They are a reliability coefficient (estimated in this function using Kuder-Richardson 20 or 21) and a standardized cut-score, which is estimated following <span class="citation">Subkoviak (1988)</span>. The estimated <span class="math inline">\(\alpha\)</span> coefficient and standardized cut-score are used to look up the values for <span class="math inline">\(\kappa\)</span> and <em>p<sub>o</sub></em> in look up tables, which the function will return if <code>look_up = TRUE</code></p>
+<p>The procedure uses two pieces of information to estimate <span class="math inline">\(\kappa\)</span> and <em>p<sub>o</sub></em>. They are a reliability coefficient (estimated in this function using Kuder-Richardson 20 or 21) and a standardized cut-score, which is estimated following Subkoviak (1988). The estimated <span class="math inline">\(\alpha\)</span> coefficient and standardized cut-score are used to look up the values for <span class="math inline">\(\kappa\)</span> and <em>p<sub>o</sub></em> in look up tables, which the function will return if <code>look_up = TRUE</code></p>
 <p><span class="math display">\[ z = \frac{c - 0.5 - M}{S}\]</span></p>
 <p>where:</p>
 <ul>
@@ -152,7 +152,7 @@ sub_ex_two
 </div>
 <div id="phi_domain" class="section level3">
 <h3>phi_domain</h3>
-<p>The <code>phi_domain</code> function calculates <span class="citation">Brown (1988)</span> short-cut estimate of the generalizability coefficient (<span class="math inline">\(\phi\)</span> dependability) for absolute decisions.</p>
+<p>The <code>phi_domain</code> function calculates Brown (1988) short-cut estimate of the generalizability coefficient (<span class="math inline">\(\phi\)</span> dependability) for absolute decisions.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># When item level information is known</span>
 phi_d_one &lt;-<span class="st"> </span><span class="kw">phi_domain</span>(<span class="dt">data =</span> test_data, <span class="dt">items =</span> <span class="dv">2</span><span class="op">:</span><span class="dv">11</span>)
 
@@ -169,7 +169,7 @@ phi_d_two
 </div>
 <div id="phi_lambda" class="section level3">
 <h3>phi_lambda</h3>
-<p>The <code>phi_lambda</code> function uses <span class="citation">Brennan (1984)</span> formula to estimate the dependability of a test. One difference to note between this function and <code>subkoviak</code> is that the <em>cut_score</em> argument is expressed as a proportion.</p>
+<p>The <code>phi_lambda</code> function uses Brennan (1984) formula to estimate the dependability of a test. One difference to note between this function and <code>subkoviak</code> is that the <em>cut_score</em> argument is expressed as a proportion.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">phi_l_one &lt;-<span class="st"> </span>rcrtan<span class="op">::</span><span class="kw">phi_lambda</span>(test_data, <span class="dv">2</span><span class="op">:</span><span class="dv">11</span>, <span class="dt">cut_score =</span> <span class="fl">0.80</span>)
 
 phi_l_two &lt;-<span class="st"> </span><span class="kw">phi_lambda</span>(test_data, <span class="dv">10</span>, <span class="dt">cut_score =</span> <span class="fl">0.80</span>, <span class="dt">total =</span> <span class="st">'Total'</span>)
@@ -183,19 +183,11 @@ phi_l_two
 <span class="co">#&gt; 1  0.2962963</span></code></pre></div>
 </div>
 </div>
-<div id="references" class="section level1 unnumbered">
+<div id="references" class="section level1">
 <h1>References</h1>
-<div id="refs" class="references">
-<div id="ref-brennan1984estimating">
-<p>Brennan, Robert L. 1984. “Estimating the Dependability of the Scores.” In <em>A Guide to Criterion-Referenced Test Construction</em>, edited by Ronald A Berk, 231–66. Baltimore, MD: The Johns Hopkins University Press.</p>
-</div>
-<div id="ref-brown1988short">
-<p>Brown, JD. 1988. “Short Cut Estimates of Criterion-Referenced Test Reliability.” <em>Language Testing</em> 7: 77–97.</p>
-</div>
-<div id="ref-subkoviak1988practitioner">
-<p>Subkoviak, Michael J. 1988. “A Practitioner’s Guide to Computation and Interpretation of Reliability Indices for Mastery Tests.” <em>Journal of Educational Measurement</em> 25. Wiley Online Library: 47–55.</p>
-</div>
-</div>
+<p>Brennan, R. L. (1984). Estimating the dependability of the scores. In <em>A guide to criterion-referenced test construction</em>, (Ed.) Ronald A Berk. 231–66. Baltimore, MD: The Johns Hopkins University Press.</p>
+<p>Brown, J. D. (1988). Short cut estimates of criterion-referenced test reliability. <em>Language Testing</em>, <em>7</em>, 77–97.</p>
+<p>Subkoviak, M. J. (1988). A practitioner’s guide to computation and interpretation of reliability indices for mastery tests. <em>Journal of Educational Measurement, 25</em>, 47–55.</p>
 </div>
 
 
