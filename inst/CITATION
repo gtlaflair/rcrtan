@@ -1,0 +1,29 @@
+citHeader("To cite rcrtan in publications use:")
+
+citEntry(entry = "misc",
+  title = "Criterion-Referenced Test Analysis",
+  author = personList(as.person("Geoffrey T. LaFlair")),
+  version = "0.1.0",
+  date = "2018-8-12",
+  url = "https://cran.r-project.org/package=rcrtan",
+  
+  textVersion = paste("LaFlair, G.T. (2018).",
+                      "rcrtan: Criterion-referenced test analysis", 
+                      "(Version 0.1.0) [R Package]", 
+                      "Available from: https://cran.r-project.org/package=rcrtan"))
+  
+citEntry(entry = "book",
+  title = "Criterion-Referenced Language Testing",
+  author = personList(as.person("James Dean Brown"), 
+                      as.person("Thom Hudson")), 
+  ISBN = "9780521000833",
+  series = "Cambridge Applied Linguistics",
+  url = "https://books.google.com/books?id=brDfGghl3qIC",
+  year = "2002",
+  publisher = "Cambridge University Press",
+  location = "Cambridge",
+  
+  textVersion = paste("Brown, J.D., & Hudson, T. (2002).",
+                      "Criterion-referenced language testing.",
+                      "Cambridge University Press: Cambridge.",
+                      "https://books.google.com/books?id=brDfGghl3qIC"))
