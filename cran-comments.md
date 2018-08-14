@@ -1,5 +1,15 @@
 ## Resubmission
 
+This is a second resubmission. In this version, I have:
+
+* Omitted the redundant "R Functions for" in the Title field of the DESCRIPTION
+* Omitted the redudnant "This package provides R functions for" in the Description field of the DESCRIPTION
+* Added a CITATION file that includes a formatted reference for Brown & Hudson (2002), it's ISBN, and a URL to the book
+
+
+
+## Resubmission
+
 This is a resubmission. In this version, I have:
 
 * Removed the .bib file that was causing a NOTE
