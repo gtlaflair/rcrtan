@@ -1,5 +1,11 @@
 ## Resubmission
 
+This is a third resubmission. In this version, I have:
+
+* Added the ISBN number for Brown & Hudson (2002) to the Description field in the DESCRIPTION file
+
+## Resubmission
+
 This is a second resubmission. In this version, I have:
 
 * Omitted the redundant "R Functions for" in the Title field of the DESCRIPTION
