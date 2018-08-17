@@ -1,6 +1,6 @@
 # rcrtan
 
-[![Build Status](https://travis-ci.org/gtlaflair/rcrtan.svg?branch=master)](https://travis-ci.org/gtlaflair/rcrtan) [![CRAN](http://www.r-pkg.org/badges/version/rcrtan)]
+[![Build Status](https://travis-ci.org/gtlaflair/rcrtan.svg?branch=master)](https://travis-ci.org/gtlaflair/rcrtan) ![CRAN](http://www.r-pkg.org/badges/version/rcrtan)
 
 rcrtan provides functions for criterion-referenced test analyses as described in Brown & Hudson (2002). Currently it supports the following item and test analyses:
 
