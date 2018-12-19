@@ -5,7 +5,8 @@ Version: 0.1.1
 Author: Geoffrey T. LaFlair
 Maintainer: Geoffrey T. LaFlair <gtlaflair@gmail.com>
 Description: Contains methods for criterion-referenced test analyses as 
-    described in Brown & Hudson (2002). This includes cut-score item discrimination 
+    described by Brown & Hudson (2002) in Criterion-referenced Language 
+    Testing (ISBN: 9780521000833). This includes cut-score item discrimination 
     analyses and measures of dependability.
 URL: https://github.com/gtlaflair/rcrtan
 BugReports: https://github.com/gtlaflair/rcrtan/issues

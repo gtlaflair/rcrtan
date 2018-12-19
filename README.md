@@ -1,6 +1,6 @@
 # rcrtan
 
-[![Build Status](https://travis-ci.org/gtlaflair/rcrtan.svg?branch=master)](https://travis-ci.org/gtlaflair/rcrtan)
+[![Build Status](https://travis-ci.org/gtlaflair/rcrtan.svg?branch=master)](https://travis-ci.org/gtlaflair/rcrtan) ![CRAN](http://www.r-pkg.org/badges/version/rcrtan)
 
 rcrtan provides functions for criterion-referenced test analyses as described in Brown & Hudson (2002). Currently it supports the following item and test analyses:
 
@@ -13,11 +13,18 @@ rcrtan provides functions for criterion-referenced test analyses as described in
 * Test dependability
      + Subkoviak's (1988) single administration kappa coefficient
      + Subkoviak's (1988) single administration agreement coefficient
-     + Brennan's (1980) short-cut estimate of the generalizability coefficient for absolute decisions
+     + Brown's (1990) short-cut estimate for phi dependability
+     + Brennan's (1984) estimate for phi lambda
 
 # Installation & Documentation
 
-Get the development version from github:
+Install the most recent version from CRAN
+
+```R
+install.packages('rcrtan')
+```
+
+Or, get the development version from github:
 
 ```R
 install.packages('devtools')
@@ -78,12 +85,23 @@ sub_estimate <- subkoviak(data = brown_depend, items = 2:31, raw_cut_score = 21,
 
 ```
 
-* `short_phi`: This function uses Brennan's (1980) formula for a short-cut estimate of generalizability coefficients for absolute decisions. 
+* `phi_domain`: This function uses Brown's (1990) formula for a short-cut estimate of generalizability coefficients for absolute decisions. 
 
 <!-- _n_ is the number of test takers. _k_ is the number of items on the test. _M_~p~ is the mean of the total scores divided by the number of items. _S_~p~^2^ is the standard deviation of the total scores divided by the number of items squared. $\alpha$ is the coefficient alpha reliability estimate. -->
 
 <!-- $$ \phi = \frac{\frac{n * S_{p}^2}{n - 1} * \alpha}{\frac{n * S_{p}^2}{n - 1} * \alpha + \frac{M_{p} * (1 - M_{p}) - S_{p}^2}{k-1}}$$ -->
 
 ```{r}
-phi_estimate <- short_phi(data = brown_depend, items  = 2:31)
+phi_estimate <- phi_domain(bh_depend, 2:31)
 ```
+
+
+## References
+
+Brennan, R.L. (1984). Estimating the dependability of the scores. In R.A. Berk (Ed.) _A guide to criterion-referenced test construction_ (pp. 292-334). Baltimore: Johns Hopkins University Press.
+
+Brown, J.D. (1990). Short-cut estimates for criterion-referenced test consistency. _Language Testing, 7_(1), 77-97.
+
+Brown, J.D., & Hudson, T (2002). _Criterion-referenced language testing_. Cambridge: Cambridge University Press.
+
+Subkoviak, M.J. (1988). A practitioner's guide to computation and interpretation of reliability indices for mastery tests. _Journal of Educational Measurement, 25_, 47-55.
