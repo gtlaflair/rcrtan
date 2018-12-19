@@ -1,19 +1,9 @@
-# rcrtan 0.1.0
+# rcrtan 0.1.1
 
-## First release of package
+## Major changes
 
-Includes functions for estimating the dependability of tests
+- none
 
-- `subkoviak`
-- `phi_domain`
-- `phi_lambda`
+## Bug fixes
 
-Includes functions for criterion-referenced item analysis
-
-- `crt_iteman`
-- `item_phi`
-- `agree_stat`
-- `b_index`
-- `if_fail`
-- `if_pass`
-- `if_total`
+- The functions have been updated to avoid bugs related to the release of `tibble` 2.0

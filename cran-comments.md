@@ -1,33 +1,14 @@
-## Resubmission
+## Updated package
 
-This is a second resubmission. In this version, I have:
-
-* Omitted the redundant "R Functions for" in the Title field of the DESCRIPTION
-* Omitted the redudnant "This package provides R functions for" in the Description field of the DESCRIPTION
-* Added a CITATION file that includes a formatted reference for Brown & Hudson (2002), it's ISBN, and a URL to the book
-
-
-
-## Resubmission
-
-This is a resubmission. In this version, I have:
-
-* Removed the .bib file that was causing a NOTE
-* Added cran-comments.md to .Rbuildignore, which was also causing a NOTE
-
+The functions in this package have been updated to avoid errors due to the upcoming release of `tibble` version 2.0. I added a NEWS.md file
 
 ## Test environments
-
+- local Debian GNU/Linux 9 (stretch) 64-bit, R 3.5.1
+- win-builder
 
 ## R CMD check results
-There were no ERRORs or WARNINGs.
+There were no ERRORs, WARNINGs, or NOTEs.
 
-There were two NOTEs
-
-> Non-standard files/directories found at top level:
-  ‘bibs.bib’ ‘cran-comments.md’
-  
-> Maintainer: ‘Geoff LaFlair <gtlaflair@gmail.com>’
 
 ## Downstream dependencies
 I have also run R CMD check on downstream dependencies of rcrtan. No ERRORs or WARNINGs were found.

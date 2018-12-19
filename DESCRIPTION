@@ -1,9 +1,9 @@
 Package: rcrtan
 Type: Package
 Title: Criterion-Referenced Test Analysis
-Version: 0.1.0
+Version: 0.1.1
 Author: Geoffrey T. LaFlair
-Maintainer: Geoff LaFlair <gtlaflair@gmail.com>
+Maintainer: Geoffrey T. LaFlair <gtlaflair@gmail.com>
 Description: Contains methods for criterion-referenced test analyses as 
     described in Brown & Hudson (2002). This includes cut-score item discrimination 
     analyses and measures of dependability.
@@ -12,6 +12,7 @@ BugReports: https://github.com/gtlaflair/rcrtan/issues
 Depends: R (>= 2.10)
 License: GPL-3
 LazyData: TRUE
+Encoding: UTF-8
 Imports:
     dplyr,
     magrittr,

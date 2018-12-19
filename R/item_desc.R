@@ -3,6 +3,8 @@
 #' 
 #' @importFrom magrittr %>%
 #' @importFrom dplyr summarise_all
+#' @importFrom tibble as_tibble
+#' @importFrom dplyr rename
 #' 
 #' @export if_total
 #' 
@@ -18,9 +20,10 @@ if_total <- function(data, items){
   Item_facility <- data %>%
     select(., items) %>%
     summarise_all(funs(mean)) %>%
-    t(.) %>%
-    as_data_frame(.) %>%
-    setNames(., 'if_total')
+    t(.)%>%
+    as.data.frame(.) %>%
+    as_tibble(., rownames = 'items') %>%
+    rename(., 'if_total' = "V1")
   
   return(Item_facility)
   
@@ -32,6 +35,9 @@ if_total <- function(data, items){
 #' @importFrom magrittr %>% 
 #' @importFrom dplyr filter
 #' @importFrom dplyr summarise_all
+#' @importFrom tibble as_tibble
+#' @importFrom dplyr rename
+#' 
 #' @export if_pass
 #' 
 #' @param data A data frame of dichotomously scored test times
@@ -72,8 +78,9 @@ if_pass <- function(data, items, cut_score, scale = 'raw'){
     select(., items) %>%
     summarise_all(funs(mean)) %>%
     t(.) %>%
-    as_data_frame(.) %>%
-    setNames(., 'if_pass')
+    as.data.frame(.) %>%
+    as_tibble(., rownames = 'items') %>%
+    rename(., 'if_pass' = "V1")
     
 
   return(Item_facility_pass)
@@ -84,6 +91,8 @@ if_pass <- function(data, items, cut_score, scale = 'raw'){
 #' @importFrom magrittr %>%
 #' @importFrom dplyr filter
 #' @importFrom dplyr summarise_all
+#' @importFrom tibble as_tibble
+#' @importFrom dplyr rename
 #' 
 #' @export if_fail
 #' 
@@ -97,6 +106,7 @@ if_pass <- function(data, items, cut_score, scale = 'raw'){
 #' 
 #' @examples 
 #' if_fail(bh_depend, 2:31, 21, scale = 'raw')
+
 if_fail <- function(data, items, cut_score, scale = 'raw'){
   
   data$raw_total <- data %>%
@@ -123,8 +133,9 @@ if_fail <- function(data, items, cut_score, scale = 'raw'){
     select(., items) %>%
     summarise_all(funs(mean)) %>%
     t(.) %>%
-    as_data_frame(.) %>%
-    setNames(., 'if_fail')
+    as.data.frame(.) %>%
+    as_tibble(., rownames = 'items') %>%
+    rename(., 'if_fail' = "V1")
   
   return(Item_facility_fail)
 }
@@ -135,6 +146,8 @@ if_fail <- function(data, items, cut_score, scale = 'raw'){
 #' @importFrom dplyr filter
 #' @importFrom tibble as_data_frame
 #' @importFrom dplyr summarise_all
+#' @importFrom tibble as_tibble
+#' @importFrom dplyr rename
 #' 
 #' @export b_index
 #' 
@@ -160,15 +173,21 @@ b_index <- function(data, items, cut_score, scale = 'raw'){
   Item_facility_pass <- data %>%
     filter(pass %in% 'pass') %>%
     select(., items) %>%
-    summarise_all(., mean)
-  
+    summarise_all(., funs(mean)) 
+    
   Item_facility_fail <- data %>%
     filter(pass %in% 'fail') %>%
     select(., items) %>%
-    summarise_all(., mean)
-  
+    summarise_all(., funs(mean)) 
+    
   Bindex <- Item_facility_pass - Item_facility_fail
-
+  
+  Bindex <- Bindex %>%
+    t(.) %>%
+    as.data.frame(.) %>%
+    as_tibble(., rownames = 'items') %>%
+    rename(., 'b_index' = "V1")
+  
   return(Bindex)
 }
 
@@ -179,6 +198,8 @@ b_index <- function(data, items, cut_score, scale = 'raw'){
 #' @importFrom dplyr summarise_all
 #' @importFrom dplyr summarise
 #' @importFrom dplyr funs
+#' @importFrom tibble as_tibble
+#' @importFrom dplyr rename
 #' 
 #' @export agree_stat
 #' 
@@ -217,7 +238,13 @@ agree_stat <- function(data, items, cut_score, scale = 'raw'){
     rep(.,length(items)) %>%
     unlist
 
-  Agree <- (2 * PiT) + Qi - Pt
+  Agree <- (2 * PiT) + Qi - Pt 
+  
+  Agree <- Agree %>%
+    t(.) %>%
+    as.data.frame(.) %>%
+    as_tibble(., rownames = 'items') %>%
+    rename(., 'agree' = "V1")
 
   return(Agree)
 }
@@ -228,6 +255,7 @@ agree_stat <- function(data, items, cut_score, scale = 'raw'){
 #' @importFrom dplyr filter
 #' @importFrom dplyr summarise_all
 #' @importFrom dplyr funs
+#' @importFrom dplyr rename
 #' 
 #' @export item_phi
 #' 
@@ -272,6 +300,12 @@ item_phi <- function(data, items, cut_score, scale = 'raw'){
   
   Phi <- (PiT - (Pi*Pt)) / (sqrt(Pi * Qi * Pt * Qt))
   
+  Phi <- Phi %>%
+    t(.) %>%
+    as.data.frame(.) %>%
+    as_tibble(., rownames = 'items') %>%
+    rename(., 'phi' = "V1")
+  
   return(Phi)
   
 }
@@ -281,6 +315,7 @@ item_phi <- function(data, items, cut_score, scale = 'raw'){
 #' @importFrom stats setNames
 #' @importFrom magrittr %>%
 #' @importFrom tibble as_data_frame
+#' @importFrom dplyr full_join
 #' 
 #' @export crt_iteman
 #' 
@@ -304,39 +339,23 @@ crt_iteman <- function(data, items, cut_score, scale = 'raw'){
 
   iteman <- data %>% {
     
-    item_fac <- if_total(., items = items) %>%
-      as_data_frame(.) %>%
-      setNames(., 'if_total')
+    item_fac <- if_total(., items = items) 
+
+    item_fac_pass <- if_pass(., items = items, cut_score = cut_score, scale = scale) 
     
-    item_fac_pass <- if_pass(., items = items, cut_score = cut_score, scale = scale) %>%
-      as_data_frame(.) %>%
-      setNames(., 'if_pass')
+    item_fac_fail <- if_fail(., items = items, cut_score = cut_score, scale = scale) 
     
-    item_fac_fail <- if_fail(., items = items, cut_score = cut_score, scale = scale) %>%
-      as_data_frame(.) %>%
-      setNames(., 'if_fail')
+    b <- b_index(.,items = items, cut_score = cut_score, scale = scale) 
     
-    b <- b_index(.,items = items, cut_score = cut_score, scale = scale) %>%
-      t() %>%
-      as_data_frame(.) %>%
-      setNames(., 'b_index')
+    a <- agree_stat(.,items = items, cut_score = cut_score, scale = scale) 
     
-    a <- agree_stat(.,items = items, cut_score = cut_score, scale = scale) %>%
-      t() %>%
-      as_data_frame(.) %>%
-      setNames(., 'agree_stat')
+    p <- item_phi(.,items = items, cut_score = cut_score, scale = scale) 
     
-    p <- item_phi(.,items = items, cut_score = cut_score, scale = scale) %>%
-      t() %>%
-      as_data_frame(.) %>%
-      setNames(., 'item_phi')
-    
-    res <- bind_cols(item_fac_pass, item_fac_fail, item_fac, b, a, p)
-    
-    res$items <- names(data[items])
-    
-    res <- res %>%
-      dplyr::tbl_df(.)
+    res <- full_join(item_fac_pass, item_fac_fail, by = "items") %>%
+      full_join(., item_fac, by = "items") %>%
+      full_join(., b, by = "items") %>%
+      full_join(., a, by = "items") %>%
+      full_join(., p, by = "items")
     
     return(res)
   }

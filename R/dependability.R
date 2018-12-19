@@ -181,13 +181,13 @@ phi_domain <- function(data, items, total = NULL){
     
     mp <- data %>%
       select(., items) %>%
-      by_row(., sum, .collate = 'rows', .to = 'total') %>%
+      purrrlyr::by_row(., sum, .collate = 'rows', .to = 'total') %>%
       summarise(m = mean(total) / k) %>%
       as.numeric()
   
     sp2 <- data %>%
       select(., items) %>%
-      by_row(., sum, .collate = 'rows', .to = 'total') %>%
+      purrrlyr::by_row(., sum, .collate = 'rows', .to = 'total') %>%
       summarise(s_p = (sd_pop(total, n = length(total))/k)^2) %>%
       as.numeric()
   
@@ -199,14 +199,14 @@ phi_domain <- function(data, items, total = NULL){
   
     sigma_x <- data %>%
       select(., items) %>%
-      by_row(., sum, .collate = 'rows', .to = 'total') %>%
+      purrrlyr::by_row(., sum, .collate = 'rows', .to = 'total') %>%
       summarise(v = var(total)) %>%
       as.numeric()
   
     rel <- (k / (k - 1)) * (1 - (sigma_y / sigma_x)) # kr-20
   
     phi <- (((n * sp2)/(n - 1)) * rel)/((((n * sp2)/(n - 1)) * rel) + ((mp * (1 - mp) - sp2)/(k - 1))) %>%
-      as_data_frame(.) %>%
+      as.data.frame(.) %>%
       setNames(., 'Domain Phi')
   
   }
@@ -239,7 +239,7 @@ phi_domain <- function(data, items, total = NULL){
     rel <- (k / (k - 1)) * (1 - ((M * (k - M)) / (k * (S^2)))) # kr-21
     
     phi <- (((n * sp2)/(n - 1)) * rel)/((((n * sp2)/(n - 1)) * rel) + ((mp * (1 - mp) - sp2)/(k - 1))) %>%
-      as_data_frame(.) %>%
+      as.data.frame(.) %>%
       setNames(., 'Domain Phi')
     
   }
@@ -299,7 +299,7 @@ phi_lambda <- function(data, items, cut_score, total = NULL){
     as.numeric()
   
   phi <- 1 - ((1 / (k - 1)) * ((mp * (1 - mp) - sp2) / ((mp - lambda)^2 + sp2))) %>%
-    as_data_frame(.) %>%
+    as.data.frame(.) %>%
     setNames(., 'Phi Lambda')
   
   return(phi)
