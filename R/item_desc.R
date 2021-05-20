@@ -337,29 +337,25 @@ item_phi <- function(data, items, cut_score, scale = 'raw'){
 
 crt_iteman <- function(data, items, cut_score, scale = 'raw'){
 
-  iteman <- data %>% {
-    
-    item_fac <- if_total(., items = items) 
+  item_fac <- if_total(data, items = items)
 
-    item_fac_pass <- if_pass(., items = items, cut_score = cut_score, scale = scale) 
-    
-    item_fac_fail <- if_fail(., items = items, cut_score = cut_score, scale = scale) 
-    
-    b <- b_index(.,items = items, cut_score = cut_score, scale = scale) 
-    
-    a <- agree_stat(.,items = items, cut_score = cut_score, scale = scale) 
-    
-    p <- item_phi(.,items = items, cut_score = cut_score, scale = scale) 
-    
-    res <- full_join(item_fac_pass, item_fac_fail, by = "items") %>%
-      full_join(., item_fac, by = "items") %>%
-      full_join(., b, by = "items") %>%
-      full_join(., a, by = "items") %>%
-      full_join(., p, by = "items")
-    
-    return(res)
-  }
-  
+  item_fac_pass <- if_pass(data, items = items, cut_score = cut_score, scale = scale)
+
+  item_fac_fail <- if_fail(data, items = items, cut_score = cut_score, scale = scale)
+
+  b <- b_index(data, items = items, cut_score = cut_score, scale = scale)
+
+  a <- agree_stat(data, items = items, cut_score = cut_score, scale = scale)
+
+  p <- item_phi(data, items = items, cut_score = cut_score, scale = scale)
+
+  iteman <- item_fac_pass %>%
+    full_join(item_fac_fail, by = "items") %>%
+    full_join(item_fac, by = "items") %>%
+    full_join(b, by = "items") %>%
+    full_join(a, by = "items") %>%
+    full_join(p, by = "items")
+
   return(iteman)
 }
 
